@@ -33,7 +33,8 @@ const I18N = {
     "index.contact.label": "Contact",
     "index.contact.title": "Have a project in mind?",
     "index.contact.sub":   "Tell us what you are building. We are happy to talk early — before you have everything figured out.",
-    "index.contact.email": "Send a Message",
+    "index.contact.cta":   "Start a Project →",
+    "index.contact.email": "Send Email",
     "index.contact.linkedin": "LinkedIn",
     /* ── PROCESS ── */
     "index.process.label":    "How We Work",
@@ -78,6 +79,23 @@ const I18N = {
     "form.submit":             "Send Message",
     "form.note":               "We typically reply within 1 business day.",
     "form.success":            "✓ Message sent. We'll be in touch soon.",
+    /* ── CONTACT PAGE ── */
+    "contact.hero.eyebrow": "Contact",
+    "contact.hero.title":   "Tell us what<br><span>you're building.</span>",
+    "contact.hero.sub":     "No need to have everything figured out. Give us a direction — we'll work it out together.",
+    "contact.location":     "Taichung, Taiwan",
+    "contact.response":     "Usually replies within 1 business day",
+    "contact.available":    "Currently accepting new projects",
+    "contact.faq.label":    "FAQ",
+    "contact.faq.q1": "What's the minimum budget?",
+    "contact.faq.a1": "It depends on the scope. Brand websites typically start from NT$30–50k. E-commerce or system projects are usually NT$80k+. We'll give a clear quote after an initial call.",
+    "contact.faq.q2": "How long does a project take?",
+    "contact.faq.a2": "Brand websites: 3–5 weeks. E-commerce or SaaS systems: 6–12 weeks, depending on complexity. A detailed timeline is provided after scoping.",
+    "contact.faq.q3": "Do you only work with clients in Taiwan?",
+    "contact.faq.a3": "No — we also take on remote international projects. We're flexible with communication methods and can work across time zones.",
+    "contact.faq.q4": "Is there support after launch?",
+    "contact.faq.a4": "Yes. We offer monthly maintenance plans covering updates, bug fixes, and minor changes. Pay-as-you-go is also available.",
+
 
     /* ── SERVICES (nav strip) ── */
     "services.s1.title":  "Brand Websites",
@@ -177,7 +195,8 @@ const I18N = {
     "index.contact.label": "聯絡我們",
     "index.contact.title": "有想法了嗎？",
     "index.contact.sub":   "告訴我們你在建什麼。不需要想清楚所有細節，我們很樂意在初期就展開對話。",
-    "index.contact.email": "傳送訊息",
+    "index.contact.cta":   "開始洽談 →",
+    "index.contact.email": "傳送 Email",
     "index.contact.linkedin": "LinkedIn",
     /* ── PROCESS ── */
     "index.process.label":    "How We Work",
@@ -222,6 +241,23 @@ const I18N = {
     "form.submit":             "Send Message",
     "form.note":               "We typically reply within 1 business day.",
     "form.success":            "✓ Message sent. We'll be in touch soon.",
+    /* ── CONTACT PAGE ── */
+    "contact.hero.eyebrow": "Contact",
+    "contact.hero.title":   "Tell us what<br><span>you're building.</span>",
+    "contact.hero.sub":     "No need to have everything figured out. Give us a direction — we'll work it out together.",
+    "contact.location":     "Taichung, Taiwan",
+    "contact.response":     "Usually replies within 1 business day",
+    "contact.available":    "Currently accepting new projects",
+    "contact.faq.label":    "FAQ",
+    "contact.faq.q1": "What's the minimum budget?",
+    "contact.faq.a1": "It depends on the scope. Brand websites typically start from NT$30–50k. E-commerce or system projects are usually NT$80k+. We'll give a clear quote after an initial call.",
+    "contact.faq.q2": "How long does a project take?",
+    "contact.faq.a2": "Brand websites: 3–5 weeks. E-commerce or SaaS systems: 6–12 weeks, depending on complexity. A detailed timeline is provided after scoping.",
+    "contact.faq.q3": "Do you only work with clients in Taiwan?",
+    "contact.faq.a3": "No — we also take on remote international projects. We're flexible with communication methods and can work across time zones.",
+    "contact.faq.q4": "Is there support after launch?",
+    "contact.faq.a4": "Yes. We offer monthly maintenance plans covering updates, bug fixes, and minor changes. Pay-as-you-go is also available.",
+
 
     /* ── SERVICES (nav strip) ── */
     "services.s1.title":  "品牌官網",

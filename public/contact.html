@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="zh-TW" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <script>document.documentElement.setAttribute("data-theme",localStorage.getItem("theme")||(matchMedia("(prefers-color-scheme:dark)").matches?"dark":"light"));</script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="聯絡 MosStack Studio，開始你的網站或系統開發專案。了解合作流程與報價方式。" />
+  <title>聯絡我們 — MosStack Studio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <nav class="nav">
+    <div class="nav__inner">
+      <a href="/" class="nav__logo" data-i18n="nav.logo">MosStack</a>
+      <ul class="nav__links">
+        <li><a href="/portfolio.html" data-i18n="nav.work">作品案例</a></li>
+        <li><a href="/services.html" data-i18n="nav.services">服務項目</a></li>
+        <li><a href="/#studio" data-i18n="nav.studio">關於工作室</a></li>
+        <li><a href="/contact.html" class="nav__link--active" data-i18n="nav.contact">聯絡我們</a></li>
+      </ul>
+      <div class="nav__right">
+        <div class="lang-switch" aria-label="Language switcher">
+          <button class="lang-switch__btn" type="button" data-lang-switch="en">EN</button>
+          <button class="lang-switch__btn is-active" type="button" data-lang-switch="zh">中</button>
+        </div>
+        <div class="nav__social">
+          <a href="https://github.com/" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .5C5.65.5.5 5.65.5 12c0 5.1 3.29 9.42 7.86 10.95.57.1.78-.25.78-.55v-2.1c-3.2.7-3.87-1.54-3.87-1.54-.52-1.33-1.27-1.69-1.27-1.69-1.04-.71.08-.7.08-.7 1.15.08 1.75 1.18 1.75 1.18 1.02 1.75 2.68 1.24 3.33.95.1-.74.4-1.24.72-1.53-2.55-.29-5.23-1.28-5.23-5.68 0-1.25.45-2.28 1.18-3.08-.12-.3-.51-1.46.11-3.04 0 0 .96-.31 3.15 1.18a10.94 10.94 0 0 1 5.74 0C17.04 5.8 18 6.11 18 6.11c.62 1.58.23 2.74.11 3.04.73.8 1.18 1.83 1.18 3.08 0 4.41-2.69 5.38-5.25 5.67.41.36.78 1.07.78 2.15v3.18c0 .31.2.66.79.55A11.51 11.51 0 0 0 23.5 12C23.5 5.65 18.35.5 12 .5z"/></svg>
+          </a>
+          <a href="https://linkedin.com/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.45 20.45h-3.55v-5.57c0-1.33-.03-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.36V9h3.41v1.56h.05c.47-.9 1.63-1.85 3.36-1.85 3.6 0 4.27 2.37 4.27 5.45v6.29zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zm1.78 13.02H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.73V1.73C24 .77 23.2 0 22.22 0z"/></svg>
+          </a>
+        </div>
+        <button class="theme-toggle" type="button" data-theme-toggle aria-label="切換深色模式">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        </button>
+        <button class="hamburger" id="hamburger" type="button" aria-label="開啟選單" aria-expanded="false">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Mobile Nav -->
+  <div class="mobile-nav" id="mobileNav" aria-hidden="true">
+    <ul>
+      <li><a href="/portfolio.html" data-i18n="nav.work">作品案例</a></li>
+      <li><a href="/services.html" data-i18n="nav.services">服務項目</a></li>
+      <li><a href="/#studio" data-i18n="nav.studio">關於工作室</a></li>
+      <li><a href="/contact.html" data-i18n="nav.contact">聯絡我們</a></li>
+    </ul>
+  </div>
+
+  <main>
+
+    <!-- ── HERO ── -->
+    <section class="hero">
+      <div class="container">
+        <p class="hero__eyebrow" data-i18n="contact.hero.eyebrow">聯絡我們</p>
+        <h1 class="hero__title" data-i18n="contact.hero.title">告訴我們你<br><span>在建什麼。</span></h1>
+        <p class="hero__subtitle" data-i18n="contact.hero.sub">不需要想清楚所有細節。給我們一個方向，我們很樂意在初期就一起釐清。</p>
+      </div>
+    </section>
+
+    <!-- ── PROCESS ── -->
+    <section class="process contact-process">
+      <div class="container--wide">
+        <p class="section-label" data-i18n="index.process.label">合作流程</p>
+        <div class="process__grid">
+          <div class="process__step">
+            <span class="process__num">01</span>
+            <h3 class="process__title" data-i18n="index.process.s1.title">需求討論</h3>
+            <p class="process__desc" data-i18n="index.process.s1.desc">透過一次免費的初步會議，了解你的目標、預算與時程。不需要準備完整規格，我們一起整理。</p>
+          </div>
+          <div class="process__step">
+            <span class="process__num">02</span>
+            <h3 class="process__title" data-i18n="index.process.s2.title">提案與報價</h3>
+            <p class="process__desc" data-i18n="index.process.s2.desc">提供清楚的技術方案與固定報價，確認後簽約。沒有隱藏費用，沒有模糊地帶。</p>
+          </div>
+          <div class="process__step">
+            <span class="process__num">03</span>
+            <h3 class="process__title" data-i18n="index.process.s3.title">設計與開發</h3>
+            <p class="process__desc" data-i18n="index.process.s3.desc">分階段交付，每個里程碑都有可測試的版本。保持溝通，你隨時知道進度在哪裡。</p>
+          </div>
+          <div class="process__step">
+            <span class="process__num">04</span>
+            <h3 class="process__title" data-i18n="index.process.s4.title">上線與維護</h3>
+            <p class="process__desc" data-i18n="index.process.s4.desc">協助部署上線、測試驗收，並提供後續維護支援。系統交給你之後，我們還在。</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── CONTACT FORM ── -->
+    <section class="contact-page" id="form">
+      <div class="container--wide">
+        <div class="contact-page__inner">
+
+          <!-- 左側資訊 -->
+          <div class="contact-page__info">
+            <p class="section-label" data-i18n="index.contact.label">聯絡我們</p>
+            <h2 class="contact-page__heading" data-i18n="index.contact.title">有想法了嗎？</h2>
+            <p class="contact-page__sub" data-i18n="index.contact.sub">告訴我們你在建什麼。不需要想清楚所有細節，我們很樂意在初期就展開對話。</p>
+
+            <div class="contact-page__details">
+              <div class="contact-detail">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+                <a href="mailto:hello@mosstack.studio">hello@mosstack.studio</a>
+              </div>
+              <div class="contact-detail">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+                <span data-i18n="contact.location">台中市，台灣</span>
+              </div>
+              <div class="contact-detail">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                <span data-i18n="contact.response">通常在 1 個工作日內回覆</span>
+              </div>
+            </div>
+
+            <div class="contact-page__availability">
+              <span class="availability-dot"></span>
+              <span data-i18n="contact.available">目前接受新專案</span>
+            </div>
+          </div>
+
+          <!-- 右側表單 -->
+          <form class="contact-form contact-form--page" id="contactForm" novalidate>
+            <div class="form-row">
+              <div class="form-group">
+                <label for="cf-name" data-i18n="form.name.label">你的姓名</label>
+                <input type="text" id="cf-name" name="name" autocomplete="name" placeholder="王小明" required />
+              </div>
+              <div class="form-group">
+                <label for="cf-email" data-i18n="form.email.label">Email</label>
+                <input type="email" id="cf-email" name="email" autocomplete="email" placeholder="hello@example.com" required />
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label for="cf-type" data-i18n="form.type.label">專案類型</label>
+                <select id="cf-type" name="type">
+                  <option value="" data-i18n="form.type.placeholder">請選擇...</option>
+                  <option value="brand" data-i18n="form.type.brand">品牌官網</option>
+                  <option value="ecom" data-i18n="form.type.ecom">電商體驗</option>
+                  <option value="hospitality" data-i18n="form.type.hospitality">旅宿平台</option>
+                  <option value="b2b" data-i18n="form.type.b2b">B2B 後台工具</option>
+                  <option value="other" data-i18n="form.type.other">其他</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="cf-budget" data-i18n="form.budget.label">預算範圍</label>
+                <select id="cf-budget" name="budget">
+                  <option value="" data-i18n="form.budget.placeholder">請選擇...</option>
+                  <option value="under30" data-i18n="form.budget.under30">3 萬以下</option>
+                  <option value="30-80" data-i18n="form.budget.mid">3 – 8 萬</option>
+                  <option value="80-200" data-i18n="form.budget.high">8 – 20 萬</option>
+                  <option value="over200" data-i18n="form.budget.over">20 萬以上</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="cf-message" data-i18n="form.message.label">簡述你的需求</label>
+              <textarea id="cf-message" name="message" rows="6" placeholder="想做什麼、希望解決什麼問題、有沒有參考網站..." required></textarea>
+            </div>
+            <div class="form-actions">
+              <button type="submit" class="btn btn--primary btn--submit" data-i18n="form.submit">送出訊息</button>
+              <p class="form-note" data-i18n="form.note">通常在 1 個工作日內回覆。</p>
+            </div>
+            <div class="form-success" id="formSuccess" hidden>
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="9 12 11.5 14.5 15 10"/></svg>
+              <p data-i18n="form.success">訊息已送出，我們會盡快與你聯絡。</p>
+            </div>
+          </form>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ── FAQ ── -->
+    <section class="faq">
+      <div class="container">
+        <p class="section-label" data-i18n="contact.faq.label">常見問題</p>
+        <div class="faq__list">
+          <details class="faq__item">
+            <summary class="faq__q" data-i18n="contact.faq.q1">專案的最低預算是多少？</summary>
+            <p class="faq__a" data-i18n="contact.faq.a1">視專案規模而定。一般品牌官網約從 3–5 萬起，電商或系統型專案通常在 8 萬以上。初步討論後我們會給出明確報價。</p>
+          </details>
+          <details class="faq__item">
+            <summary class="faq__q" data-i18n="contact.faq.q2">開發週期大概多長？</summary>
+            <p class="faq__a" data-i18n="contact.faq.a2">品牌官網約 3–5 週，電商或 SaaS 系統通常 6–12 週，視功能複雜度而定。確認規格後會給出詳細時程。</p>
+          </details>
+          <details class="faq__item">
+            <summary class="faq__q" data-i18n="contact.faq.q3">你們只接台灣的案子嗎？</summary>
+            <p class="faq__a" data-i18n="contact.faq.a3">不是，我們也接海外遠端專案。溝通方式彈性，可以用 Email、視訊或通訊軟體配合你的時區。</p>
+          </details>
+          <details class="faq__item">
+            <summary class="faq__q" data-i18n="contact.faq.q4">上線後有維護服務嗎？</summary>
+            <p class="faq__a" data-i18n="contact.faq.a4">有。我們提供月費制的維護方案，包含定期更新、Bug 修復與小幅調整。也可以按需計費，依你的需求討論。</p>
+          </details>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <p data-i18n="footer.copy">© 2026 MosStack Studio. 版權所有。</p>
+    <p data-i18n="footer.location">位於台中，服務來自各地的客戶。</p>
+  </footer>
+
+  <script src="i18n.js"></script>
+  <script>
+    (function () {
+      const form = document.getElementById('contactForm');
+      const success = document.getElementById('formSuccess');
+      if (!form) return;
+      form.addEventListener('submit', function (e) {
+        e.preventDefault();
+        const btn = form.querySelector('[type=submit]');
+        btn.disabled = true;
+        const origText = btn.textContent;
+        btn.textContent = '送出中...';
+        setTimeout(function () {
+          form.querySelector('.form-actions').style.display = 'none';
+          form.querySelectorAll('.form-row, .form-group').forEach(function(el){ el.style.opacity = '0.4'; el.style.pointerEvents = 'none'; });
+          success.hidden = false;
+        }, 800);
+      });
+    })();
+  </script>
+</body>
+</html>
