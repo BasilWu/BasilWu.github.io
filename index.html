@@ -2,6 +2,7 @@
 <html lang="zh-TW" data-theme="light">
 <head>
   <meta charset="UTF-8" />
+  <script>document.documentElement.setAttribute("data-theme",localStorage.getItem("theme")||(matchMedia("(prefers-color-scheme:dark)").matches?"dark":"light"));</script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="description" content="MosStack Studio 是一個位於台中的接案工程工作室，專注於品牌官網、電商、旅宿平台與 B2B 後台工具。" />
   <meta name="robots" content="index, follow" />
