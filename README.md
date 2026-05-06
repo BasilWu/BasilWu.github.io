@@ -24,4 +24,4 @@ npm run dev
 
 ## GitHub Pages
 
-網址：https://basilwu.github.io/personal-site/
+網址：https://basilwu.github.io/
