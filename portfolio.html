@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="zh-TW" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>作品集 — Basil</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <nav class="nav">
+    <div class="nav__inner">
+      <a href="/" class="nav__logo" data-i18n="nav.logo">Basil</a>
+      <ul class="nav__links">
+        <li><a href="/services.html" data-i18n="nav.services">服務項目</a></li>
+        <li><a href="#studio" data-i18n="nav.studio">關於工作室</a></li>
+        <li><a href="#contact" data-i18n="nav.contact">聯絡我們</a></li>
+      </ul>
+      <div class="nav__right">
+        <div class="lang-switch" aria-label="Language switcher">
+          <button class="lang-switch__btn" type="button" data-lang-switch="en">EN</button>
+          <button class="lang-switch__btn is-active" type="button" data-lang-switch="zh">中</button>
+        </div>
+        <button class="theme-toggle" data-theme-toggle aria-label="切換深色模式">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <section class="hero">
+    <div class="container">
+      <p class="hero__eyebrow" data-i18n="portfolio.hero.eyebrow">作品案例</p>
+      <h1 class="hero__title" data-i18n="portfolio.hero.title">為真實商業運作打造的精選案例</h1>
+      <p class="hero__subtitle" data-i18n="portfolio.hero.subtitle">
+        我們的作品涵蓋品牌官網、電商體驗、旅宿產品與內部系統。每個專案從結構、易用性與長期可維護性出發。
+      </p>
+      <div class="hero__cta">
+        <a href="/#contact" class="btn btn--primary" data-i18n="portfolio.hero.primary">開始洽談專案</a>
+        <a href="/services.html" class="btn btn--ghost" data-i18n="portfolio.hero.secondary">查看服務</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="portfolio">
+    <div class="container--wide">
+      <p class="section-label" data-i18n="portfolio.case.label">案例集合</p>
+
+      <a href="#" class="project-card--featured">
+        <div class="project-card__info">
+          <h2 class="project-card__name" data-i18n="portfolio.c1.title">租賃電商平台</h2>
+          <p class="project-card__desc" data-i18n="portfolio.c1.desc">
+            串接瀏覽、預約、結帳、後台處理與付款流程的全端平台。
+          </p>
+          <div class="project-card__tags">
+            <span class="tag">Full-Stack</span>
+            <span class="tag">Node.js</span>
+            <span class="tag">React</span>
+          </div>
+        </div>
+        <div class="project-card__image">
+          <img src="https://picsum.photos/seed/p1/800/500" alt="專案截圖" width="800" height="500" loading="lazy" />
+        </div>
+      </a>
+
+      <div class="project-grid">
+        <a href="#" class="project-card">
+          <div class="project-card__image">
+            <img src="https://picsum.photos/seed/p2/600/400" alt="專案截圖" width="600" height="400" loading="lazy" />
+          </div>
+          <div class="project-card__info">
+            <h3 class="project-card__name" data-i18n="portfolio.c2.title">跨裝置管理介面</h3>
+            <p class="project-card__desc" data-i18n="portfolio.c2.desc">為平板與桌機場景打造的操作介面。</p>
+            <div class="project-card__tags"><span class="tag">UX</span><span class="tag">iPad</span></div>
+          </div>
+        </a>
+
+        <a href="#" class="project-card">
+          <div class="project-card__image">
+            <img src="https://picsum.photos/seed/p3/600/400" alt="專案截圖" width="600" height="400" loading="lazy" />
+          </div>
+          <div class="project-card__info">
+            <h3 class="project-card__name" data-i18n="portfolio.c3.title">彈性金流整合流程</h3>
+            <p class="project-card__desc" data-i18n="portfolio.c3.desc">將多種 checkout 選項整合成更簡潔的使用流程。</p>
+            <div class="project-card__tags"><span class="tag">UI</span><span class="tag">Finance</span></div>
+          </div>
+        </a>
+
+        <a href="#" class="project-card">
+          <div class="project-card__image">
+            <img src="https://picsum.photos/seed/p4/600/400" alt="專案截圖" width="600" height="400" loading="lazy" />
+          </div>
+          <div class="project-card__info">
+            <h3 class="project-card__name" data-i18n="portfolio.c4.title">品牌官網系統</h3>
+            <p class="project-card__desc" data-i18n="portfolio.c4.desc">改善品牌呈現清晰度與內容結構的行銷網站。</p>
+            <div class="project-card__tags"><span class="tag">Branding</span><span class="tag">Frontend</span></div>
+          </div>
+        </a>
+
+        <a href="#" class="project-card">
+          <div class="project-card__image">
+            <img src="https://picsum.photos/seed/p5/600/400" alt="專案截圖" width="600" height="400" loading="lazy" />
+          </div>
+          <div class="project-card__info">
+            <h3 class="project-card__name" data-i18n="portfolio.c5.title">旅宿預約產品</h3>
+            <p class="project-card__desc" data-i18n="portfolio.c5.desc">以預約清晰度與前後台順暢協作為核心的旅宿型產品。</p>
+            <div class="project-card__tags"><span class="tag">Hospitality</span><span class="tag">Booking</span></div>
+          </div>
+        </a>
+
+        <a href="#" class="project-card">
+          <div class="project-card__image">
+            <img src="https://picsum.photos/seed/p6/600/400" alt="專案截圖" width="600" height="400" loading="lazy" />
+          </div>
+          <div class="project-card__info">
+            <h3 class="project-card__name" data-i18n="portfolio.c6.title">內部營運儀表板</h3>
+            <p class="project-card__desc" data-i18n="portfolio.c6.desc">提升工作流、團隊操作與營運資料可視性的內部 dashboard。</p>
+            <div class="project-card__tags"><span class="tag">Dashboard</span><span class="tag">B2B</span></div>
+          </div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section class="about">
+    <div class="container">
+      <div class="about__inner">
+        <h2 class="about__heading" data-i18n="portfolio.principles.title">我們如何判斷一個建置是否夠好</h2>
+        <div class="about__body">
+          <p data-i18n="portfolio.principles.p1">我們從結構是否清楚、介面是否減少阻力，以及系統是否能持續維護三個角度評估。</p>
+          <p data-i18n="portfolio.principles.p2">目標不只是讓介面看起來現代，而是幫團隊更順地運作，並在上線後持續成長。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="contact">
+    <div class="container">
+      <div class="contact__inner">
+        <p class="section-label" data-i18n="portfolio.cta.label">下一步</p>
+        <h2 class="contact__heading" data-i18n="portfolio.cta.title">你有正在規劃的專案嗎？</h2>
+        <p class="contact__sub" data-i18n="portfolio.cta.sub">如果你正在規劃網站、電商流程、旅宿平台或內部工具，我們可以從一開始就協助你整理結構。</p>
+        <div class="contact__links">
+          <a href="/#contact" class="btn btn--primary" data-i18n="portfolio.cta.primary">開始聯絡</a>
+          <a href="/services.html" class="btn btn--ghost" data-i18n="portfolio.cta.secondary">回到服務頁</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <p data-i18n="footer.copy">© 2026 Basil. 版權所有。</p>
+    <p data-i18n="footer.built">以 Node.js + Express 建置</p>
+  </footer>
+
+  <script src="i18n.js"></script>
+</body>
+</html>
