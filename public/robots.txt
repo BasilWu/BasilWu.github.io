@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://basil-studio.github.io/sitemap.xml
