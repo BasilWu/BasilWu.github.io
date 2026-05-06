@@ -207,7 +207,7 @@ const I18N = {
   const themeToggle = document.querySelector('[data-theme-toggle]');
   const langBtns = document.querySelectorAll('[data-lang-switch]');
   let theme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-  let lang = 'zh';
+  let lang = localStorage.getItem('lang') || 'zh';
 
   const sunSVG  = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>';
   const moonSVG = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>';
@@ -228,6 +228,7 @@ const I18N = {
       if (val !== undefined) el.innerHTML = val;
     });
     langBtns.forEach(btn => btn.classList.toggle('is-active', btn.dataset.langSwitch === l));
+    localStorage.setItem('lang', l);
   }
 
   applyTheme();
@@ -242,5 +243,42 @@ const I18N = {
 
   langBtns.forEach(btn => {
     btn.addEventListener('click', () => applyLang(btn.dataset.langSwitch));
+  });
+})();
+
+// ── HAMBURGER MENU ──────────────────────
+(function () {
+  const hamburger = document.getElementById('hamburger');
+  const mobileNav = document.getElementById('mobileNav');
+  if (!hamburger || !mobileNav) return;
+
+  function openMenu() {
+    hamburger.classList.add('is-open');
+    mobileNav.classList.add('is-open');
+    hamburger.setAttribute('aria-expanded', 'true');
+    mobileNav.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeMenu() {
+    hamburger.classList.remove('is-open');
+    mobileNav.classList.remove('is-open');
+    hamburger.setAttribute('aria-expanded', 'false');
+    mobileNav.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+  }
+
+  hamburger.addEventListener('click', function () {
+    hamburger.classList.contains('is-open') ? closeMenu() : openMenu();
+  });
+
+  // 點選連結後關閉
+  mobileNav.querySelectorAll('a').forEach(function (a) {
+    a.addEventListener('click', closeMenu);
+  });
+
+  // ESC 關閉
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') closeMenu();
   });
 })();
