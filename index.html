@@ -169,5 +169,25 @@
   </footer>
 
   <script src="i18n.js"></script>
+  <script>
+    // 跨頁錨點：從其他頁跳回首頁時，自動滾到 #studio 或 #contact
+    (function () {
+      function scrollToHash() {
+        const hash = window.location.hash;
+        if (!hash) return;
+        const target = document.querySelector(hash);
+        if (target) {
+          setTimeout(function () {
+            target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }, 100);
+        }
+      }
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', scrollToHash);
+      } else {
+        scrollToHash();
+      }
+    })();
+  </script>
 </body>
 </html>
