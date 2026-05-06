@@ -1156,3 +1156,7 @@ footer p {
   .contact-cta__actions { flex-direction: column; }
   .contact-cta__actions .btn { width: 100%; justify-content: center; }
 }
+
+/* form-success 預設隱藏，送出後顯示 */
+.form-success { display: none; }
+.form-success.is-visible { display: flex; }

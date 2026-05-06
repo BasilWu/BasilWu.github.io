@@ -61,6 +61,9 @@ const I18N = {
 
     /* ── FORM ── */
     "form.name.label":         "Your Name",
+    "form.name.placeholder":    "Jane Smith",
+    "form.email.placeholder":   "hello@example.com",
+    "form.message.placeholder": "What are you building, what problem are you solving, any reference sites...",
     "form.email.label":        "Email",
     "form.type.label":         "Project Type",
     "form.type.placeholder":   "Select...",
@@ -82,6 +85,7 @@ const I18N = {
     /* ── CONTACT PAGE ── */
     "contact.hero.eyebrow": "Contact",
     "contact.hero.title":   "Tell us what<br><span>you're building.</span>",
+    "contact.hero.eyebrow": "Contact Us",
     "contact.hero.sub":     "No need to have everything figured out. Give us a direction — we'll work it out together.",
     "contact.location":     "Taichung, Taiwan",
     "contact.response":     "Usually replies within 1 business day",
@@ -223,6 +227,9 @@ const I18N = {
 
     /* ── FORM ── */
     "form.name.label":         "Your Name",
+    "form.name.placeholder":    "Jane Smith",
+    "form.email.placeholder":   "hello@example.com",
+    "form.message.placeholder": "What are you building, what problem are you solving, any reference sites...",
     "form.email.label":        "Email",
     "form.type.label":         "Project Type",
     "form.type.placeholder":   "Select...",
@@ -244,6 +251,7 @@ const I18N = {
     /* ── CONTACT PAGE ── */
     "contact.hero.eyebrow": "Contact",
     "contact.hero.title":   "Tell us what<br><span>you're building.</span>",
+    "contact.hero.eyebrow": "Contact Us",
     "contact.hero.sub":     "No need to have everything figured out. Give us a direction — we'll work it out together.",
     "contact.location":     "Taichung, Taiwan",
     "contact.response":     "Usually replies within 1 business day",
@@ -349,6 +357,10 @@ const I18N = {
     document.querySelectorAll('[data-i18n]').forEach(el => {
       const val = I18N[l]?.[el.getAttribute('data-i18n')];
       if (val !== undefined) el.innerHTML = val;
+    });
+    document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+      const val = I18N[l]?.[el.getAttribute('data-i18n-placeholder')];
+      if (val !== undefined) el.setAttribute('placeholder', val);
     });
     langBtns.forEach(btn => btn.classList.toggle('is-active', btn.dataset.langSwitch === l));
     localStorage.setItem('lang', l);

@@ -132,11 +132,11 @@
             <div class="form-row">
               <div class="form-group">
                 <label for="cf-name" data-i18n="form.name.label">你的姓名</label>
-                <input type="text" id="cf-name" name="name" autocomplete="name" placeholder="王小明" required />
+                <input type="text" id="cf-name" name="name" autocomplete="name" placeholder="王小明" data-i18n-placeholder="form.name.placeholder" required />
               </div>
               <div class="form-group">
                 <label for="cf-email" data-i18n="form.email.label">Email</label>
-                <input type="email" id="cf-email" name="email" autocomplete="email" placeholder="hello@example.com" required />
+                <input type="email" id="cf-email" name="email" autocomplete="email" placeholder="hello@example.com" data-i18n-placeholder="form.email.placeholder" required />
               </div>
             </div>
             <div class="form-row">
@@ -164,13 +164,13 @@
             </div>
             <div class="form-group">
               <label for="cf-message" data-i18n="form.message.label">簡述你的需求</label>
-              <textarea id="cf-message" name="message" rows="6" placeholder="想做什麼、希望解決什麼問題、有沒有參考網站..." required></textarea>
+              <textarea id="cf-message" name="message" rows="6" placeholder="想做什麼、希望解決什麼問題、有沒有參考網站..." data-i18n-placeholder="form.message.placeholder" required></textarea>
             </div>
             <div class="form-actions">
               <button type="submit" class="btn btn--primary btn--submit" data-i18n="form.submit">送出訊息</button>
               <p class="form-note" data-i18n="form.note">通常在 1 個工作日內回覆。</p>
             </div>
-            <div class="form-success" id="formSuccess" hidden>
+            <div class="form-success" id="formSuccess">
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="9 12 11.5 14.5 15 10"/></svg>
               <p data-i18n="form.success">訊息已送出，我們會盡快與你聯絡。</p>
             </div>
@@ -227,7 +227,7 @@
         setTimeout(function () {
           form.querySelector('.form-actions').style.display = 'none';
           form.querySelectorAll('.form-row, .form-group').forEach(function(el){ el.style.opacity = '0.4'; el.style.pointerEvents = 'none'; });
-          success.hidden = false;
+          success.classList.add('is-visible');
         }, 800);
       });
     })();
