@@ -1,4 +1,0 @@
-User-agent: *
-Allow: /
-
-Sitemap: https://basilwu.github.io/personal-site/sitemap.xml
