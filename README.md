@@ -1,40 +1,27 @@
-# Basil Studio — 個人工作室網站
+# MosStack Studio
 
-全端工程師 Basil 的個人工作室網站，包含關於我、服務項目、作品集、聯絡表單。
+全端網頁開發工作室網站 — 品牌官網、電商、旅宿平台與 B2B 後台工具。
 
-## 🚀 本地運行
+## 頁面
+
+- `index.html` — 首頁
+- `portfolio.html` — 作品案例
+- `services.html` — 服務項目
+
+## 本地開發
 
 ```bash
 npm install
 npm run dev
+# → http://localhost:3000
 ```
 
-開啟 http://localhost:3000
+## 技術架構
 
-## 📁 架構
+- 純靜態 HTML / CSS / JS（無框架）
+- `i18n.js` — 中英雙語切換
+- GitHub Pages 透過 `/docs` 目錄部署
 
-```
-personal-site/
-├── public/           # 靜態前端檔案 (GitHub Pages 部署此目錄)
-│   ├── index.html
-│   ├── css/style.css
-│   ├── js/main.js
-│   ├── assets/
-│   ├── sitemap.xml
-│   └── robots.txt
-├── server.js         # Express 伺服器（本地開發用）
-└── package.json
-```
+## GitHub Pages
 
-## 🌐 GitHub Pages 部署
-
-1. 推送到 GitHub
-2. 進入 Settings → Pages
-3. Source 選 `main` branch，目錄選 `/public`
-4. 儲存後等待幾分鐘，網站會發布在 `https://<username>.github.io/<repo-name>/`
-
-## 📝 自定義
-
-- 修改 `public/index.html` 中的個人資訊（email、GitHub 連結等）
-- 修改 `public/sitemap.xml` 中的網址為實際 GitHub Pages 網址
-- 修改 `public/robots.txt` 中的 Sitemap 網址
+網址：https://basilwu.github.io/personal-site/

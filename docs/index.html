@@ -1,239 +1,146 @@
 <!DOCTYPE html>
-<html lang="zh-TW" data-theme="dark">
+<html lang="zh-TW" data-theme="light">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Basil Studio — 全端工程師 · 接案工作室</title>
-  <meta name="description" content="Basil 是位於台中的全端工程師，專注於電商平台、SaaS 系統、企業網站開發。提供前後端整合、客製化解決方案。" />
-  <meta name="keywords" content="全端工程師,台中接案,網站開發,電商平台,前端開發,後端開發,React,Node.js" />
-  <meta name="author" content="Basil" />
+  <meta name="description" content="MosStack Studio 是一個位於台中的接案工程工作室，專注於品牌官網、電商、旅宿平台與 B2B 後台工具。" />
   <meta name="robots" content="index, follow" />
   <link rel="canonical" href="https://basilwu.github.io/personal-site/" />
-
-  <!-- Open Graph -->
-  <meta property="og:title" content="Basil Studio — 全端工程師 · 接案工作室" />
-  <meta property="og:description" content="專注於電商平台、SaaS 系統、企業網站開發的全端工程師，提供客製化解決方案。" />
+  <meta property="og:title" content="MosStack Studio — 全端網頁開發工作室" />
+  <meta property="og:description" content="位於台中的小型接案工程工作室，專注於品牌官網、電商、旅宿平台與 B2B 後台工具。" />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://basilwu.github.io/personal-site/" />
   <meta property="og:locale" content="zh_TW" />
-
-  <!-- Twitter Card -->
-  <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="Basil Studio — 全端工程師 · 接案工作室" />
-  <meta name="twitter:description" content="專注於電商平台、SaaS 系統、企業網站開發的全端工程師。" />
-
-  <!-- Structured Data -->
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "Person",
-    "name": "Basil",
-    "jobTitle": "全端工程師",
-    "description": "台中全端接案工程師，專注於電商平台與 SaaS 系統開發",
-    "url": "https://basilwu.github.io/personal-site/",
-    "address": {
-      "@type": "PostalAddress",
-      "addressLocality": "台中市",
-      "addressRegion": "西屯區",
-      "addressCountry": "TW"
-    },
-    "knowsAbout": ["前端開發", "後端開發", "電商平台", "React", "Node.js", "資料庫設計"]
-  }
-  </script>
-
-  <!-- Fonts: Clash Display + Satoshi -->
-  <link href="https://api.fontshare.com/v2/css?f[]=clash-display@400,500,600,700&f[]=satoshi@400,500,700&display=swap" rel="stylesheet" />
-
-  <link rel="stylesheet" href="css/style.css" />
-  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"ProfessionalService","name":"MosStack Studio","description":"全端網頁開發工作室","url":"https://basilwu.github.io/personal-site/","address":{"@type":"PostalAddress","addressLocality":"台中市","addressCountry":"TW"},"knowsAbout":["Web Development","E-commerce","React","Node.js","TypeScript"]}</script>
+  <title>MosStack Studio — 全端網頁開發工作室</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-
-  <!-- ── HEADER ────────────────────────────────── -->
-  <header class="header" id="header">
-    <div class="container header__inner">
-      <a href="#" class="logo" aria-label="Basil Studio 首頁">
-        <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-          <rect width="32" height="32" rx="6" fill="var(--color-primary)"/>
-          <path d="M8 10h8c2.2 0 4 1.8 4 4s-1.8 4-4 4H8V10z" fill="none" stroke="white" stroke-width="1.5" stroke-linejoin="round"/>
-          <path d="M8 18h9c2.4 0 4.2 1.8 4.2 4.2S19.4 26 17 26H8V18z" fill="none" stroke="white" stroke-width="1.5" stroke-linejoin="round"/>
-        </svg>
-        <span class="logo__text">Basil<span class="logo__dot">.</span></span>
-      </a>
-
-      <nav class="nav" aria-label="主導覽">
-        <ul role="list" class="nav__list">
-          <li><a href="#about" class="nav__link">關於我</a></li>
-          <li><a href="#services" class="nav__link">服務</a></li>
-          <li><a href="#works" class="nav__link">作品集</a></li>
-          <li><a href="#contact" class="nav__link nav__link--cta">聯絡我</a></li>
-        </ul>
-      </nav>
-
-      <div class="header__actions">
-        <button class="theme-toggle" data-theme-toggle aria-label="切換暗色/亮色模式">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
-        </button>
-        <button class="hamburger" id="hamburger" aria-label="開啟選單" aria-expanded="false">
-          <span></span><span></span><span></span>
+  <nav class="nav">
+    <div class="nav__inner">
+      <a href="/index.html" class="nav__logo" data-i18n="nav.logo">MosStack</a>
+      <ul class="nav__links">
+        <li><a href="/portfolio.html" data-i18n="nav.work">作品案例</a></li>
+        <li><a href="/services.html" data-i18n="nav.services">服務項目</a></li>
+        <li><a href="#studio" data-i18n="nav.studio">關於工作室</a></li>
+        <li><a href="#contact" data-i18n="nav.contact">聯絡我們</a></li>
+      </ul>
+      <div class="nav__right">
+        <div class="lang-switch" aria-label="Language switcher">
+          <button class="lang-switch__btn" type="button" data-lang-switch="en">EN</button>
+          <button class="lang-switch__btn is-active" type="button" data-lang-switch="zh">中</button>
+        </div>
+        <div class="nav__social">
+          <a href="https://github.com/" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .5C5.65.5.5 5.65.5 12c0 5.1 3.29 9.42 7.86 10.95.57.1.78-.25.78-.55v-2.1c-3.2.7-3.87-1.54-3.87-1.54-.52-1.33-1.27-1.69-1.27-1.69-1.04-.71.08-.7.08-.7 1.15.08 1.75 1.18 1.75 1.18 1.02 1.75 2.68 1.24 3.33.95.1-.74.4-1.24.72-1.53-2.55-.29-5.23-1.28-5.23-5.68 0-1.25.45-2.28 1.18-3.08-.12-.3-.51-1.46.11-3.04 0 0 .96-.31 3.15 1.18a10.94 10.94 0 0 1 5.74 0C17.04 5.8 18 6.11 18 6.11c.62 1.58.23 2.74.11 3.04.73.8 1.18 1.83 1.18 3.08 0 4.41-2.69 5.38-5.25 5.67.41.36.78 1.07.78 2.15v3.18c0 .31.2.66.79.55A11.51 11.51 0 0 0 23.5 12C23.5 5.65 18.35.5 12 .5z"/></svg>
+          </a>
+          <a href="https://linkedin.com/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.45 20.45h-3.55v-5.57c0-1.33-.03-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.36V9h3.41v1.56h.05c.47-.9 1.63-1.85 3.36-1.85 3.6 0 4.27 2.37 4.27 5.45v6.29zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zm1.78 13.02H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.73V1.73C24 .77 23.2 0 22.22 0z"/></svg>
+          </a>
+        </div>
+        <button class="theme-toggle" type="button" data-theme-toggle aria-label="切換深色模式">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
         </button>
       </div>
     </div>
-  </header>
-
-  <!-- Mobile Nav -->
-  <div class="mobile-nav" id="mobileNav" aria-hidden="true">
-    <ul role="list">
-      <li><a href="#about" class="mobile-nav__link">關於我</a></li>
-      <li><a href="#services" class="mobile-nav__link">服務</a></li>
-      <li><a href="#works" class="mobile-nav__link">作品集</a></li>
-      <li><a href="#contact" class="mobile-nav__link">聯絡我</a></li>
-    </ul>
-  </div>
+  </nav>
 
   <main>
-
-    <!-- ── HERO ──────────────────────────────────── -->
-    <section class="hero" id="hero" aria-label="首頁英雄區塊">
-      <div class="hero__bg" aria-hidden="true">
-        <div class="hero__grid"></div>
-        <div class="hero__glow hero__glow--1"></div>
-        <div class="hero__glow hero__glow--2"></div>
-      </div>
-      <div class="container hero__content">
-        <div class="hero__badge">
-          <span class="badge__dot"></span>
-          <span>接受新專案</span>
-        </div>
-        <h1 class="hero__title">
-          <span class="hero__line">打造高品質</span>
-          <span class="hero__line hero__line--accent">全端解決方案</span>
-        </h1>
-        <p class="hero__desc">
-          Hi，我是 Basil — 台中全端工程師。<br>
-          從電商平台到 SaaS 系統，交付可靠、可擴展的數位產品。
-        </p>
-        <div class="hero__ctas">
-          <a href="#works" class="btn btn--primary">查看作品集</a>
-          <a href="#contact" class="btn btn--ghost">開始合作 →</a>
-        </div>
-        <div class="hero__stats">
-          <div class="stat">
-            <span class="stat__num">5+</span>
-            <span class="stat__label">年開發經驗</span>
-          </div>
-          <div class="stat__divider" aria-hidden="true"></div>
-          <div class="stat">
-            <span class="stat__num">20+</span>
-            <span class="stat__label">完成專案</span>
-          </div>
-          <div class="stat__divider" aria-hidden="true"></div>
-          <div class="stat">
-            <span class="stat__num">100%</span>
-            <span class="stat__label">客戶滿意</span>
-          </div>
-        </div>
-      </div>
-      <div class="hero__scroll" aria-hidden="true">
-        <span class="scroll__line"></span>
-        <span class="scroll__text">向下滾動</span>
-      </div>
-    </section>
-
-    <!-- ── TECH STACK MARQUEE ────────────────────── -->
-    <section class="marquee-section" aria-label="技術棧">
-      <div class="marquee" aria-hidden="true">
-        <div class="marquee__track">
-          <span>React</span><span>·</span>
-          <span>Next.js</span><span>·</span>
-          <span>Node.js</span><span>·</span>
-          <span>Express</span><span>·</span>
-          <span>TypeScript</span><span>·</span>
-          <span>PostgreSQL</span><span>·</span>
-          <span>MongoDB</span><span>·</span>
-          <span>Redis</span><span>·</span>
-          <span>Docker</span><span>·</span>
-          <span>AWS</span><span>·</span>
-          <span>Tailwind CSS</span><span>·</span>
-          <span>Vue.js</span><span>·</span>
-          <!-- duplicate for loop -->
-          <span>React</span><span>·</span>
-          <span>Next.js</span><span>·</span>
-          <span>Node.js</span><span>·</span>
-          <span>Express</span><span>·</span>
-          <span>TypeScript</span><span>·</span>
-          <span>PostgreSQL</span><span>·</span>
-          <span>MongoDB</span><span>·</span>
-          <span>Redis</span><span>·</span>
-          <span>Docker</span><span>·</span>
-          <span>AWS</span><span>·</span>
-          <span>Tailwind CSS</span><span>·</span>
-          <span>Vue.js</span><span>·</span>
+    <section class="hero">
+      <div class="container">
+        <p class="hero__eyebrow">MosStack</p>
+        <h1 class="hero__title" data-i18n="index.hero.title">我們打造<br><span>真正可用的數位產品。</span></h1>
+        <p class="hero__subtitle" data-i18n="index.hero.sub">一個小型接案工作室，專注於 Web 開發、系統設計與產品體驗。我們與在意品質與長期可維護性的企業合作。</p>
+        <div class="hero__cta">
+          <a href="/portfolio.html" class="btn btn--primary" data-i18n="index.hero.primary">查看作品案例</a>
+          <a href="#contact" class="btn btn--ghost" data-i18n="index.hero.secondary">開始洽談專案</a>
         </div>
       </div>
     </section>
 
-    <!-- ── ABOUT ──────────────────────────────────── -->
-    <section class="about section" id="about">
+    <section class="portfolio" id="work">
+      <div class="container--wide">
+        <p class="section-label" data-i18n="index.work.label">精選案例</p>
+        <a href="/portfolio.html" class="project-card project-card--featured">
+          <div class="project-card__info">
+            <h2 class="project-card__name" data-i18n="index.c1.title">租賃電商平台</h2>
+            <p class="project-card__desc" data-i18n="index.c1.desc">以 Node.js + React 打造的全端租賃電商平台，支援多角色管理、金流整合與即時通知。</p>
+            <div class="project-card__tags">
+              <span class="tag">Full-Stack</span><span class="tag">Node.js</span><span class="tag">React</span><span class="tag">PostgreSQL</span>
+            </div>
+          </div>
+          <div class="project-card__image"><img src="https://picsum.photos/seed/mos1/900/600" alt="租賃電商平台" width="900" height="600" loading="lazy"></div>
+        </a>
+
+        <div class="project-grid">
+          <a href="/portfolio.html" class="project-card">
+            <div class="project-card__image"><img src="https://picsum.photos/seed/mos2/600/400" alt="跨裝置管理後台" width="600" height="400" loading="lazy"></div>
+            <div class="project-card__info">
+              <h3 class="project-card__name" data-i18n="index.c2.title">跨裝置管理後台</h3>
+              <p class="project-card__desc" data-i18n="index.c2.desc">同時支援 iPad 與桌機操作環境的管理介面。</p>
+              <div class="project-card__tags"><span class="tag">UX</span><span class="tag">React</span><span class="tag">iPad</span></div>
+            </div>
+          </a>
+          <a href="/portfolio.html" class="project-card">
+            <div class="project-card__image"><img src="https://picsum.photos/seed/mos3/600/400" alt="金流整合流程" width="600" height="400" loading="lazy"></div>
+            <div class="project-card__info">
+              <h3 class="project-card__name" data-i18n="index.c3.title">金流整合流程</h3>
+              <p class="project-card__desc" data-i18n="index.c3.desc">將多種付款方式整合成更清楚、更有結構的結帳體驗。</p>
+              <div class="project-card__tags"><span class="tag">UI</span><span class="tag">Finance</span><span class="tag">Node.js</span></div>
+            </div>
+          </a>
+        </div>
+
+        <div class="portfolio__cta"><a href="/portfolio.html" class="btn btn--ghost" data-i18n="index.work.cta">查看所有案例</a></div>
+      </div>
+    </section>
+
+    <section class="services-strip">
+      <div class="container--wide">
+        <p class="section-label" data-i18n="nav.services">服務項目</p>
+        <div class="services-strip__grid">
+          <a href="/services.html#brand" class="service-tile">
+            <span class="service-tile__num">01</span>
+            <h3 class="service-tile__title" data-i18n="services.s1.title">品牌官網</h3>
+            <p class="service-tile__desc" data-i18n="services.s1.short">企業、創辦人與品牌的數位形象建立。</p>
+          </a>
+          <a href="/services.html#ecom" class="service-tile">
+            <span class="service-tile__num">02</span>
+            <h3 class="service-tile__title" data-i18n="services.s2.title">電商體驗</h3>
+            <p class="service-tile__desc" data-i18n="services.s2.short">客製購物流程與轉換導向的電商建置。</p>
+          </a>
+          <a href="/services.html#hospitality" class="service-tile">
+            <span class="service-tile__num">03</span>
+            <h3 class="service-tile__title" data-i18n="services.s3.title">旅宿平台</h3>
+            <p class="service-tile__desc" data-i18n="services.s3.short">預約型產品與旅宿平台的前後台整合。</p>
+          </a>
+          <a href="/services.html#b2b" class="service-tile">
+            <span class="service-tile__num">04</span>
+            <h3 class="service-tile__title" data-i18n="services.s4.title">B2B 後台工具</h3>
+            <p class="service-tile__desc" data-i18n="services.s4.short">Dashboard、後台系統與內部操作介面。</p>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <section class="about" id="studio">
       <div class="container">
         <div class="about__inner">
-          <div class="about__visual">
-            <div class="about__card">
-              <div class="about__avatar" aria-hidden="true">
-                <svg width="64" height="64" viewBox="0 0 64 64" fill="none">
-                  <circle cx="32" cy="32" r="32" fill="var(--color-surface-2)"/>
-                  <circle cx="32" cy="26" r="10" fill="var(--color-primary)" opacity="0.6"/>
-                  <path d="M12 56c0-11 9-20 20-20s20 9 20 20" fill="var(--color-primary)" opacity="0.4"/>
-                </svg>
-                <span class="avatar__initials">B</span>
-              </div>
-              <div class="about__info">
-                <span class="about__name">Basil</span>
-                <span class="about__role">全端工程師 · 台中</span>
-              </div>
-              <div class="about__skills-badges">
-                <span class="skill-badge">Full-Stack</span>
-                <span class="skill-badge">E-Commerce</span>
-                <span class="skill-badge">SaaS</span>
-              </div>
-            </div>
-            <div class="about__code-block" aria-hidden="true">
-              <div class="code-header">
-                <span class="code-dot"></span><span class="code-dot"></span><span class="code-dot"></span>
-                <span class="code-filename">basil.ts</span>
-              </div>
-              <pre class="code-body"><code><span class="kw">const</span> <span class="var">basil</span> = {
-  <span class="key">role</span>: <span class="str">"Full-Stack Engineer"</span>,
-  <span class="key">location</span>: <span class="str">"Taichung, TW"</span>,
-  <span class="key">skills</span>: [
-    <span class="str">"React"</span>, <span class="str">"Node.js"</span>,
-    <span class="str">"TypeScript"</span>, <span class="str">"SQL"</span>
-  ],
-  <span class="key">available</span>: <span class="bool">true</span>
-}</code></pre>
-            </div>
+          <div>
+            <p class="section-label" data-i18n="index.studio.label">關於工作室</p>
+            <h2 class="about__heading" data-i18n="index.studio.title">我們是一個聚焦的小型工作室。</h2>
           </div>
-          <div class="about__text">
-            <div class="section__label">關於我</div>
-            <h2 class="section__title">用程式碼解決<br>真實的商業問題</h2>
-            <p class="about__para">
-              我是 Basil，台中在地的全端工程師。從 2019 年起，我專注於打造高品質的電商平台、預訂系統與企業應用，服務對象從新創公司到傳統產業轉型需求都有涉獵。
-            </p>
-            <p class="about__para">
-              我相信好的軟體不只是「能用」，而是要<strong>易於維護、可以擴展</strong>，並且真正符合使用者的工作流程。每個專案我都會深入理解業務需求，再著手設計技術架構。
-            </p>
-            <div class="about__highlights">
-              <div class="highlight">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--color-primary)" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
-                <span>前後端整合，一站式交付</span>
-              </div>
-              <div class="highlight">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--color-primary)" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
-                <span>清楚的溝通，透明的進度追蹤</span>
-              </div>
-              <div class="highlight">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--color-primary)" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
-                <span>交付後提供技術支援與維護</span>
+          <div class="about__body">
+            <p data-i18n="index.studio.p1">MosStack Studio 是一個位於台中的小型工程工作室，專精於全端 Web 開發，涵蓋品牌官網、電商建置、旅宿平台到 B2B 內部工具。</p>
+            <p data-i18n="index.studio.p2">我們同時進行的案子數量有限，確保每個專案都能獲得應有的專注度。目標是打造結構清楚、易於維護、能夠長期使用的系統。</p>
+            <div>
+              <p class="skills__label" data-i18n="index.stack.label">核心技術</p>
+              <div class="skills__list">
+                <span class="tag">Node.js</span><span class="tag">React</span><span class="tag">Next.js</span><span class="tag">TypeScript</span><span class="tag">PostgreSQL</span><span class="tag">Express</span>
               </div>
             </div>
           </div>
@@ -241,285 +148,26 @@
       </div>
     </section>
 
-    <!-- ── SERVICES ───────────────────────────────── -->
-    <section class="services section" id="services">
-      <div class="container">
-        <div class="section__header">
-          <div class="section__label">服務項目</div>
-          <h2 class="section__title">我能幫你做什麼</h2>
-          <p class="section__desc">從原型到上線，提供完整的技術服務，讓你的想法成為可用的產品。</p>
-        </div>
-        <div class="services__grid">
-          <div class="service-card">
-            <div class="service-card__icon">
-              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                <rect x="3" y="3" width="18" height="18" rx="2"/>
-                <path d="M3 9h18M9 21V9"/>
-              </svg>
-            </div>
-            <h3 class="service-card__title">電商平台開發</h3>
-            <p class="service-card__desc">客製化購物車、金流串接、庫存管理、訂單系統。支援 B2C / B2B 模式，行動裝置優先設計。</p>
-            <ul class="service-card__tags" role="list">
-              <li>購物車系統</li><li>金流串接</li><li>訂單管理</li><li>會員系統</li>
-            </ul>
-          </div>
-          <div class="service-card service-card--featured">
-            <div class="service-card__badge">熱門</div>
-            <div class="service-card__icon">
-              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                <path d="M12 2L2 7l10 5 10-5-10-5z"/>
-                <path d="M2 17l10 5 10-5M2 12l10 5 10-5"/>
-              </svg>
-            </div>
-            <h3 class="service-card__title">全端 Web 應用</h3>
-            <p class="service-card__desc">SaaS 產品、管理後台、API 設計與整合。使用 React + Node.js 技術棧，注重效能與安全性。</p>
-            <ul class="service-card__tags" role="list">
-              <li>SaaS 系統</li><li>API 開發</li><li>後台管理</li><li>資料庫設計</li>
-            </ul>
-          </div>
-          <div class="service-card">
-            <div class="service-card__icon">
-              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
-              </svg>
-            </div>
-            <h3 class="service-card__title">企業網站 & 形象站</h3>
-            <p class="service-card__desc">高效能的企業官網、品牌形象網站，著重 SEO 優化與速度，確保在 Google 的可見度。</p>
-            <ul class="service-card__tags" role="list">
-              <li>形象網站</li><li>SEO 優化</li><li>Landing Page</li><li>CMS 整合</li>
-            </ul>
-          </div>
-          <div class="service-card">
-            <div class="service-card__icon">
-              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>
-              </svg>
-            </div>
-            <h3 class="service-card__title">技術顧問 & 維護</h3>
-            <p class="service-card__desc">既有系統的效能優化、Code Review、技術債清理，以及長期維護合約服務。</p>
-            <ul class="service-card__tags" role="list">
-              <li>效能優化</li><li>程式碼審查</li><li>系統維護</li><li>技術諮詢</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ── WORKS ──────────────────────────────────── -->
-    <section class="works section" id="works">
-      <div class="container">
-        <div class="section__header">
-          <div class="section__label">作品集</div>
-          <h2 class="section__title">精選專案</h2>
-          <p class="section__desc">每個專案都是一個解決真實問題的故事。</p>
-        </div>
-        <div class="works__grid">
-          <article class="work-card work-card--large">
-            <div class="work-card__visual work-card__visual--ecommerce" aria-hidden="true">
-              <div class="work-card__mockup">
-                <div class="mockup-bar"></div>
-                <div class="mockup-content">
-                  <div class="mockup-nav"></div>
-                  <div class="mockup-hero"></div>
-                  <div class="mockup-grid">
-                    <div class="mockup-item"></div>
-                    <div class="mockup-item"></div>
-                    <div class="mockup-item"></div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="work-card__info">
-              <div class="work-card__meta">
-                <span class="work-tag">電商</span>
-                <span class="work-tag">全端</span>
-                <span class="work-year">2024</span>
-              </div>
-              <h3 class="work-card__title">個人代購平台</h3>
-              <p class="work-card__desc">完整的代購電商系統，包含前台購物體驗、後台訂單管理、金流串接（綠界）、會員系統與物流追蹤。</p>
-              <div class="work-card__tech">
-                <span>React</span><span>Node.js</span><span>PostgreSQL</span><span>Redis</span>
-              </div>
-            </div>
-          </article>
-
-          <article class="work-card">
-            <div class="work-card__visual work-card__visual--rental" aria-hidden="true">
-              <div class="work-card__mockup">
-                <div class="mockup-bar"></div>
-                <div class="mockup-content">
-                  <div class="mockup-map"></div>
-                  <div class="mockup-list">
-                    <div class="mockup-row"></div>
-                    <div class="mockup-row"></div>
-                    <div class="mockup-row"></div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="work-card__info">
-              <div class="work-card__meta">
-                <span class="work-tag">地圖應用</span>
-                <span class="work-year">2023</span>
-              </div>
-              <h3 class="work-card__title">租屋搜尋平台</h3>
-              <p class="work-card__desc">整合地圖的租屋搜尋平台，支援條件篩選、地圖圖釘顯示與收藏功能。</p>
-              <div class="work-card__tech">
-                <span>Vue.js</span><span>Express</span><span>MongoDB</span>
-              </div>
-            </div>
-          </article>
-
-          <article class="work-card">
-            <div class="work-card__visual work-card__visual--hotel" aria-hidden="true">
-              <div class="work-card__mockup">
-                <div class="mockup-bar"></div>
-                <div class="mockup-content">
-                  <div class="mockup-hero mockup-hero--tall"></div>
-                  <div class="mockup-booking"></div>
-                </div>
-              </div>
-            </div>
-            <div class="work-card__info">
-              <div class="work-card__meta">
-                <span class="work-tag">飯店系統</span>
-                <span class="work-year">2023</span>
-              </div>
-              <h3 class="work-card__title">飯店完整平台</h3>
-              <p class="work-card__desc">飯店官網加上房型預訂系統，含後台客房管理、訂單處理與報表功能，前後端完整實作。</p>
-              <div class="work-card__tech">
-                <span>Next.js</span><span>Node.js</span><span>MySQL</span>
-              </div>
-            </div>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <!-- ── PROCESS ────────────────────────────────── -->
-    <section class="process section" id="process">
-      <div class="container">
-        <div class="section__header">
-          <div class="section__label">合作流程</div>
-          <h2 class="section__title">簡單透明的工作方式</h2>
-        </div>
-        <div class="process__steps">
-          <div class="process__step">
-            <div class="step__num">01</div>
-            <div class="step__content">
-              <h3>需求訪談</h3>
-              <p>深入了解你的業務需求、目標用戶與技術限制，確定範疇與時程。</p>
-            </div>
-          </div>
-          <div class="process__connector" aria-hidden="true"></div>
-          <div class="process__step">
-            <div class="step__num">02</div>
-            <div class="step__content">
-              <h3>提案規劃</h3>
-              <p>提供技術架構方案、功能清單與報價，確認後簽約開始執行。</p>
-            </div>
-          </div>
-          <div class="process__connector" aria-hidden="true"></div>
-          <div class="process__step">
-            <div class="step__num">03</div>
-            <div class="step__content">
-              <h3>迭代開發</h3>
-              <p>分階段交付，每個里程碑都有可測試的版本，保持溝通透明。</p>
-            </div>
-          </div>
-          <div class="process__connector" aria-hidden="true"></div>
-          <div class="process__step">
-            <div class="step__num">04</div>
-            <div class="step__content">
-              <h3>上線維護</h3>
-              <p>部署上線、測試驗收，提供後續維護支援，確保系統穩定運行。</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ── CONTACT ────────────────────────────────── -->
-    <section class="contact section" id="contact">
+    <section class="contact" id="contact">
       <div class="container">
         <div class="contact__inner">
-          <div class="contact__info">
-            <div class="section__label">聯絡我</div>
-            <h2 class="section__title">有想法嗎？<br>讓我們來聊聊</h2>
-            <p class="contact__desc">
-              不管是新專案、技術諮詢，還是只是想交流想法，歡迎直接聯絡。通常在 24 小時內回覆。
-            </p>
-            <div class="contact__links">
-              <a href="mailto:basil@example.com" class="contact__link">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
-                <span>basil@example.com</span>
-              </a>
-              <a href="https://github.com" class="contact__link" target="_blank" rel="noopener noreferrer">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
-                <span>github.com/basil</span>
-              </a>
-            </div>
+          <p class="section-label" data-i18n="index.contact.label">聯絡我們</p>
+          <h2 class="contact__heading" data-i18n="index.contact.title">有想法了嗎？</h2>
+          <p class="contact__sub" data-i18n="index.contact.sub">告訴我們你在建什麼。不需要想清楚所有細節，我們很樂意在初期就展開對話。</p>
+          <div class="contact__links">
+            <a href="mailto:hello@mosstack.studio" class="btn btn--primary" data-i18n="index.contact.email">傳送訊息</a>
+            <a href="https://linkedin.com/" target="_blank" rel="noopener noreferrer" class="btn btn--ghost" data-i18n="index.contact.linkedin">LinkedIn</a>
           </div>
-          <form class="contact__form" id="contactForm" novalidate>
-            <div class="form__group">
-              <label for="name" class="form__label">姓名 <span aria-hidden="true">*</span></label>
-              <input type="text" id="name" name="name" class="form__input" placeholder="你的名字" required autocomplete="name" />
-            </div>
-            <div class="form__group">
-              <label for="email" class="form__label">Email <span aria-hidden="true">*</span></label>
-              <input type="email" id="email" name="email" class="form__input" placeholder="your@email.com" required autocomplete="email" />
-            </div>
-            <div class="form__group">
-              <label for="project" class="form__label">專案類型</label>
-              <select id="project" name="project" class="form__input form__select">
-                <option value="">請選擇...</option>
-                <option value="ecommerce">電商平台</option>
-                <option value="webapp">Web 應用</option>
-                <option value="website">企業官網</option>
-                <option value="consult">技術顧問</option>
-                <option value="other">其他</option>
-              </select>
-            </div>
-            <div class="form__group">
-              <label for="message" class="form__label">訊息 <span aria-hidden="true">*</span></label>
-              <textarea id="message" name="message" class="form__input form__textarea" placeholder="告訴我你的專案需求、預算範圍或任何問題..." rows="5" required></textarea>
-            </div>
-            <button type="submit" class="btn btn--primary btn--full" id="submitBtn">
-              <span>送出訊息</span>
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
-            </button>
-            <p class="form__note">送出後我會在 24 小時內以 Email 回覆。</p>
-          </form>
         </div>
       </div>
     </section>
-
   </main>
 
-  <!-- ── FOOTER ─────────────────────────────────── -->
-  <footer class="footer">
-    <div class="container footer__inner">
-      <div class="footer__brand">
-        <a href="#" class="logo" aria-label="回到頂部">
-          <svg width="24" height="24" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-            <rect width="32" height="32" rx="6" fill="var(--color-primary)"/>
-            <path d="M8 10h8c2.2 0 4 1.8 4 4s-1.8 4-4 4H8V10z" fill="none" stroke="white" stroke-width="1.5" stroke-linejoin="round"/>
-            <path d="M8 18h9c2.4 0 4.2 1.8 4.2 4.2S19.4 26 17 26H8V18z" fill="none" stroke="white" stroke-width="1.5" stroke-linejoin="round"/>
-          </svg>
-          <span class="logo__text">Basil<span class="logo__dot">.</span></span>
-        </a>
-        <p class="footer__tagline">全端工程師 · 台中</p>
-      </div>
-      <nav class="footer__nav" aria-label="頁尾導覽">
-        <a href="#about">關於我</a>
-        <a href="#services">服務</a>
-        <a href="#works">作品集</a>
-        <a href="#contact">聯絡</a>
-      </nav>
-      <p class="footer__copy">© 2025 Basil. All rights reserved.</p>
-    </div>
+  <footer>
+    <p data-i18n="footer.copy">© 2026 MosStack Studio. 版權所有。</p>
+    <p data-i18n="footer.location">位於台中，服務來自各地的客戶。</p>
   </footer>
 
-  <script src="js/main.js"></script>
+  <script src="i18n.js"></script>
 </body>
 </html>
