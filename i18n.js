@@ -1,7 +1,7 @@
 const I18N = {
   en: {
     "nav.logo":    "MosStack",
-    "nav.work":    "Work",
+    "nav.work":    "Selected Work",
     "nav.services":"Services",
     "nav.studio":  "Studio",
     "nav.contact": "Contact",
@@ -127,7 +127,7 @@ const I18N = {
     "services.contact.primary":  "Get in Touch",
     "services.contact.secondary":"View Work",
 
-    "portfolio.hero.eyebrow":  "Work",
+    "portfolio.hero.eyebrow":  "Selected Work",
     "portfolio.hero.title":    "Selected work built for real business operations",
     "portfolio.hero.subtitle": "Our work spans brand websites, e-commerce, hospitality products, and internal systems. Every project starts from structure, usability, and long-term maintainability.",
     "portfolio.hero.primary":  "Start a Project",
@@ -157,7 +157,7 @@ const I18N = {
 
   zh: {
     "nav.logo":    "MosStack",
-    "nav.work":    "作品案例",
+    "nav.work":    "精選案例",
     "nav.services":"服務項目",
     "nav.studio":  "關於工作室",
     "nav.contact": "聯絡我們",
@@ -169,7 +169,7 @@ const I18N = {
     "index.hero.title":    "我們打造<br><span>真正可用的數位產品。</span>",
     "index.hero.sub":      "一個小型接案工作室，專注於 Web 開發、系統設計與產品體驗。我們與在意品質與長期可維護性的企業合作。",
     "index.hero.primary":  "開始洽談專案",
-    "index.hero.secondary":"查看作品案例",
+    "index.hero.secondary":"查看精選案例",
     "index.work.label":    "精選案例",
     "index.c1.title":      "租賃電商平台",
     "index.c1.desc":       "以 Node.js + React 打造的全端租賃電商平台，支援多角色管理、金流整合與即時通知。",
@@ -177,7 +177,7 @@ const I18N = {
     "index.c2.desc":       "同時支援 iPad 與桌機操作環境的管理介面。",
     "index.c3.title":      "金流整合流程",
     "index.c3.desc":       "將多種付款方式整合成更清楚、更有結構的結帳體驗。",
-    "index.work.cta":      "查看所有案例",
+    "index.work.cta":      "查看所有精選案例",
     "index.studio.label":  "關於工作室",
     "index.studio.title":  "我們是一個聚焦的小型工作室。",
     "index.studio.p1":     "MosStack Studio 是一個位於台中的小型工程工作室，專精於全端 Web 開發，涵蓋品牌官網、電商建置、旅宿平台到 B2B 內部工具。",
@@ -283,7 +283,7 @@ const I18N = {
     "services.contact.primary":  "開始聯絡",
     "services.contact.secondary":"查看作品",
 
-    "portfolio.hero.eyebrow":  "作品案例",
+    "portfolio.hero.eyebrow":  "精選案例",
     "portfolio.hero.title":    "為真實商業運作打造的精選案例",
     "portfolio.hero.subtitle": "我們的作品涵蓋品牌官網、電商體驗、旅宿產品與內部系統。每個專案從結構、易用性與長期可維護性出發。",
     "portfolio.hero.primary":  "開始洽談專案",
