@@ -1513,3 +1513,18 @@ footer p {
   .service-section__header { position: static; }
   .services-overview__item { padding-inline: var(--space-4); }
 }
+
+/* ── FLOAT CONTACT z-index fix ────────── */
+/* 確保浮動按鈕不遮住 nav 的點擊範圍 */
+.float-contact {
+  pointer-events: none;
+}
+.float-btn {
+  pointer-events: auto;
+}
+.nav {
+  z-index: 300;
+}
+.mobile-nav {
+  z-index: 299;
+}
