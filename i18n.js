@@ -300,7 +300,7 @@ const I18N = {
     "form.success":            "訊息已送出，我們會盡快與你聯絡。",
 
     "contact.hero.eyebrow": "聯絡我們",
-    "contact.hero.title":   "告訴我們你<br><span>在建什麼。</span>",
+    "contact.hero.title":   "告訴我們你<br><span>的想法吧！</span>",
     "contact.hero.sub":     "不需要想清楚所有細節。給我們一個方向，我們很樂意在初期就一起釐清。",
     "contact.location":     "台中市，台灣",
     "contact.response":     "通常在 1 個工作日內回覆",
