@@ -303,7 +303,7 @@ button, a {
 }
 
 .hero__title {
-  font-size: var(--text-3xl);
+  font-size: var(--text-2xl);
   font-weight: 700;
   letter-spacing: -0.03em;
   color: var(--color-text);
