@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <script>document.documentElement.setAttribute("data-theme",localStorage.getItem("theme")||(matchMedia("(prefers-color-scheme:dark)").matches?"dark":"light"));</script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="MosStack Studio 服務項目：品牌官網、電商平台、旅宿系統、B2B 後台、餐廳品牌網站模板。" />
+  <meta name="description" content="MosStack Studio 服務項目：電商系統、品牌官網、旅宿平台、企業後台、POS 零售系統。台中全端接案工作室。" />
   <title>服務項目 — MosStack Studio</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -46,7 +46,6 @@
     </div>
   </nav>
 
-  <!-- Mobile Nav -->
   <div class="mobile-nav" id="mobileNav" aria-hidden="true">
     <ul>
       <li><a href="/portfolio.html" data-i18n="nav.work">精選案例</a></li>
@@ -60,190 +59,257 @@
   <section class="hero">
     <div class="container">
       <p class="hero__eyebrow" data-i18n="services.hero.eyebrow">服務項目</p>
-      <h1 class="hero__title" data-i18n="services.hero.title">以真實商業需求<br>為核心的數位服務</h1>
-      <p class="hero__subtitle" data-i18n="services.hero.subtitle">從品牌官網到複雜系統，MosStack Studio 提供五個主要服務方向，每個專案都從結構、品質與長期可維護性出發。</p>
+      <h1 class="hero__title" data-i18n="services.hero.title">做過的，才是我們<br><span>真正能幫你的。</span></h1>
+      <p class="hero__subtitle" data-i18n="services.hero.subtitle">以下五個服務方向，都有對應的真實案例。不是服務清單，是我們實際交付過的東西。</p>
       <div class="hero__cta">
         <a href="#service-list" class="btn btn--primary" data-i18n="services.hero.primary">查看服務內容</a>
-        <a href="/contact.html" class="btn btn--ghost" data-i18n="services.hero.secondary">開始洽談專案</a>
+        <a href="/portfolio.html" class="btn btn--ghost" data-i18n="services.hero.secondary">查看精選案例</a>
       </div>
     </div>
   </section>
 
-  <!-- ── 服務清單 ── -->
+  <!-- ── 服務總覽 strip ── -->
+  <div class="services-overview">
+    <div class="container--wide">
+      <div class="services-overview__grid">
+        <a href="#s1" class="services-overview__item">
+          <span class="services-overview__num">01</span>
+          <span class="services-overview__name" data-i18n="services.s1.title">電商 & 金流系統</span>
+        </a>
+        <a href="#s2" class="services-overview__item">
+          <span class="services-overview__num">02</span>
+          <span class="services-overview__name" data-i18n="services.s2.title">旅宿 & 訂房平台</span>
+        </a>
+        <a href="#s3" class="services-overview__item">
+          <span class="services-overview__num">03</span>
+          <span class="services-overview__name" data-i18n="services.s3.title">品牌 & 餐廳官網</span>
+        </a>
+        <a href="#s4" class="services-overview__item">
+          <span class="services-overview__num">04</span>
+          <span class="services-overview__name" data-i18n="services.s4.title">企業後台 & 管理系統</span>
+        </a>
+        <a href="#s5" class="services-overview__item">
+          <span class="services-overview__num">05</span>
+          <span class="services-overview__name" data-i18n="services.s5.title">POS & 零售系統</span>
+        </a>
+      </div>
+    </div>
+  </div>
+
   <div id="service-list">
 
-    <!-- S1：品牌官網 -->
-    <section class="about">
+    <!-- ── S1：電商 & 金流 ── -->
+    <section class="service-section" id="s1">
       <div class="container">
-        <div class="about__inner">
-          <div>
-            <p class="skills__label" data-i18n="services.s1.num">01</p>
-            <h2 class="about__heading" data-i18n="services.s1.title">品牌官網</h2>
-            <div class="service-price-badge">
-              <span class="service-price__from" data-i18n="services.price.from">起價</span>
-              <span class="service-price__num" data-i18n="services.s1.price">NT$ 30,000</span>
+        <div class="service-section__inner">
+          <div class="service-section__header">
+            <span class="service-section__num">01</span>
+            <h2 class="service-section__title" data-i18n="services.s1.title">電商 & 金流系統</h2>
+            <p class="service-section__price"><span data-i18n="services.price.from">起價</span> <strong data-i18n="services.s1.price">NT$ 80,000</strong></p>
+            <p class="service-section__desc" data-i18n="services.s1.desc">從前台購物體驗到後台訂單管理，包含金流串接、會員機制與庫存管理，完整交付可實際營運的電商系統。</p>
+            <div class="service-section__cases">
+              <span class="service-case-tag" data-i18n="services.s1.case1">→ 全端電商平台</span>
+              <span class="service-case-tag" data-i18n="services.s1.case2">→ 金流串接整合</span>
+              <span class="service-case-tag" data-i18n="services.s1.case3">→ 租賃系統平台</span>
             </div>
           </div>
-          <div class="about__body">
-            <p data-i18n="services.s1.p1">適合需要更強數位形象的公司、創辦人與個人品牌。目標不只是讓網站更好看，而是建立更清楚的訊息架構、信任感與後續成長基礎。</p>
-            <p data-i18n="services.s1.p2">我們重視資訊層級、響應式呈現、內容彈性與實作品質，確保網站在 Google 可被搜尋到。</p>
-            <div class="skills__list">
-              <span class="tag">品牌形象</span>
-              <span class="tag">SEO 優化</span>
-              <span class="tag">RWD</span>
-              <span class="tag">內容架構</span>
+          <div class="service-section__body">
+            <div class="service-detail-block">
+              <p class="service-detail-block__label" data-i18n="services.detail.suitable">適合對象</p>
+              <p data-i18n="services.s1.suitable">品牌電商、代購業者、租賃服務、訂閱制產品。需要完整購物流程，不想用現成平台的限制。</p>
             </div>
-            <div class="service-includes">
-              <p class="service-includes__label" data-i18n="services.includes">包含項目</p>
-              <ul>
-                <li data-i18n="services.s1.i1">首頁、關於、服務、聯絡共 4–6 頁</li>
-                <li data-i18n="services.s1.i2">SEO meta、sitemap、robots.txt</li>
-                <li data-i18n="services.s1.i3">聯絡表單串接</li>
-                <li data-i18n="services.s1.i4">部署上線 + 30 天技術支援</li>
+            <div class="service-detail-block">
+              <p class="service-detail-block__label" data-i18n="services.detail.includes">包含項目</p>
+              <ul class="service-checklist">
+                <li data-i18n="services.s1.i1">商品列表、分類、搜尋、購物車、結帳流程</li>
+                <li data-i18n="services.s1.i2">綠界 / 藍新金流串接（信用卡、ATM、超商）</li>
+                <li data-i18n="services.s1.i3">會員系統（註冊、登入、訂單查詢）</li>
+                <li data-i18n="services.s1.i4">後台訂單管理、庫存追蹤、報表</li>
+                <li data-i18n="services.s1.i5">部署上線 + 60 天技術支援</li>
               </ul>
+            </div>
+            <div class="service-detail-block">
+              <p class="service-detail-block__label" data-i18n="services.detail.stack">技術棧</p>
+              <div class="skills__list">
+                <span class="tag">React</span><span class="tag">Node.js</span>
+                <span class="tag">PostgreSQL</span><span class="tag">Redis</span>
+                <span class="tag">綠界 / 藍新</span>
+              </div>
+            </div>
+            <a href="/contact.html" class="btn btn--primary" data-i18n="services.cta.consult">免費 30 分鐘諮詢</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── S2：旅宿 & 訂房 ── -->
+    <section class="service-section service-section--alt" id="s2">
+      <div class="container">
+        <div class="service-section__inner">
+          <div class="service-section__header">
+            <span class="service-section__num">02</span>
+            <h2 class="service-section__title" data-i18n="services.s2.title">旅宿 & 訂房平台</h2>
+            <p class="service-section__price"><span data-i18n="services.price.from">起價</span> <strong data-i18n="services.s2.price">NT$ 100,000</strong></p>
+            <p class="service-section__desc" data-i18n="services.s2.desc">飯店官網、線上訂房、房態管理、訂單處理到報表，前後台一體整合。真正讓業者每天都能順暢使用的系統。</p>
+            <div class="service-section__cases">
+              <span class="service-case-tag" data-i18n="services.s2.case1">→ 飯店前後台整合服務</span>
+            </div>
+          </div>
+          <div class="service-section__body">
+            <div class="service-detail-block">
+              <p class="service-detail-block__label" data-i18n="services.detail.suitable">適合對象</p>
+              <p data-i18n="services.s2.suitable">飯店、民宿、度假村、服務式公寓。需要取代手動作業或現成系統不夠用的業者。</p>
+            </div>
+            <div class="service-detail-block">
+              <p class="service-detail-block__label" data-i18n="services.detail.includes">包含項目</p>
+              <ul class="service-checklist">
+                <li data-i18n="services.s2.i1">飯店官網 + 房型展示頁</li>
+                <li data-i18n="services.s2.i2">線上訂房流程（日期選擇、人數、即時房況）</li>
+                <li data-i18n="services.s2.i3">後台房態管理（每日 / 每月房況一覽）</li>
+                <li data-i18n="services.s2.i4">訂單管理、入住確認、取消流程</li>
+                <li data-i18n="services.s2.i5">金流串接 + 營收報表</li>
+                <li data-i18n="services.s2.i6">部署上線 + 60 天技術支援</li>
+              </ul>
+            </div>
+            <div class="service-detail-block">
+              <p class="service-detail-block__label" data-i18n="services.detail.stack">技術棧</p>
+              <div class="skills__list">
+                <span class="tag">Next.js</span><span class="tag">Node.js</span>
+                <span class="tag">MySQL</span><span class="tag">金流串接</span>
+              </div>
+            </div>
+            <a href="/contact.html" class="btn btn--primary" data-i18n="services.cta.consult">免費 30 分鐘諮詢</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── S3：品牌 & 餐廳官網 ── -->
+    <section class="service-section" id="s3">
+      <div class="container">
+        <div class="service-section__inner">
+          <div class="service-section__header">
+            <span class="service-section__num">03</span>
+            <h2 class="service-section__title" data-i18n="services.s3.title">品牌 & 餐廳官網</h2>
+            <p class="service-section__price"><span data-i18n="services.price.from">起價</span> <strong data-i18n="services.s3.price">NT$ 25,000</strong></p>
+            <p class="service-section__desc" data-i18n="services.s3.desc">企業形象網站、個人品牌頁、餐廳 / 咖啡廳品牌網站。快速建立可信賴的數位門面，SEO 優化，讓客戶找得到你。</p>
+            <div class="service-section__cases">
+              <span class="service-case-tag" data-i18n="services.s3.case1">→ 品牌官網系統</span>
+              <span class="service-case-tag" data-i18n="services.s3.case2">→ 餐廳品牌網站</span>
+            </div>
+          </div>
+          <div class="service-section__body">
+            <div class="service-detail-block">
+              <p class="service-detail-block__label" data-i18n="services.detail.suitable">適合對象</p>
+              <p data-i18n="services.s3.suitable">企業、創辦人、餐廳、咖啡廳、小型店面。需要專業的網路形象，但不需要複雜系統。</p>
+            </div>
+            <div class="service-detail-block">
+              <p class="service-detail-block__label" data-i18n="services.detail.includes">包含項目</p>
+              <ul class="service-checklist">
+                <li data-i18n="services.s3.i1">首頁、關於、服務 / 菜單、聯絡共 4–6 頁</li>
+                <li data-i18n="services.s3.i2">SEO 優化（meta、sitemap、Google 搜尋可見）</li>
+                <li data-i18n="services.s3.i3">聯絡 / 訂位表單串接（實際寄信）</li>
+                <li data-i18n="services.s3.i4">中英雙語（選配）</li>
+                <li data-i18n="services.s3.i5">部署上線 + 網域設定協助 + 30 天支援</li>
+              </ul>
+            </div>
+            <div class="service-detail-block">
+              <p class="service-detail-block__label" data-i18n="services.detail.stack">技術棧</p>
+              <div class="skills__list">
+                <span class="tag">HTML / CSS / JS</span><span class="tag">SEO</span>
+                <span class="tag">Formspree</span><span class="tag">Cloudflare Pages</span>
+              </div>
+            </div>
+            <div style="display:flex; gap: var(--space-3); flex-wrap:wrap;">
+              <a href="/contact.html" class="btn btn--primary" data-i18n="services.cta.consult">免費 30 分鐘諮詢</a>
+              <a href="https://basilwu.github.io/restaurant-template/" target="_blank" rel="noopener noreferrer" class="btn btn--ghost" data-i18n="services.s3.demo">查看餐廳網站範例 ↗</a>
             </div>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- S2：餐廳 / 品牌網站模板 -->
-    <section class="about services__highlight">
+    <!-- ── S4：企業後台 & 管理系統 ── -->
+    <section class="service-section service-section--alt" id="s4">
       <div class="container">
-        <div class="about__inner">
-          <div>
-            <p class="skills__label" data-i18n="services.s2.num">02</p>
-            <h2 class="about__heading" data-i18n="services.s2.title">餐廳 / 店面品牌網站</h2>
-            <div class="service-price-badge">
-              <span class="service-price__from" data-i18n="services.price.from">起價</span>
-              <span class="service-price__num" data-i18n="services.s2.price">NT$ 25,000</span>
+        <div class="service-section__inner">
+          <div class="service-section__header">
+            <span class="service-section__num">04</span>
+            <h2 class="service-section__title" data-i18n="services.s4.title">企業後台 & 管理系統</h2>
+            <p class="service-section__price"><span data-i18n="services.price.from">起價</span> <strong data-i18n="services.s4.price">NT$ 80,000</strong></p>
+            <p class="service-section__desc" data-i18n="services.s4.desc">專為企業內部打造的管理後台與 Dashboard，整合訂單、庫存、人員權限與報表，讓日常營運更清楚、更有效率。</p>
+            <div class="service-section__cases">
+              <span class="service-case-tag" data-i18n="services.s4.case1">→ 內部管理後台</span>
+              <span class="service-case-tag" data-i18n="services.s4.case2">→ 租賃系統後台</span>
             </div>
-            <span class="service-badge" data-i18n="services.s2.badge">快速交付</span>
           </div>
-          <div class="about__body">
-            <p data-i18n="services.s2.p1">專為餐廳、咖啡廳、酒吧、小型店面打造的品牌網站。包含完整菜單展示、線上訂位表單、關於我們、地圖與聯絡資訊，中英雙語。</p>
-            <p data-i18n="services.s2.p2">基於模組化模板快速客製，保留完整設計品質。通常 5–7 個工作天可完成交付，是最快建立數位門面的方式。</p>
-            <div class="skills__list">
-              <span class="tag">菜單展示</span>
-              <span class="tag">線上訂位</span>
-              <span class="tag">中英雙語</span>
-              <span class="tag">Google Maps</span>
+          <div class="service-section__body">
+            <div class="service-detail-block">
+              <p class="service-detail-block__label" data-i18n="services.detail.suitable">適合對象</p>
+              <p data-i18n="services.s4.suitable">需要取代 Excel、Google 試算表或現成軟體的企業。有特殊工作流、希望系統真正貼合業務需求的團隊。</p>
             </div>
-            <div class="service-includes">
-              <p class="service-includes__label" data-i18n="services.includes">包含項目</p>
-              <ul>
-                <li data-i18n="services.s2.i1">首頁、菜單、關於我們、訂位共 4 頁</li>
-                <li data-i18n="services.s2.i2">Formspree 訂位表單（實際寄信）</li>
-                <li data-i18n="services.s2.i3">中英雙語切換</li>
-                <li data-i18n="services.s2.i4">部署上線 + 網域設定協助</li>
+            <div class="service-detail-block">
+              <p class="service-detail-block__label" data-i18n="services.detail.includes">包含項目</p>
+              <ul class="service-checklist">
+                <li data-i18n="services.s4.i1">需求訪談 & 工作流盤點</li>
+                <li data-i18n="services.s4.i2">後台介面設計 & 開發（CRUD、篩選、搜尋）</li>
+                <li data-i18n="services.s4.i3">角色 & 權限管理系統</li>
+                <li data-i18n="services.s4.i4">數據報表 & 匯出功能</li>
+                <li data-i18n="services.s4.i5">API 串接 & 資料庫設計</li>
+                <li data-i18n="services.s4.i6">部署上線 + 60 天技術支援</li>
               </ul>
             </div>
-            <a href="https://basilwu.github.io/restaurant-template/" target="_blank" rel="noopener noreferrer" class="btn btn--ghost" style="margin-top: var(--space-5)" data-i18n="services.s2.demo">查看範例網站 ↗</a>
+            <div class="service-detail-block">
+              <p class="service-detail-block__label" data-i18n="services.detail.stack">技術棧</p>
+              <div class="skills__list">
+                <span class="tag">React</span><span class="tag">Node.js</span>
+                <span class="tag">PostgreSQL</span><span class="tag">Express</span>
+              </div>
+            </div>
+            <a href="/contact.html" class="btn btn--primary" data-i18n="services.cta.consult">免費 30 分鐘諮詢</a>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- S3：電商平台 -->
-    <section class="about">
+    <!-- ── S5：POS & 零售系統 ── -->
+    <section class="service-section" id="s5">
       <div class="container">
-        <div class="about__inner">
-          <div>
-            <p class="skills__label" data-i18n="services.s3.num">03</p>
-            <h2 class="about__heading" data-i18n="services.s3.title">電商平台</h2>
-            <div class="service-price-badge">
-              <span class="service-price__from" data-i18n="services.price.from">起價</span>
-              <span class="service-price__num" data-i18n="services.s3.price">NT$ 80,000</span>
+        <div class="service-section__inner">
+          <div class="service-section__header">
+            <span class="service-section__num">05</span>
+            <h2 class="service-section__title" data-i18n="services.s5.title">POS & 零售系統</h2>
+            <p class="service-section__price"><span data-i18n="services.price.from">起價</span> <strong data-i18n="services.s5.price">NT$ 80,000</strong></p>
+            <p class="service-section__desc" data-i18n="services.s5.desc">為零售現場打造的 POS 收銀系統，支援平板與桌機雙場景操作，整合收銀流程、庫存管理與日報表，不需要購買昂貴的現成設備。</p>
+            <div class="service-section__cases">
+              <span class="service-case-tag" data-i18n="services.s5.case1">→ POS 機系統</span>
+              <span class="service-case-tag" data-i18n="services.s5.case2">→ 跨裝置管理介面</span>
             </div>
           </div>
-          <div class="about__body">
-            <p data-i18n="services.s3.p1">適合需要超越基本 storefront 的品牌，包含客製購物流程、金流串接、會員系統與訂單後台。</p>
-            <p data-i18n="services.s3.p2">我們思考商品結構、轉換流程、結帳清晰度與長期可維護性，讓系統上線後真正可以穩定運作。</p>
-            <div class="skills__list">
-              <span class="tag">購物車系統</span>
-              <span class="tag">金流串接</span>
-              <span class="tag">會員系統</span>
-              <span class="tag">訂單管理</span>
+          <div class="service-section__body">
+            <div class="service-detail-block">
+              <p class="service-detail-block__label" data-i18n="services.detail.suitable">適合對象</p>
+              <p data-i18n="services.s5.suitable">實體零售店、餐廳收銀、小型連鎖門市。需要客製化 POS 或希望整合線上線下庫存的業者。</p>
             </div>
-            <div class="service-includes">
-              <p class="service-includes__label" data-i18n="services.includes">包含項目</p>
-              <ul>
-                <li data-i18n="services.s3.i1">前台購物體驗完整實作</li>
-                <li data-i18n="services.s3.i2">綠界 / 藍新金流串接</li>
-                <li data-i18n="services.s3.i3">後台訂單 & 庫存管理</li>
-                <li data-i18n="services.s3.i4">部署上線 + 60 天技術支援</li>
+            <div class="service-detail-block">
+              <p class="service-detail-block__label" data-i18n="services.detail.includes">包含項目</p>
+              <ul class="service-checklist">
+                <li data-i18n="services.s5.i1">收銀介面（商品快速選取、折扣、退貨）</li>
+                <li data-i18n="services.s5.i2">平板 iPad + 桌機雙裝置優化</li>
+                <li data-i18n="services.s5.i3">即時庫存扣減 & 低庫存警示</li>
+                <li data-i18n="services.s5.i4">每日 / 每月銷售報表</li>
+                <li data-i18n="services.s5.i5">多員工帳號 & 班次管理</li>
+                <li data-i18n="services.s5.i6">部署上線 + 60 天技術支援</li>
               </ul>
             </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- S4：旅宿平台 -->
-    <section class="about">
-      <div class="container">
-        <div class="about__inner">
-          <div>
-            <p class="skills__label" data-i18n="services.s4.num">04</p>
-            <h2 class="about__heading" data-i18n="services.s4.title">旅宿 / 預約平台</h2>
-            <div class="service-price-badge">
-              <span class="service-price__from" data-i18n="services.price.from">起價</span>
-              <span class="service-price__num" data-i18n="services.s4.price">NT$ 100,000</span>
+            <div class="service-detail-block">
+              <p class="service-detail-block__label" data-i18n="services.detail.stack">技術棧</p>
+              <div class="skills__list">
+                <span class="tag">React</span><span class="tag">Node.js</span>
+                <span class="tag">iPad 優化</span><span class="tag">即時同步</span>
+              </div>
             </div>
-          </div>
-          <div class="about__body">
-            <p data-i18n="services.s4.p1">適合旅宿業者、民宿、飯店需要線上訂房、客房管理與前後台整合的平台，重視使用清晰度與內部營運邏輯之間的平衡。</p>
-            <p data-i18n="services.s4.p2">我們特別注意搜尋流程、預約結構、角色邏輯與前後台協作，讓業者實際用得順手。</p>
-            <div class="skills__list">
-              <span class="tag">線上訂房</span>
-              <span class="tag">房態管理</span>
-              <span class="tag">角色權限</span>
-              <span class="tag">前後台整合</span>
-            </div>
-            <div class="service-includes">
-              <p class="service-includes__label" data-i18n="services.includes">包含項目</p>
-              <ul>
-                <li data-i18n="services.s4.i1">官網 + 線上訂房流程</li>
-                <li data-i18n="services.s4.i2">後台房態 & 訂單管理</li>
-                <li data-i18n="services.s4.i3">金流串接</li>
-                <li data-i18n="services.s4.i4">部署上線 + 60 天技術支援</li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- S5：B2B 後台 -->
-    <section class="about">
-      <div class="container">
-        <div class="about__inner">
-          <div>
-            <p class="skills__label" data-i18n="services.s5.num">05</p>
-            <h2 class="about__heading" data-i18n="services.s5.title">B2B 後台工具</h2>
-            <div class="service-price-badge">
-              <span class="service-price__from" data-i18n="services.price.from">起價</span>
-              <span class="service-price__num" data-i18n="services.s5.price">NT$ 80,000</span>
-            </div>
-          </div>
-          <div class="about__body">
-            <p data-i18n="services.s5.p1">適合需要 dashboard、admin system 或內部操作介面的企業團隊，幫助降低手動作業並讓日常流程更容易管理。</p>
-            <p data-i18n="services.s5.p2">我們重視工作流盤點、資訊可視性、介面清晰度與可維護的實作方式，讓員工真正願意用。</p>
-            <div class="skills__list">
-              <span class="tag">Dashboard</span>
-              <span class="tag">Admin System</span>
-              <span class="tag">資料可視化</span>
-              <span class="tag">權限管理</span>
-            </div>
-            <div class="service-includes">
-              <p class="service-includes__label" data-i18n="services.includes">包含項目</p>
-              <ul>
-                <li data-i18n="services.s5.i1">需求訪談 & 工作流分析</li>
-                <li data-i18n="services.s5.i2">後台介面設計 & 開發</li>
-                <li data-i18n="services.s5.i3">API 串接 & 資料庫設計</li>
-                <li data-i18n="services.s5.i4">部署上線 + 60 天技術支援</li>
-              </ul>
-            </div>
+            <a href="/contact.html" class="btn btn--primary" data-i18n="services.cta.consult">免費 30 分鐘諮詢</a>
           </div>
         </div>
       </div>
@@ -292,7 +358,6 @@
     <p data-i18n="footer.location">位於台中，服務來自各地的客戶。</p>
   </footer>
 
-  <!-- 浮動按鈕 -->
   <div class="float-contact" aria-label="快速聯絡">
     <a href="https://wa.me/886980054850?text=%E4%BD%A0%E5%A5%BD%EF%BC%8C%E6%88%91%E6%83%B3%E8%AB%AE%E8%A9%A2%E7%B6%B2%E7%AB%99%E9%96%8B%E7%99%BC%E5%B0%88%E6%A1%88" target="_blank" rel="noopener noreferrer" class="float-btn float-btn--whatsapp" aria-label="WhatsApp">
       <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
