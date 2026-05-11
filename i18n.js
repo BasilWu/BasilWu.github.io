@@ -240,7 +240,7 @@ const I18N = {
     "footer.copy": "© 2026 MosStack Studio. All rights reserved.",
     "footer.location": "位於台中，與各地客戶合作。",
 
-    "index.hero.title": "打造真正能上線、<br><span>也真正能使用的產品。</span>",
+    "index.hero.title": "打造真正能上線<br><span>也真正能使用的產品</span>",
     "index.hero.sub": "MosStack 是一間位於台中的 Web 開發工作室，專注在客製化系統、網站與產品開發。",
     "index.hero.primary": "免費 30 分鐘諮詢",
     "index.hero.secondary": "查看精選案例",
@@ -322,7 +322,7 @@ const I18N = {
     "form.success": "訊息已送出，我們會盡快與你聯絡。",
 
     "contact.hero.eyebrow": "聯絡",
-    "contact.hero.title": "告訴我們你<br><span>正在做什麼。</span>",
+    "contact.hero.title": "告訴我們你<br><span>的想法吧！</span>",
     "contact.hero.sub": "不用一開始就想得很完整，有一個方向就能開始討論。",
     "contact.location": "台中，台灣",
     "contact.response": "通常於 1 個工作日內回覆",
