@@ -353,6 +353,53 @@
 
   </div>
 
+  <!-- ── 估價自我檢測 ── -->
+  <section class="estimator" id="estimator" style="padding:var(--space-12) 0">
+    <div class="container">
+      <p class="section-label">30 秒估價</p>
+      <h2 style="font-size:var(--text-2xl);margin:0 0 var(--space-2)">不確定預算？先選三個問題</h2>
+      <p style="color:var(--color-text-muted);margin:0 0 var(--space-6)">選完馬上看到建議方案與價格區間。只是初步參考，實際報價依需求討論後確認。</p>
+
+      <div class="est" style="display:grid;gap:var(--space-6);max-width:760px">
+        <div class="est-q" data-q="type">
+          <p style="font-weight:600;margin:0 0 var(--space-3)">1 · 你要做的是？</p>
+          <div class="est-opts" style="display:flex;flex-wrap:wrap;gap:var(--space-2)">
+            <button type="button" class="est-btn" data-v="ecom">品牌電商 / 網路商店</button>
+            <button type="button" class="est-btn" data-v="booking">預約 / 訂房系統</button>
+            <button type="button" class="est-btn" data-v="site">品牌 / 企業官網</button>
+            <button type="button" class="est-btn" data-v="backend">企業後台 / POS</button>
+          </div>
+        </div>
+
+        <div class="est-q" data-q="scale">
+          <p style="font-weight:600;margin:0 0 var(--space-3)">2 · 規模大概是？</p>
+          <div class="est-opts" style="display:flex;flex-wrap:wrap;gap:var(--space-2)">
+            <button type="button" class="est-btn" data-v="small">小·剛起步 / 品項不多</button>
+            <button type="button" class="est-btn" data-v="mid">中·已有生意 / 要完整功能</button>
+            <button type="button" class="est-btn" data-v="large">大·多品項 / 需系統整合</button>
+          </div>
+        </div>
+
+        <div class="est-q" data-q="budget">
+          <p style="font-weight:600;margin:0 0 var(--space-3)">3 · 預算心理區間？</p>
+          <div class="est-opts" style="display:flex;flex-wrap:wrap;gap:var(--space-2)">
+            <button type="button" class="est-btn" data-v="low">5 萬以下</button>
+            <button type="button" class="est-btn" data-v="med">5 – 12 萬</button>
+            <button type="button" class="est-btn" data-v="high">12 萬以上</button>
+          </div>
+        </div>
+
+        <div class="est-result" id="est-result" hidden style="border:1px solid var(--color-border);border-radius:14px;padding:var(--space-6);background:var(--color-surface)">
+          <p class="section-label" style="margin:0 0 var(--space-2)">建議方案</p>
+          <h3 id="est-plan" style="font-size:var(--text-xl);margin:0 0 4px"></h3>
+          <p id="est-price" style="color:var(--color-primary);font-weight:700;font-size:var(--text-lg);margin:0 0 var(--space-2)"></p>
+          <p id="est-note" style="color:var(--color-text-muted);margin:0 0 var(--space-4)"></p>
+          <a href="/contact.html" class="btn btn--primary">拿這個結果去諮詢 →</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- ── 適合對象 ── -->
   <section class="portfolio">
     <div class="container--wide">
@@ -404,5 +451,73 @@
   </div>
 
   <script src="i18n.js"></script>
+  <script>
+  (function () {
+    var est = document.querySelector('.est');
+    if (!est) return;
+    var picks = { type: null, scale: null, budget: null };
+
+    var TYPE = {
+      ecom:    { name: '品牌電商 / 網路商店', base: 'ecom' },
+      booking: { name: '預約 / 訂房系統',     base: 'booking' },
+      site:    { name: '品牌 / 企業官網',      base: 'site' },
+      backend: { name: '企業後台 / POS 系統',  base: 'backend' }
+    };
+
+    // 各類型依規模給方案；預算僅用於補充提示
+    var PLANS = {
+      ecom: {
+        small: { plan: '入門電商店', price: 'NT$ 35,000 – 50,000', note: '個人賣家、第一間店。基本商品、購物車、結帳與單一金流。' },
+        mid:   { plan: '品牌電商（最熱門）', price: 'NT$ 80,000 – 120,000', note: '多金流物流、會員點數、優惠券與行銷工具，可實際營運。' },
+        large: { plan: '進階電商整合', price: 'NT$ 150,000 起', note: '多 SKU、需整合 ERP / CRM 或客製化流程。' }
+      },
+      booking: {
+        small: { plan: '輕量預約系統', price: 'NT$ 60,000 – 90,000', note: '單點訂房 / 預約、房況或時段管理與基本後台。' },
+        mid:   { plan: '旅宿訂房平台', price: 'NT$ 100,000 起', note: '官網＋線上訂房、房態管理、訂單與金流串接，前後台一體。' },
+        large: { plan: '多館訂房整合', price: 'NT$ 150,000 起', note: '多館 / 多房型、營收報表與系統整合。' }
+      },
+      site: {
+        small: { plan: '品牌官網（基本）', price: 'NT$ 25,000 – 40,000', note: '4–6 頁形象網站、SEO 與聯絡表單，快速建立數位門面。' },
+        mid:   { plan: '品牌官網（完整）', price: 'NT$ 40,000 – 70,000', note: '中英雙語、內容管理與進階 SEO，適合成長中的品牌。' },
+        large: { plan: '品牌官網＋系統', price: 'NT$ 80,000 起', note: '官網結合會員、預約或內容後台等客製功能。' }
+      },
+      backend: {
+        small: { plan: '輕量管理後台', price: 'NT$ 60,000 – 90,000', note: '取代 Excel 的 CRUD 後台、篩選搜尋與基本報表。' },
+        mid:   { plan: '企業後台 / POS', price: 'NT$ 80,000 起', note: '權限管理、報表匯出、API 串接，或平板＋桌機 POS 收銀。' },
+        large: { plan: '企業系統整合', price: 'NT$ 150,000 起', note: '多模組整合、線上線下庫存或客製工作流。' }
+      }
+    };
+
+    var BUDGET_NOTE = {
+      low:  '你選的預算偏低，若功能需求較多，建議先從最小可行版本開始，再分階段擴充。',
+      med:  '這個預算區間最常落在「完整可營運」的方案，CP 值通常最好。',
+      high: '預算充足，可以一次把整合、行銷與擴充性都做到位。'
+    };
+
+    est.addEventListener('click', function (e) {
+      var btn = e.target.closest('.est-btn');
+      if (!btn) return;
+      var q = btn.closest('.est-q').getAttribute('data-q');
+      var siblings = btn.closest('.est-opts').querySelectorAll('.est-btn');
+      for (var i = 0; i < siblings.length; i++) siblings[i].classList.remove('is-selected');
+      btn.classList.add('is-selected');
+      picks[q] = btn.getAttribute('data-v');
+      render();
+    });
+
+    function render() {
+      if (!picks.type || !picks.scale) return; // 預算非必填，但 type+scale 才出結果
+      var t = TYPE[picks.type];
+      var p = PLANS[picks.type][picks.scale];
+      document.getElementById('est-plan').textContent = t.name + ' · ' + p.plan;
+      document.getElementById('est-price').textContent = p.price;
+      var note = p.note;
+      if (picks.budget) note += ' ' + BUDGET_NOTE[picks.budget];
+      document.getElementById('est-note').textContent = note;
+      var box = document.getElementById('est-result');
+      box.hidden = false;
+    }
+  })();
+  </script>
 </body>
 </html>
