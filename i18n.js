@@ -31,7 +31,7 @@ const I18N = {
     "privacy.s6.title": "6. Contact Us",
     "privacy.s6.body": "If you have any questions about this privacy policy, please reach out via our <a href=\"/contact.html\">contact page</a>, WhatsApp, or LINE.",
 
-    "index.hero.title": "We build digital products<br><span>that work.</span>",
+    "index.hero.title": "We don\u2019t just ship sites<br><span>we make them actually work.</span>",
     "index.hero.sub": "A web development studio focused on product thinking, system design, and real business needs.",
     "index.hero.primary": "Free 30-Minute Consultation",
     "index.hero.secondary": "View Selected Work",
@@ -118,7 +118,7 @@ const I18N = {
     "form.success": "Message sent. We will be in touch soon.",
 
     "contact.hero.eyebrow": "Contact Us",
-    "contact.hero.title": "Tell us what<br><span>you are building.</span>",
+    "contact.hero.title": "Tell us what<br><span>you want to build.</span>",
     "contact.hero.sub": "You do not need to have everything figured out. A clear direction is enough to start.",
     "contact.location": "Taichung, Taiwan",
     "contact.response": "Usually replies within 1 business day",
@@ -223,8 +223,8 @@ const I18N = {
     "services.contact.secondary": "View Selected Work",
 
     "portfolio.hero.eyebrow": "Selected Work",
-    "portfolio.hero.title": "Selected work built for real-world operations",
-    "portfolio.hero.subtitle": "From brand websites to e-commerce, hospitality platforms, and internal systems, every project is built around practical use.",
+    "portfolio.hero.title": "Real projects, still running today",
+    "portfolio.hero.subtitle": "From brand sites to e-commerce, hospitality platforms, and internal tools \u2014 every one is still live and serving real users.",
     "portfolio.hero.primary": "Start a Project",
     "portfolio.hero.secondary": "View Services",
 
@@ -318,7 +318,7 @@ const I18N = {
     "privacy.s6.title": "六、聯絡我們",
     "privacy.s6.body": "如對本隱私權政策有任何疑問，歡迎透過 <a href=\"/contact.html\">聯絡頁面</a>、WhatsApp 或 LINE 與我們聯繫。",
 
-    "index.hero.title": "打造真正能上線<br><span>也真正能使用的產品</span>",
+    "index.hero.title": "不只是把網站做出來<br><span>是把它做到真的能用</span>",
     "index.hero.sub": "MosStack 是一間位於台中的 Web 開發工作室，專注在客製化系統、網站與產品開發。",
     "index.hero.primary": "免費 30 分鐘諮詢",
     "index.hero.secondary": "查看精選案例",
@@ -406,7 +406,7 @@ const I18N = {
     "form.success": "訊息已送出，我們會盡快與你聯絡。",
 
     "contact.hero.eyebrow": "聯絡",
-    "contact.hero.title": "告訴我們你<br><span>的想法吧！</span>",
+    "contact.hero.title": "說說你想<br><span>做的東西吧</span>",
     "contact.hero.sub": "不用一開始就想得很完整，有一個方向就能開始討論。",
     "contact.location": "台中，台灣",
     "contact.response": "通常於 1 個工作日內回覆",
@@ -513,8 +513,8 @@ const I18N = {
     "services.contact.secondary": "查看精選案例",
 
     "portfolio.hero.eyebrow": "精選案例",
-    "portfolio.hero.title": "為實際營運而做的案例",
-    "portfolio.hero.subtitle": "從品牌網站到電商、旅宿平台與內部系統，每個專案都對應真實需求。",
+    "portfolio.hero.title": "這些都是真的在跑的案子",
+    "portfolio.hero.subtitle": "從品牌網站到電商、旅宿平台與內部系統，每一個都還在線上服務真實的使用者。",
     "portfolio.hero.primary": "開始洽談專案",
     "portfolio.hero.secondary": "查看服務",
 
