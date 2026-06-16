@@ -83,6 +83,28 @@
           <a href="https://wa.me/886980054850?text=%E4%BD%A0%E5%A5%BD%EF%BC%8C%E6%88%91%E6%83%B3%E8%AB%AE%E8%A9%A2%E7%B6%B2%E7%AB%99%E9%96%8B%E7%99%BC%E5%B0%88%E6%A1%88" target="_blank" rel="noopener noreferrer" class="btn btn--primary" data-i18n="index.hero.primary">免費 30 分鐘諮詢</a>
           <a href="/portfolio.html" class="btn btn--ghost" data-i18n="index.hero.secondary">查看精選案例</a>
         </div>
+
+        <!-- 視覺錨點：填補留白、建立信任 -->
+        <div class="hero__anchor">
+          <div class="hero__metric">
+            <span class="hero__metric-num" data-i18n="index.hero.m1.num">全端</span>
+            <span class="hero__metric-label" data-i18n="index.hero.m1.label">前後端與資料庫一手包辦</span>
+          </div>
+          <div class="hero__metric">
+            <span class="hero__metric-num" data-i18n="index.hero.m2.num">固定報價</span>
+            <span class="hero__metric-label" data-i18n="index.hero.m2.label">無隱藏費用、無模糊地帶</span>
+          </div>
+          <div class="hero__metric">
+            <span class="hero__metric-num" data-i18n="index.hero.m3.num">可驗證</span>
+            <span class="hero__metric-label" data-i18n="index.hero.m3.label">每個案例都有 Live Demo</span>
+          </div>
+          <div class="hero__stack">
+            <span class="hero__stack-label" data-i18n="index.stack.label">核心技術</span>
+            <div class="hero__stack-list">
+              <span class="tag">Next.js</span><span class="tag">React</span><span class="tag">TypeScript</span><span class="tag">Node.js</span><span class="tag">PostgreSQL</span>
+            </div>
+          </div>
+        </div>
       </div>
     </section>
 
@@ -114,12 +136,14 @@
             <p class="project-card__hint" style="margin-top:var(--space-3);font-size:var(--text-xs);color:var(--color-text-muted)">↗ 後台試用：<code>/admin/login</code> · owner@example.com / changeme</p>
             </div>
           </a>
-          <a href="/portfolio.html" class="project-card">
-            <div class="project-card__image"><img src="/assets/work/cap-dashboard.svg" alt="營運管理後台" width="600" height="400" loading="lazy"></div>
+          <a href="https://reservation-template-virid.vercel.app/admin/login" target="_blank" rel="noopener noreferrer" class="project-card">
+            <div class="project-card__image"><img src="/assets/work/dashboard.jpg" alt="營運管理後台 — 實際 Demo 畫面（今日概覽、預約列表、帳務）" width="600" height="400" loading="lazy"></div>
             <div class="project-card__info">
+              <span class="project-card__live-badge" data-i18n="portfolio.live">Live Demo</span>
               <h3 class="project-card__name" data-i18n="portfolio.c6.title">營運管理後台</h3>
               <p class="project-card__desc" data-i18n="portfolio.c6.desc">整合預約、行事曆、器材庫存、帳務報表與 LINE 客戶訊息的營運後台。</p>
-              <div class="project-card__tags"><span class="tag">Dashboard</span><span class="tag">B2B</span></div>
+              <div class="project-card__tags"><span class="tag">Dashboard</span><span class="tag">B2B</span><span class="tag">帳務報表</span></div>
+              <p class="project-card__hint" style="margin-top:var(--space-3);font-size:var(--text-xs);color:var(--color-text-muted)">↗ 後台試用：<code>/admin/login</code> · owner@example.com / changeme</p>
             </div>
           </a>
         </div>
@@ -266,8 +290,49 @@
   </main>
 
   <footer>
-    <p data-i18n="footer.copy">© 2026 MosStack Studio. 版權所有。</p>
-    <p data-i18n="footer.location">位於台中，服務來自各地的客戶。</p>
+    <div class="footer__inner">
+      <div class="footer__brand">
+        <p class="footer__brand-name">MosStack Studio</p>
+        <p class="footer__tagline" data-i18n="footer.tagline">位於台中的全端接案工作室，專注於電商、品牌官網、預約系統與 B2B 後台開發。</p>
+        <div class="footer__social">
+          <a href="https://github.com/BasilWu" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .5C5.65.5.5 5.65.5 12c0 5.1 3.29 9.42 7.86 10.95.57.1.78-.25.78-.55v-2.1c-3.2.7-3.87-1.54-3.87-1.54-.52-1.33-1.27-1.69-1.27-1.69-1.04-.71.08-.7.08-.7 1.15.08 1.75 1.18 1.75 1.18 1.02 1.75 2.68 1.24 3.33.95.1-.74.4-1.24.72-1.53-2.55-.29-5.23-1.28-5.23-5.68 0-1.25.45-2.28 1.18-3.08-.12-.3-.51-1.46.11-3.04 0 0 .96-.31 3.15 1.18a10.94 10.94 0 0 1 5.74 0C17.04 5.8 18 6.11 18 6.11c.62 1.58.23 2.74.11 3.04.73.8 1.18 1.83 1.18 3.08 0 4.41-2.69 5.38-5.25 5.67.41.36.78 1.07.78 2.15v3.18c0 .31.2.66.79.55A11.51 11.51 0 0 0 23.5 12C23.5 5.65 18.35.5 12 .5z"/></svg>
+          </a>
+          <a href="https://wa.me/886980054850" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+          </a>
+          <a href="https://line.me/ti/p/hz6EePU4Ha" target="_blank" rel="noopener noreferrer" aria-label="Line">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M19.365 9.863c.349 0 .63.285.63.631 0 .345-.281.63-.63.63H17.61v1.125h1.755c.349 0 .63.283.63.63 0 .344-.281.629-.63.629h-2.386c-.345 0-.627-.285-.627-.629V8.108c0-.345.282-.63.63-.63h2.386c.349 0 .63.285.63.63 0 .349-.281.63-.63.63H17.61v1.125h1.755zm-3.855 3.016c0 .27-.174.51-.432.596-.064.021-.133.031-.199.031-.211 0-.391-.09-.51-.25l-2.443-3.317v2.94c0 .344-.279.629-.631.629-.346 0-.626-.285-.626-.629V8.108c0-.27.173-.51.43-.595.06-.023.136-.033.194-.033.195 0 .375.104.495.254l2.462 3.33V8.108c0-.345.282-.63.63-.63.345 0 .63.285.63.63v4.771zm-5.741 0c0 .344-.282.629-.631.629-.345 0-.627-.285-.627-.629V8.108c0-.345.282-.63.627-.63.349 0 .631.285.631.63v4.771zm-2.466.629H4.917c-.345 0-.63-.285-.63-.629V8.108c0-.345.285-.63.63-.63.348 0 .63.285.63.63v4.141h1.756c.348 0 .629.283.629.63 0 .344-.281.629-.629.629M24 10.314C24 4.943 18.615.572 12 .572S0 4.943 0 10.314c0 4.811 4.27 8.842 10.035 9.608.391.082.923.258 1.058.59.12.301.079.766.038 1.08l-.164 1.02c-.045.301-.24 1.186 1.049.645 1.291-.539 6.916-4.078 9.436-6.975C23.176 14.393 24 12.458 24 10.314"/></svg>
+          </a>
+        </div>
+      </div>
+      <div class="footer__col">
+        <p class="footer__col-title" data-i18n="footer.col.explore">瀏覽</p>
+        <nav class="footer__list">
+          <a href="/portfolio.html" data-i18n="nav.work">精選案例</a>
+          <a href="/services.html" data-i18n="nav.services">服務項目</a>
+          <a href="/index.html#studio" data-i18n="nav.studio">關於工作室</a>
+          <a href="/contact.html" data-i18n="nav.contact">聯絡我們</a>
+        </nav>
+      </div>
+      <div class="footer__col">
+        <p class="footer__col-title" data-i18n="footer.col.contact">聯絡</p>
+        <nav class="footer__list">
+          <a href="https://wa.me/886980054850" target="_blank" rel="noopener noreferrer">WhatsApp</a>
+          <a href="https://line.me/ti/p/hz6EePU4Ha" target="_blank" rel="noopener noreferrer">LINE</a>
+          <a href="https://github.com/BasilWu" target="_blank" rel="noopener noreferrer">GitHub</a>
+        </nav>
+      </div>
+    </div>
+    <div class="footer__bottom">
+      <div class="footer__bottom-inner">
+        <p data-i18n="footer.copy">© 2026 MosStack Studio. 版權所有。</p>
+        <div class="footer__legal">
+          <span data-i18n="footer.location">位於台中，服務來自各地的客戶。</span>
+          <a href="/privacy.html" data-i18n="footer.privacy">隱私權政策</a>
+        </div>
+      </div>
+    </div>
   </footer>
 
   <!-- ── 浮動聯絡按鈕 ── -->
