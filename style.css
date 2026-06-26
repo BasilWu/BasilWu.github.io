@@ -293,7 +293,68 @@ button, a {
 
 /* ── HERO ─────────────────────────────── */
 .hero {
+  position: relative;
   padding-block: clamp(var(--space-16), 10vw, var(--space-24));
+  isolation: isolate;
+}
+
+/* Hero 背景：柔和光暈 + 細點陣紋理，增加層次感（不破壞極簡風格） */
+.hero::before {
+  content: "";
+  position: absolute;
+  inset: -20% -10% 0;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    radial-gradient(60% 50% at 50% 0%,
+      color-mix(in oklab, var(--color-text) 7%, transparent) 0%,
+      transparent 70%),
+    radial-gradient(40% 40% at 82% 12%,
+      color-mix(in oklab, var(--color-text) 4%, transparent) 0%,
+      transparent 65%);
+  -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 60%, transparent 100%);
+  mask-image: linear-gradient(to bottom, #000 0%, #000 60%, transparent 100%);
+}
+
+/* 點陣紋理層 */
+.hero::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background-image: radial-gradient(
+    color-mix(in oklab, var(--color-text) 9%, transparent) 1px,
+    transparent 1px);
+  background-size: 26px 26px;
+  opacity: 0.5;
+  -webkit-mask-image: radial-gradient(70% 60% at 50% 25%, #000 0%, transparent 75%);
+  mask-image: radial-gradient(70% 60% at 50% 25%, #000 0%, transparent 75%);
+}
+
+.hero > .container { position: relative; z-index: 1; }
+
+/* 深色模式：光暈與點陣再強一點，讓背景不再單調 */
+[data-theme="dark"] .hero::before,
+:root:not([data-theme]) .hero::before {
+  background:
+    radial-gradient(62% 52% at 50% 0%,
+      color-mix(in oklab, var(--color-text) 12%, transparent) 0%,
+      transparent 72%),
+    radial-gradient(42% 42% at 82% 10%,
+      color-mix(in oklab, var(--color-text) 7%, transparent) 0%,
+      transparent 65%);
+}
+[data-theme="dark"] .hero::after,
+:root:not([data-theme]) .hero::after { opacity: 0.7; }
+
+@media (prefers-reduced-motion: no-preference) {
+  .hero::before { animation: heroGlow 14s ease-in-out infinite alternate; }
+}
+
+@keyframes heroGlow {
+  from { opacity: 0.75; transform: translateY(0); }
+  to   { opacity: 1;    transform: translateY(-10px); }
 }
 
 .hero__eyebrow {
