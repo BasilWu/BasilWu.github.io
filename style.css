@@ -477,7 +477,7 @@ button, a {
 
 .hero__metrics {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 0;
 }
 
@@ -485,7 +485,7 @@ button, a {
   display: flex;
   flex-direction: column;
   gap: var(--space-2);
-  padding: 0 clamp(var(--space-4), 2.5vw, var(--space-8));
+  padding: 0 clamp(var(--space-3), 1.8vw, var(--space-6));
 }
 
 .hero__metric:first-child {
@@ -511,15 +511,44 @@ button, a {
   line-height: 1.5;
 }
 
+/* 平板：4 欄太擠，改 2x2 */
+@media (max-width: 900px) {
+  .hero__metrics {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-5) 0;
+  }
+  .hero__metric {
+    padding: 0 clamp(var(--space-4), 2.5vw, var(--space-8));
+  }
+  .hero__metric:first-child {
+    padding-left: 0;
+  }
+  /* 重設邊框：只在同一列的右側欄加左線 */
+  .hero__metric + .hero__metric {
+    border-left: none;
+  }
+  .hero__metric:nth-child(2),
+  .hero__metric:nth-child(4) {
+    border-left: 1px solid var(--color-divider);
+  }
+  .hero__metric:nth-child(3) {
+    padding-left: 0;
+  }
+}
+
 @media (max-width: 600px) {
   .hero__metrics {
     grid-template-columns: 1fr;
     gap: var(--space-5);
   }
-  .hero__metric {
+  .hero__metric,
+  .hero__metric:first-child,
+  .hero__metric:nth-child(3) {
     padding: 0;
   }
-  .hero__metric + .hero__metric {
+  .hero__metric + .hero__metric,
+  .hero__metric:nth-child(2),
+  .hero__metric:nth-child(4) {
     border-left: none;
     border-top: 1px solid var(--color-divider);
     padding-top: var(--space-5);
