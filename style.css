@@ -169,20 +169,23 @@ button, a {
 /* ── SCROLL REVEAL（滾動進場動畫）──────── */
 .reveal {
   opacity: 0;
-  transform: translateY(28px);
+  transform: translateY(64px);
+  filter: blur(6px);
   transition:
-    opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1),
-    transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+    opacity 0.95s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 1.05s cubic-bezier(0.16, 1, 0.3, 1),
+    filter 0.9s cubic-bezier(0.16, 1, 0.3, 1);
   transition-delay: var(--reveal-delay, 0ms);
-  will-change: opacity, transform;
+  will-change: opacity, transform, filter;
 }
 .reveal.is-visible {
   opacity: 1;
   transform: none;
+  filter: blur(0);
 }
 
 /* 縮放進場（用於卡片等區塊） */
-.reveal--scale { transform: translateY(28px) scale(0.985); }
+.reveal--scale { transform: translateY(64px) scale(0.94); }
 .reveal--scale.is-visible { transform: none; }
 
 /* 無障礙：關閉動態時直接顯示，避免內容被隱藏 */

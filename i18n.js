@@ -751,7 +751,7 @@ const I18N = {
         var items = container.querySelectorAll(itemSel);
         items.forEach(function (item, i) {
           if (item.classList.contains('reveal')) {
-            item.style.setProperty('--reveal-delay', Math.min(i * 90, 450) + 'ms');
+            item.style.setProperty('--reveal-delay', Math.min(i * 120, 600) + 'ms');
           }
         });
       });
@@ -772,8 +772,8 @@ const I18N = {
         }
       });
     }, {
-      threshold: 0.12,
-      rootMargin: '0px 0px -8% 0px'
+      threshold: 0.05,
+      rootMargin: '0px 0px -12% 0px'
     });
 
     targets.forEach(function (t) { io.observe(t); });
