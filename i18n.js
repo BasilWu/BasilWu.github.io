@@ -645,6 +645,8 @@ const I18N = {
       btn.classList.toggle('is-active', btn.getAttribute('data-lang-switch') === l);
     });
     localStorage.setItem('lang', l);
+    // 通知動畫系統：語言/內容已更新，需要重新切字
+    try { window.dispatchEvent(new CustomEvent('i18n:applied', { detail: { lang: l } })); } catch (e) {}
   }
 
   applyTheme();
@@ -702,14 +704,14 @@ const I18N = {
   });
 })();
 
-/* ── 滾動進場動畫（Scroll Reveal）────────────────────────────
-   自動為頁面主要區塊與其內部群組元素加上絲滑的淡入上移效果。
-   使用 IntersectionObserver，並尊重使用者的「減少動態」偏好。 */
+
+/* ════════════════════════════════════════════════════════════════
+   滾動特效系統 v2：標題逐行浮現 + 卡片依序滑入放大 + 視差捲動
+   尊重 prefers-reduced-motion；支援 i18n 切換後重新初始化。
+   ════════════════════════════════════════════════════════════════ */
 (function () {
   var reduceMotion = window.matchMedia &&
     window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-  // 不支援 IntersectionObserver 或使用者要求減少動態 → 不做動畫，保持內容直接可見
   if (reduceMotion || !('IntersectionObserver' in window)) return;
 
   function ready(fn) {
@@ -718,88 +720,180 @@ const I18N = {
       : fn();
   }
 
-  ready(function () {
-    // 需要套用進場動畫的目標：主要區段內的內容區塊
-    // （略過 hero，因為它在載入時就在畫面上，避免閃爍）
-    var groupSelectors = [
-      '.project-grid', '.project-card', '.service-tile', '.testimonial',
-      '.service-detail-block', '.service-section', '.price-tiers',
-      '.process', '.faq', '.about', '.contact', '.estimator',
-      '.section-label', '.services-overview', '.services-strip',
-      '.legal', '.contact-detail', '.form-group'
-    ];
+  /* ---------- A. 標題逐行浮現 ---------- */
+  // 將標題依「行」拆成可獨立進場的片段。中文逐行、英文逐字浮現都很順。
+  function splitTitle(el) {
+    if (el.dataset.split === 'done') return;
+    // 保留原始 HTML 以便 i18n 切換後重建
+    if (!el.dataset.orig) el.dataset.orig = el.innerHTML;
 
-    var seen = [];
-    function collect(el) {
-      if (!el || seen.indexOf(el) !== -1) return;
-      // 不處理 hero 內部與導覽列
-      if (el.closest('.hero') || el.closest('.nav') || el.closest('.mobile-nav')) return;
-      // 略過尺寸為 0 或隱藏的元素，避免它們被掛上初始隱藏狀態
-      var rect = el.getBoundingClientRect();
-      if ((rect.width === 0 && rect.height === 0) || el.hidden) return;
-      seen.push(el);
-      el.classList.add('reveal');
+    // 將 <br> 視為換行；<span> 視為獨立一行區塊
+    var html = el.dataset.orig;
+    // 用暫存節點解析
+    var tmp = document.createElement('div');
+    tmp.innerHTML = html;
+
+    var lines = [];
+    var current = [];
+    function flush() {
+      if (current.length) { lines.push(current.join('')); current = []; }
     }
+    tmp.childNodes.forEach(function (node) {
+      if (node.nodeType === 1 && node.tagName === 'BR') { flush(); return; }
+      if (node.nodeType === 1 && node.tagName === 'SPAN') {
+        flush();
+        lines.push('<span class="' + node.className + '">' + node.innerHTML + '</span>');
+        return;
+      }
+      current.push(node.nodeType === 1 ? node.outerHTML : node.textContent);
+    });
+    flush();
 
+    el.innerHTML = lines.map(function (line, i) {
+      return '<span class="line-reveal" style="--line-delay:' + (i * 140) + 'ms">' +
+             '<span class="line-reveal__inner">' + line + '</span></span>';
+    }).join('');
+    el.dataset.split = 'done';
+    el.classList.add('title-reveal');
+  }
+
+  function setupTitles() {
+    document.querySelectorAll('.hero__title').forEach(splitTitle);
+  }
+
+  /* ---------- B. 卡片 / 區塊滑入放大 ---------- */
+  var groupSelectors = [
+    '.section-label', '.project-card', '.service-tile', '.service-detail-block',
+    '.service-section', '.testimonial', '.process', '.faq', '.about',
+    '.contact', '.estimator', '.legal', '.contact-detail', '.form-group',
+    '.price-tier', '.services-overview', '.hero__lead', '.hero__actions',
+    '.hero__metrics', '.hero__eyebrow'
+  ];
+
+  var seen = [];
+  function tag(el, cls) {
+    if (!el || seen.indexOf(el) !== -1) return;
+    if (el.closest('.nav') || el.closest('.mobile-nav')) return;
+    var rect = el.getBoundingClientRect();
+    if ((rect.width === 0 && rect.height === 0) || el.hidden) return;
+    seen.push(el);
+    el.classList.add(cls || 'reveal');
+  }
+
+  function setupReveals() {
     groupSelectors.forEach(function (sel) {
-      document.querySelectorAll(sel).forEach(collect);
+      document.querySelectorAll(sel).forEach(function (el) {
+        // hero 內部用較快的進場（避免一進站就等太久）
+        tag(el, 'reveal');
+      });
     });
 
-    // 為「同一個父層下的多個卡片/磚塊」加上漸進延遲，做出 stagger 絲滑感
-    function stagger(containerSel, itemSel) {
+    // 卡片群組加 stagger，做出「一個接一個」滑入
+    function stagger(containerSel, itemSel, step) {
       document.querySelectorAll(containerSel).forEach(function (container) {
-        var items = container.querySelectorAll(itemSel);
-        items.forEach(function (item, i) {
+        container.querySelectorAll(itemSel).forEach(function (item, i) {
           if (item.classList.contains('reveal')) {
-            item.style.setProperty('--reveal-delay', Math.min(i * 120, 600) + 'ms');
+            item.style.setProperty('--reveal-delay', Math.min(i * (step || 130), 700) + 'ms');
+            item.classList.add('reveal--card');
           }
         });
       });
     }
-    stagger('.project-grid', '.project-card');
-    stagger('.services-overview', '.service-tile');
-    stagger('.testimonials', '.testimonial');
-    stagger('.price-tiers', '.price-tier');
+    stagger('.project-grid', '.project-card', 140);
+    stagger('.services-strip__grid', '.service-tile', 130);
+    stagger('.services-overview', '.service-tile', 130);
+    stagger('.testimonials', '.testimonial', 120);
+    stagger('.price-tiers', '.price-tier', 130);
+    stagger('.process', '.process__step', 110);
+  }
 
-    var targets = document.querySelectorAll('.reveal');
-    if (!targets.length) return;
+  /* ---------- C. 視差捲動 Parallax ---------- */
+  // 為帶有 data-parallax 或特定元素加上隨捲動的位移，產生深度感
+  var parallaxEls = [];
+  function setupParallax() {
+    parallaxEls = [];
+    // hero 背景光暈、案例主圖、服務區標題給予不同視差速度
+    document.querySelectorAll('.project-card--featured .project-card__image img, .hero__eyebrow')
+      .forEach(function (el) { el.setAttribute('data-parallax', el.getAttribute('data-parallax') || '0.12'); });
+    document.querySelectorAll('[data-parallax]').forEach(function (el) {
+      parallaxEls.push({ el: el, speed: parseFloat(el.getAttribute('data-parallax')) || 0.1 });
+      el.style.willChange = 'transform';
+    });
+  }
 
-    var io = new IntersectionObserver(function (entries) {
+  var ticking = false;
+  function onScrollParallax() {
+    if (ticking) return;
+    ticking = true;
+    requestAnimationFrame(function () {
+      var vh = window.innerHeight;
+      parallaxEls.forEach(function (item) {
+        var r = item.el.getBoundingClientRect();
+        // 元素相對視窗中心的距離 → 位移
+        var center = r.top + r.height / 2 - vh / 2;
+        var shift = -center * item.speed;
+        item.el.style.transform = 'translate3d(0,' + shift.toFixed(1) + 'px,0)';
+      });
+      ticking = false;
+    });
+  }
+
+  /* ---------- 觀察器：進入視窗時觸發 ---------- */
+  var io;
+  function observeAll() {
+    var titles = document.querySelectorAll('.title-reveal');
+    var reveals = document.querySelectorAll('.reveal');
+    if (io) io.disconnect();
+    io = new IntersectionObserver(function (entries) {
       entries.forEach(function (entry) {
         if (entry.isIntersecting) {
           entry.target.classList.add('is-visible');
-          io.unobserve(entry.target); // 只觸發一次
+          io.unobserve(entry.target);
         }
       });
-    }, {
-      threshold: 0.05,
-      rootMargin: '0px 0px -12% 0px'
-    });
+    }, { threshold: 0.05, rootMargin: '0px 0px -10% 0px' });
 
-    targets.forEach(function (t) { io.observe(t); });
+    titles.forEach(function (t) { io.observe(t); });
+    reveals.forEach(function (t) { io.observe(t); });
 
-    // 安全網：確保任何已進入（或接近）視窗的元素一定會顯示，避免內容卡住隱藏
+    // 安全網：已在視窗內者立即顯示
     function revealVisible() {
       var vh = window.innerHeight;
-      targets.forEach(function (t) {
-        if (t.classList.contains('is-visible')) return;
+      document.querySelectorAll('.reveal:not(.is-visible), .title-reveal:not(.is-visible)').forEach(function (t) {
         var r = t.getBoundingClientRect();
-        // 元素頂端已進入視窗下緣以上、或底端仍在視窗內 → 顯示
         if (r.top < vh * 0.95 && r.bottom > 0) {
           t.classList.add('is-visible');
-          io.unobserve(t);
+          if (io) io.unobserve(t);
         }
       });
     }
     requestAnimationFrame(revealVisible);
-    // 捲動／視窗改變時再次檢查（節流），確保頁尾元素也會觸發
-    var ticking = false;
-    function onScroll() {
-      if (ticking) return;
-      ticking = true;
-      window.requestAnimationFrame(function () { revealVisible(); ticking = false; });
-    }
-    window.addEventListener('scroll', onScroll, { passive: true });
-    window.addEventListener('resize', onScroll, { passive: true });
+    var t2 = false;
+    window.addEventListener('scroll', function () {
+      if (t2) return; t2 = true;
+      requestAnimationFrame(function () { revealVisible(); t2 = false; });
+    }, { passive: true });
+    window.addEventListener('resize', revealVisible, { passive: true });
+  }
+
+  function init() {
+    seen = [];
+    setupTitles();
+    setupReveals();
+    setupParallax();
+    observeAll();
+    window.addEventListener('scroll', onScrollParallax, { passive: true });
+    onScrollParallax();
+  }
+
+  ready(init);
+
+  // i18n 切換語言後，標題會被重寫 → 重新切字並重新觀察
+  window.addEventListener('i18n:applied', function () {
+    // 標記標題需重切
+    document.querySelectorAll('.hero__title').forEach(function (el) {
+      el.dataset.split = '';
+    });
+    setTimeout(init, 30);
   });
 })();
