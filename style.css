@@ -2301,3 +2301,65 @@ body.gallery-lightbox-open { overflow: hidden; }
   .gallery-lightbox__backdrop,
   .gallery-lightbox__figure { animation: none; }
 }
+
+/* ══ AI 智能功能卡片（案例頁）═══════════════════════════════════ */
+.ai-feature-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(248px, 1fr));
+  gap: var(--space-4);
+}
+.ai-feature-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  padding: var(--space-5);
+  border: 1px solid var(--color-border);
+  border-radius: 16px;
+  background: var(--color-surface);
+  overflow: hidden;
+  transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+}
+.ai-feature-card::before {
+  content: '';
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--color-primary), transparent);
+  opacity: 0.85;
+}
+.ai-feature-card:hover {
+  transform: translateY(-3px);
+  border-color: var(--color-primary);
+  box-shadow: 0 14px 36px rgba(0, 0, 0, 0.10);
+}
+.ai-feature-card__icon {
+  font-size: 1.5rem;
+  line-height: 1;
+}
+.ai-feature-card__title {
+  font-size: var(--text-base);
+  font-weight: 700;
+  color: var(--color-text);
+  margin: 0;
+}
+.ai-feature-card__desc {
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+  line-height: 1.7;
+  margin: 0;
+}
+.ai-feature-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  align-self: flex-start;
+  padding: 3px 11px;
+  border-radius: 999px;
+  background: var(--color-primary);
+  color: #fff;
+  font-size: var(--text-xs);
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  margin-bottom: var(--space-2);
+}
