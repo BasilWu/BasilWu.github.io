@@ -945,6 +945,18 @@ footer {
 
 .mobile-nav a:hover { color: var(--color-text-muted); }
 
+/* 選單內的 CTA 按鈕：保留按鈕樣式（隨主題反色文字、置中、無底線） */
+.mobile-nav a.btn--primary {
+  color: var(--color-text-inverse);
+  font-size: var(--text-base);
+  text-align: center;
+  justify-content: center;
+  border-bottom: none;
+  padding: var(--space-3) var(--space-5);
+}
+
+.mobile-nav a.btn--primary:hover { color: var(--color-text-inverse); }
+
 @media (max-width: 768px) {
   .hamburger { display: flex; }
   .mobile-nav { display: block; }
@@ -1337,8 +1349,13 @@ footer {
   white-space: nowrap;
 }
 
-@media (max-width: 900px) {
+/* 窄螢幕：隱藏頂部 CTA（漢堡選單內已有一顆），並收緊右側間距 */
+@media (max-width: 768px) {
   .nav__cta { display: none; }
+
+  .nav__right { gap: var(--space-3); }
+
+  .lang-switch { margin-right: var(--space-1); }
 }
 
 /* ── SERVICE TILE PRICE ───────────────── */
