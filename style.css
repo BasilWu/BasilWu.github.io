@@ -2363,3 +2363,17 @@ body.gallery-lightbox-open { overflow: hidden; }
   letter-spacing: 0.04em;
   margin-bottom: var(--space-2);
 }
+
+/* AI 區塊內的截圖輪播 */
+.ai-gallery-hint {
+  margin: var(--space-5) 0 var(--space-3);
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+  font-weight: 600;
+}
+.ai-feature-grid + .ai-gallery-hint {
+  margin-top: var(--space-6);
+}
+#ai .gallery {
+  margin-top: 0;
+}

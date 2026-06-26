@@ -1052,8 +1052,18 @@ const I18N = {
     var img = lb.querySelector('.gallery-lightbox__img');
     img.src = srcImg.getAttribute('src');
     img.alt = srcImg.getAttribute('alt') || '';
-    lb.querySelector('.gallery-lightbox__caption').textContent =
-      cap ? cap.textContent.trim() : '';
+    var capText = '';
+    if (cap) {
+      var tag = cap.querySelector('.gallery__tag');
+      if (tag) {
+        var tagText = tag.textContent.trim();
+        var rest = cap.textContent.replace(tagText, '').trim();
+        capText = tagText ? (tagText + '・' + rest) : rest;
+      } else {
+        capText = cap.textContent.trim();
+      }
+    }
+    lb.querySelector('.gallery-lightbox__caption').textContent = capText;
     lb.querySelector('.gallery-lightbox__counter').textContent =
       (lbState.index + 1) + ' / ' + lbState.slides.length;
     var prev = lb.querySelector('.gallery-lightbox__nav--prev');
