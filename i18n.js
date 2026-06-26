@@ -701,3 +701,105 @@ const I18N = {
     if (e.key === 'Escape') closeMenu();
   });
 })();
+
+/* ── 滾動進場動畫（Scroll Reveal）────────────────────────────
+   自動為頁面主要區塊與其內部群組元素加上絲滑的淡入上移效果。
+   使用 IntersectionObserver，並尊重使用者的「減少動態」偏好。 */
+(function () {
+  var reduceMotion = window.matchMedia &&
+    window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // 不支援 IntersectionObserver 或使用者要求減少動態 → 不做動畫，保持內容直接可見
+  if (reduceMotion || !('IntersectionObserver' in window)) return;
+
+  function ready(fn) {
+    document.readyState === 'loading'
+      ? document.addEventListener('DOMContentLoaded', fn)
+      : fn();
+  }
+
+  ready(function () {
+    // 需要套用進場動畫的目標：主要區段內的內容區塊
+    // （略過 hero，因為它在載入時就在畫面上，避免閃爍）
+    var groupSelectors = [
+      '.project-grid', '.project-card', '.service-tile', '.testimonial',
+      '.service-detail-block', '.service-section', '.price-tiers',
+      '.process', '.faq', '.about', '.contact', '.estimator',
+      '.section-label', '.services-overview', '.services-strip',
+      '.legal', '.contact-detail', '.form-group'
+    ];
+
+    var seen = [];
+    function collect(el) {
+      if (!el || seen.indexOf(el) !== -1) return;
+      // 不處理 hero 內部與導覽列
+      if (el.closest('.hero') || el.closest('.nav') || el.closest('.mobile-nav')) return;
+      // 略過尺寸為 0 或隱藏的元素，避免它們被掛上初始隱藏狀態
+      var rect = el.getBoundingClientRect();
+      if ((rect.width === 0 && rect.height === 0) || el.hidden) return;
+      seen.push(el);
+      el.classList.add('reveal');
+    }
+
+    groupSelectors.forEach(function (sel) {
+      document.querySelectorAll(sel).forEach(collect);
+    });
+
+    // 為「同一個父層下的多個卡片/磚塊」加上漸進延遲，做出 stagger 絲滑感
+    function stagger(containerSel, itemSel) {
+      document.querySelectorAll(containerSel).forEach(function (container) {
+        var items = container.querySelectorAll(itemSel);
+        items.forEach(function (item, i) {
+          if (item.classList.contains('reveal')) {
+            item.style.setProperty('--reveal-delay', Math.min(i * 90, 450) + 'ms');
+          }
+        });
+      });
+    }
+    stagger('.project-grid', '.project-card');
+    stagger('.services-overview', '.service-tile');
+    stagger('.testimonials', '.testimonial');
+    stagger('.price-tiers', '.price-tier');
+
+    var targets = document.querySelectorAll('.reveal');
+    if (!targets.length) return;
+
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible');
+          io.unobserve(entry.target); // 只觸發一次
+        }
+      });
+    }, {
+      threshold: 0.12,
+      rootMargin: '0px 0px -8% 0px'
+    });
+
+    targets.forEach(function (t) { io.observe(t); });
+
+    // 安全網：確保任何已進入（或接近）視窗的元素一定會顯示，避免內容卡住隱藏
+    function revealVisible() {
+      var vh = window.innerHeight;
+      targets.forEach(function (t) {
+        if (t.classList.contains('is-visible')) return;
+        var r = t.getBoundingClientRect();
+        // 元素頂端已進入視窗下緣以上、或底端仍在視窗內 → 顯示
+        if (r.top < vh * 0.95 && r.bottom > 0) {
+          t.classList.add('is-visible');
+          io.unobserve(t);
+        }
+      });
+    }
+    requestAnimationFrame(revealVisible);
+    // 捲動／視窗改變時再次檢查（節流），確保頁尾元素也會觸發
+    var ticking = false;
+    function onScroll() {
+      if (ticking) return;
+      ticking = true;
+      window.requestAnimationFrame(function () { revealVisible(); ticking = false; });
+    }
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll, { passive: true });
+  });
+})();

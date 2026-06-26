@@ -166,6 +166,34 @@ button, a {
   }
 }
 
+/* ── SCROLL REVEAL（滾動進場動畫）──────── */
+.reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition:
+    opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+  transition-delay: var(--reveal-delay, 0ms);
+  will-change: opacity, transform;
+}
+.reveal.is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+/* 縮放進場（用於卡片等區塊） */
+.reveal--scale { transform: translateY(28px) scale(0.985); }
+.reveal--scale.is-visible { transform: none; }
+
+/* 無障礙：關閉動態時直接顯示，避免內容被隱藏 */
+@media (prefers-reduced-motion: reduce) {
+  .reveal {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+}
+
 /* ── LAYOUT ───────────────────────────── */
 .container {
   max-width: var(--content-default);
