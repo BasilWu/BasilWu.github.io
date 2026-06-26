@@ -897,3 +897,102 @@ const I18N = {
     setTimeout(init, 30);
   });
 })();
+
+/* ══ CASE GALLERY CAROUSEL（案例多圖橫向輪播）═══════════════════ */
+(function () {
+  'use strict';
+  var reduce = window.matchMedia &&
+    window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function initGallery(root) {
+    var viewport = root.querySelector('.gallery__viewport');
+    var track = root.querySelector('.gallery__track');
+    if (!viewport || !track) return;
+    var slides = Array.prototype.slice.call(track.querySelectorAll('.gallery__slide'));
+    if (!slides.length) return;
+
+    var prevBtn = root.querySelector('.gallery__arrow--prev');
+    var nextBtn = root.querySelector('.gallery__arrow--next');
+    var dotsWrap = root.querySelector('.gallery__dots');
+    var dots = [];
+
+    // 動態建立進度點（依 slide 數）
+    if (dotsWrap) {
+      dotsWrap.innerHTML = '';
+      slides.forEach(function (s, i) {
+        var d = document.createElement('button');
+        d.type = 'button';
+        d.className = 'gallery__dot';
+        d.setAttribute('aria-label', '第 ' + (i + 1) + ' 張');
+        d.addEventListener('click', function () { goTo(i); });
+        dotsWrap.appendChild(d);
+        dots.push(d);
+      });
+    }
+
+    function slideStep() {
+      // 一次捲動一張（含 gap）
+      if (slides.length < 2) return slides[0].offsetWidth;
+      return slides[1].offsetLeft - slides[0].offsetLeft;
+    }
+
+    function activeIndex() {
+      var center = viewport.scrollLeft + viewport.clientWidth / 2;
+      var best = 0, bestDist = Infinity;
+      slides.forEach(function (s, i) {
+        var sc = s.offsetLeft + s.offsetWidth / 2;
+        var d = Math.abs(sc - center);
+        if (d < bestDist) { bestDist = d; best = i; }
+      });
+      return best;
+    }
+
+    function goTo(i) {
+      i = Math.max(0, Math.min(slides.length - 1, i));
+      var target = slides[i].offsetLeft -
+        (viewport.clientWidth - slides[i].offsetWidth) / 2;
+      viewport.scrollTo({
+        left: Math.max(0, target),
+        behavior: reduce ? 'auto' : 'smooth'
+      });
+    }
+
+    function update() {
+      var idx = activeIndex();
+      dots.forEach(function (d, i) {
+        d.classList.toggle('is-active', i === idx);
+      });
+      var atStart = viewport.scrollLeft <= 2;
+      var atEnd = viewport.scrollLeft + viewport.clientWidth >=
+        track.scrollWidth - 2;
+      if (prevBtn) prevBtn.disabled = atStart;
+      if (nextBtn) nextBtn.disabled = atEnd;
+    }
+
+    if (prevBtn) prevBtn.addEventListener('click', function () {
+      viewport.scrollBy({ left: -slideStep(), behavior: reduce ? 'auto' : 'smooth' });
+    });
+    if (nextBtn) nextBtn.addEventListener('click', function () {
+      viewport.scrollBy({ left: slideStep(), behavior: reduce ? 'auto' : 'smooth' });
+    });
+
+    var raf = null;
+    viewport.addEventListener('scroll', function () {
+      if (raf) return;
+      raf = requestAnimationFrame(function () { raf = null; update(); });
+    }, { passive: true });
+    window.addEventListener('resize', update, { passive: true });
+
+    update();
+  }
+
+  function boot() {
+    document.querySelectorAll('.gallery').forEach(initGallery);
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', boot);
+  } else {
+    boot();
+  }
+})();

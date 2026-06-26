@@ -82,13 +82,77 @@
     </div>
   </section>
 
-  <!-- ── 案例主視覺 ── -->
+  <!-- ── 案例主視覺（多圖橫向輪播）── -->
   <section style="padding:0 0 var(--space-10)">
     <div class="container--wide">
-      <div style="border:1px solid var(--color-border);border-radius:16px;overflow:hidden;background:var(--color-surface)">
-        <img src="/assets/work/reservation.jpg" alt="Frame &amp; Light Studio 服務業預約系統 — 實際 Demo 畫面" width="1200" height="800" loading="lazy" style="display:block;width:100%;height:auto" />
+      <div class="gallery" aria-roledescription="輪播" aria-label="Frame &amp; Light Studio 預約系統 Demo 畫面">
+        <div class="gallery__viewport">
+          <div class="gallery__track">
+            <div class="gallery__slide">
+              <figure class="gallery__card">
+                <img class="gallery__img" src="/assets/work/reservation/01-home.jpg" alt="Frame &amp; Light Studio — 首頁" width="1600" height="1000" loading="lazy" />
+                <figcaption class="gallery__caption"><span class="gallery__tag">前台</span>工作室首頁：品牌介紹與預約入口</figcaption>
+              </figure>
+            </div>
+            <div class="gallery__slide">
+              <figure class="gallery__card">
+                <img class="gallery__img" src="/assets/work/reservation/02-services.jpg" alt="Frame &amp; Light Studio — 服務方案" width="1600" height="1000" loading="lazy" />
+                <figcaption class="gallery__caption"><span class="gallery__tag">前台</span>服務方案：拍攝方案與價格說明</figcaption>
+              </figure>
+            </div>
+            <div class="gallery__slide">
+              <figure class="gallery__card">
+                <img class="gallery__img" src="/assets/work/reservation/03-booking.jpg" alt="Frame &amp; Light Studio — 預約流程" width="1600" height="1000" loading="lazy" />
+                <figcaption class="gallery__caption"><span class="gallery__tag">前台</span>預約流程：選擇服務項目</figcaption>
+              </figure>
+            </div>
+            <div class="gallery__slide">
+              <figure class="gallery__card">
+                <img class="gallery__img" src="/assets/work/reservation/04-booking-time.jpg" alt="Frame &amp; Light Studio — 選擇時段" width="1600" height="1000" loading="lazy" />
+                <figcaption class="gallery__caption"><span class="gallery__tag">前台</span>選擇時段：可預約日期與時間</figcaption>
+              </figure>
+            </div>
+            <div class="gallery__slide">
+              <figure class="gallery__card">
+                <img class="gallery__img" src="/assets/work/reservation/05-portfolio.jpg" alt="Frame &amp; Light Studio — 作品集" width="1600" height="1000" loading="lazy" />
+                <figcaption class="gallery__caption"><span class="gallery__tag">前台</span>作品集：拍攝作品展示</figcaption>
+              </figure>
+            </div>
+            <div class="gallery__slide">
+              <figure class="gallery__card">
+                <img class="gallery__img" src="/assets/work/reservation/06-admin-dashboard.jpg" alt="Frame &amp; Light Studio — 後台儀表板" width="1600" height="1000" loading="lazy" />
+                <figcaption class="gallery__caption"><span class="gallery__tag gallery__tag--admin">後台</span>管理儀表板：預約統計與營收概覽</figcaption>
+              </figure>
+            </div>
+            <div class="gallery__slide">
+              <figure class="gallery__card">
+                <img class="gallery__img" src="/assets/work/reservation/07-admin-calendar.jpg" alt="Frame &amp; Light Studio — 後台行事曆" width="1600" height="1000" loading="lazy" />
+                <figcaption class="gallery__caption"><span class="gallery__tag gallery__tag--admin">後台</span>預約行事曆：月月檢視排程</figcaption>
+              </figure>
+            </div>
+            <div class="gallery__slide">
+              <figure class="gallery__card">
+                <img class="gallery__img" src="/assets/work/reservation/08-admin-bookings.jpg" alt="Frame &amp; Light Studio — 後台預約管理" width="1600" height="1000" loading="lazy" />
+                <figcaption class="gallery__caption"><span class="gallery__tag gallery__tag--admin">後台</span>預約管理：訂單列表與狀態徽章</figcaption>
+              </figure>
+            </div>
+            <div class="gallery__slide">
+              <figure class="gallery__card">
+                <img class="gallery__img" src="/assets/work/reservation/09-admin-accounting.jpg" alt="Frame &amp; Light Studio — 後台帳務" width="1600" height="1000" loading="lazy" />
+                <figcaption class="gallery__caption"><span class="gallery__tag gallery__tag--admin">後台</span>帳務管理：收支、淨利與應收賬齡</figcaption>
+              </figure>
+            </div>
+          </div>
+        </div>
+        <div class="gallery__controls">
+          <div class="gallery__dots" aria-hidden="true"></div>
+          <div class="gallery__arrows">
+            <button type="button" class="gallery__arrow gallery__arrow--prev" aria-label="上一張">&#8592;</button>
+            <button type="button" class="gallery__arrow gallery__arrow--next" aria-label="下一張">&#8594;</button>
+          </div>
+        </div>
       </div>
-      <p style="margin:var(--space-3) 0 0;font-size:var(--text-sm);color:var(--color-text-muted)">Demo 範例：Frame &amp; Light Studio（攝影棚預約）。實際畫面、品牌與功能依你的需求調整。</p>
+      <p style="margin:var(--space-4) 0 0;font-size:var(--text-sm);color:var(--color-text-muted)">Demo 範例：Frame &amp; Light Studio（攝影棚預約）。實際畫面、品牌與功能依你的需求調整。</p>
     </div>
   </section>
 

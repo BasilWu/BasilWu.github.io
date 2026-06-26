@@ -1978,6 +1978,104 @@ footer {
   }
 }
 
+/* ══ CASE GALLERY CAROUSEL（案例多圖橫向輪播）═══════ */
+.gallery {
+  position: relative;
+}
+.gallery__viewport {
+  overflow-x: auto;
+  overflow-y: hidden;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  border-radius: 16px;
+}
+.gallery__viewport::-webkit-scrollbar { display: none; }
+.gallery__track {
+  display: flex;
+  gap: var(--space-4);
+}
+.gallery__slide {
+  flex: 0 0 88%;            /* 手機：一次顯示主要一張，右側露出下一張提示可滑 */
+  scroll-snap-align: center;
+}
+.gallery__card {
+  border: 1px solid var(--color-border);
+  border-radius: 16px;
+  overflow: hidden;
+  background: var(--color-surface);
+  height: 100%;
+}
+.gallery__img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16 / 10;
+  object-fit: cover;
+}
+.gallery__caption {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-3) var(--space-4);
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+  border-top: 1px solid var(--color-divider);
+}
+.gallery__tag {
+  flex: 0 0 auto;
+  font-size: var(--text-xs);
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  padding: 3px 8px;
+  border-radius: 999px;
+  background: var(--color-surface-offset);
+  color: var(--color-text);
+}
+.gallery__tag--admin {
+  background: color-mix(in oklab, var(--color-primary) 88%, transparent);
+  color: var(--color-bg);
+}
+
+/* 控制列：左右箭頭 + 進度點 */
+.gallery__controls {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+  margin-top: var(--space-4);
+}
+.gallery__arrows { display: flex; gap: var(--space-2); }
+.gallery__arrow {
+  width: 44px; height: 44px;
+  display: inline-flex; align-items: center; justify-content: center;
+  border: 1px solid var(--color-border);
+  border-radius: 999px;
+  background: var(--color-surface);
+  color: var(--color-text);
+  cursor: pointer;
+  font-size: var(--text-lg);
+  transition: background var(--transition-interactive), opacity var(--transition-interactive), transform var(--transition-interactive);
+}
+.gallery__arrow:hover { background: var(--color-surface-offset); transform: translateY(-1px); }
+.gallery__arrow:disabled { opacity: 0.35; cursor: default; transform: none; }
+.gallery__dots { display: flex; gap: 7px; flex-wrap: wrap; }
+.gallery__dot {
+  width: 8px; height: 8px; border-radius: 999px;
+  border: none; padding: 0; cursor: pointer;
+  background: var(--color-border);
+  transition: background var(--transition-interactive), width var(--transition-interactive);
+}
+.gallery__dot.is-active { background: var(--color-primary); width: 22px; }
+
+/* 桌機：一次顯示兩張半 */
+@media (min-width: 768px) {
+  .gallery__slide { flex-basis: 46%; }
+}
+@media (min-width: 1100px) {
+  .gallery__slide { flex-basis: 38%; }
+}
+
 /* ── FLOAT CONTACT z-index fix ────────── */
 /* 確保浮動按鈕不遮住 nav 的點擊範圍 */
 .float-contact {

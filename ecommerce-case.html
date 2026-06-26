@@ -82,13 +82,53 @@
     </div>
   </section>
 
-  <!-- ── 案例主視覺 ── -->
+  <!-- ── 案例主視覺（多圖橫向輪播）── -->
   <section style="padding:0 0 var(--space-10)">
     <div class="container--wide">
-      <div style="border:1px solid var(--color-border);border-radius:16px;overflow:hidden;background:var(--color-surface)">
-        <img src="/assets/work/ecommerce.jpg" alt="STREET LAB 街頭實驗室 品牌電商系統 — 實際 Demo 畫面" width="1600" height="1000" loading="lazy" style="display:block;width:100%;height:auto" />
+      <div class="gallery" aria-roledescription="輪播" aria-label="STREET LAB 品牌電商 Demo 畫面">
+        <div class="gallery__viewport">
+          <div class="gallery__track">
+            <div class="gallery__slide">
+              <figure class="gallery__card">
+                <img class="gallery__img" src="/assets/work/ecommerce/01-home.jpg" alt="STREET LAB 品牌電商 — 首頁" width="1600" height="1000" loading="lazy" />
+                <figcaption class="gallery__caption"><span class="gallery__tag">前台</span>品牌首頁：主視覺與精選商品</figcaption>
+              </figure>
+            </div>
+            <div class="gallery__slide">
+              <figure class="gallery__card">
+                <img class="gallery__img" src="/assets/work/ecommerce/02-products.jpg" alt="STREET LAB 品牌電商 — 商品列表" width="1600" height="1000" loading="lazy" />
+                <figcaption class="gallery__caption"><span class="gallery__tag">前台</span>商品列表：分類篩選與排序</figcaption>
+              </figure>
+            </div>
+            <div class="gallery__slide">
+              <figure class="gallery__card">
+                <img class="gallery__img" src="/assets/work/ecommerce/03-product.jpg" alt="STREET LAB 品牌電商 — 商品詳情" width="1600" height="1000" loading="lazy" />
+                <figcaption class="gallery__caption"><span class="gallery__tag">前台</span>商品詳情：規格選擇與加入購物車</figcaption>
+              </figure>
+            </div>
+            <div class="gallery__slide">
+              <figure class="gallery__card">
+                <img class="gallery__img" src="/assets/work/ecommerce/04-cart.jpg" alt="STREET LAB 品牌電商 — 購物車" width="1600" height="1000" loading="lazy" />
+                <figcaption class="gallery__caption"><span class="gallery__tag">前台</span>購物車：數量調整與結帳入口</figcaption>
+              </figure>
+            </div>
+            <div class="gallery__slide">
+              <figure class="gallery__card">
+                <img class="gallery__img" src="/assets/work/ecommerce/05-news.jpg" alt="STREET LAB 品牌電商 — 最新消息" width="1600" height="1000" loading="lazy" />
+                <figcaption class="gallery__caption"><span class="gallery__tag">前台</span>最新消息：活動與品牌內容</figcaption>
+              </figure>
+            </div>
+          </div>
+        </div>
+        <div class="gallery__controls">
+          <div class="gallery__dots" aria-hidden="true"></div>
+          <div class="gallery__arrows">
+            <button type="button" class="gallery__arrow gallery__arrow--prev" aria-label="上一張">&#8592;</button>
+            <button type="button" class="gallery__arrow gallery__arrow--next" aria-label="下一張">&#8594;</button>
+          </div>
+        </div>
       </div>
-      <p style="margin:var(--space-3) 0 0;font-size:var(--text-sm);color:var(--color-text-muted)">Demo 範例：STREET LAB 街頭實驗室（品牌選物電商）。實際畫面、品牌與功能依你的需求調整。</p>
+      <p style="margin:var(--space-4) 0 0;font-size:var(--text-sm);color:var(--color-text-muted)">Demo 範例：STREET LAB 街頭實驗室（品牌選物電商）。可左右滑動或點箭頭瀏覽多個實際畫面。品牌與功能依你的需求調整。</p>
     </div>
   </section>
 
