@@ -118,10 +118,13 @@ html {
   -moz-osx-font-smoothing: grayscale;
   scroll-behavior: smooth;
   scroll-padding-top: var(--space-16);
+  overflow-x: hidden;        /* 防止任何超寬元素造成整頁橫向拖動 */
 }
 
 body {
   min-height: 100dvh;
+  overflow-x: hidden;        /* 雙重防護：手機上門頁不會出現右側空白 */
+  max-width: 100%;
   line-height: 1.6;
   font-family: var(--font-body);
   font-size: var(--text-base);
@@ -1953,9 +1956,17 @@ footer {
 
 /* 手機：服務總覽 strip 改為可橫向滑動，避免五欄碎字 */
 @media (max-width: 760px) {
+  /* 關鍵：把橫滑關在 section 內部，不讓它擐開整頁寬度 */
+  .services-overview {
+    overflow-x: hidden;
+  }
+  .services-overview .container--wide {
+    padding-inline: 0;         /* 讓橫滑貼齊螢幕邊緣 */
+  }
   .services-overview__grid {
     scroll-snap-type: x proximity;
     -webkit-overflow-scrolling: touch;
+    padding-inline: var(--space-6); /* 內審代替原容器 padding，首末項不貼邊 */
   }
   .services-overview__item {
     flex: 0 0 auto;            /* 不再平均壓縮，保留完整文字 */
