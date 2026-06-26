@@ -991,6 +991,106 @@ const I18N = {
     window.addEventListener('resize', update, { passive: true });
 
     update();
+
+    // 讓每張圖可點擊放大（燈箱）
+    slides.forEach(function (s, i) {
+      var img = s.querySelector('.gallery__img');
+      if (!img) return;
+      img.classList.add('gallery__img--zoomable');
+      img.setAttribute('role', 'button');
+      img.setAttribute('tabindex', '0');
+      img.setAttribute('aria-label', '放大檢視第 ' + (i + 1) + ' 張');
+      img.addEventListener('click', function () { openLightbox(slides, i); });
+      img.addEventListener('keydown', function (e) {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          openLightbox(slides, i);
+        }
+      });
+    });
+  }
+
+  /* ── 燈箱（全螢幕放大檢視）────────────────────────── */
+  var lb = null;
+  var lbState = { slides: [], index: 0 };
+
+  function buildLightbox() {
+    if (lb) return lb;
+    lb = document.createElement('div');
+    lb.className = 'gallery-lightbox';
+    lb.setAttribute('role', 'dialog');
+    lb.setAttribute('aria-modal', 'true');
+    lb.setAttribute('aria-label', '圖片放大檢視');
+    lb.innerHTML =
+      '<div class="gallery-lightbox__backdrop"></div>' +
+      '<button type="button" class="gallery-lightbox__close" aria-label="關閉">&times;</button>' +
+      '<button type="button" class="gallery-lightbox__nav gallery-lightbox__nav--prev" aria-label="上一張">&#8249;</button>' +
+      '<button type="button" class="gallery-lightbox__nav gallery-lightbox__nav--next" aria-label="下一張">&#8250;</button>' +
+      '<figure class="gallery-lightbox__figure">' +
+        '<img class="gallery-lightbox__img" alt="" />' +
+        '<figcaption class="gallery-lightbox__caption"></figcaption>' +
+      '</figure>' +
+      '<div class="gallery-lightbox__counter"></div>';
+    document.body.appendChild(lb);
+
+    lb.querySelector('.gallery-lightbox__backdrop')
+      .addEventListener('click', closeLightbox);
+    lb.querySelector('.gallery-lightbox__close')
+      .addEventListener('click', closeLightbox);
+    lb.querySelector('.gallery-lightbox__nav--prev')
+      .addEventListener('click', function () { stepLightbox(-1); });
+    lb.querySelector('.gallery-lightbox__nav--next')
+      .addEventListener('click', function () { stepLightbox(1); });
+    return lb;
+  }
+
+  function renderLightbox() {
+    var slide = lbState.slides[lbState.index];
+    if (!slide) return;
+    var srcImg = slide.querySelector('.gallery__img');
+    var cap = slide.querySelector('.gallery__caption');
+    var img = lb.querySelector('.gallery-lightbox__img');
+    img.src = srcImg.getAttribute('src');
+    img.alt = srcImg.getAttribute('alt') || '';
+    lb.querySelector('.gallery-lightbox__caption').textContent =
+      cap ? cap.textContent.trim() : '';
+    lb.querySelector('.gallery-lightbox__counter').textContent =
+      (lbState.index + 1) + ' / ' + lbState.slides.length;
+    var prev = lb.querySelector('.gallery-lightbox__nav--prev');
+    var next = lb.querySelector('.gallery-lightbox__nav--next');
+    var multi = lbState.slides.length > 1;
+    prev.style.display = multi ? '' : 'none';
+    next.style.display = multi ? '' : 'none';
+  }
+
+  function openLightbox(slides, index) {
+    buildLightbox();
+    lbState.slides = slides;
+    lbState.index = index;
+    renderLightbox();
+    lb.classList.add('is-open');
+    document.body.classList.add('gallery-lightbox-open');
+    document.addEventListener('keydown', onLightboxKey);
+  }
+
+  function closeLightbox() {
+    if (!lb) return;
+    lb.classList.remove('is-open');
+    document.body.classList.remove('gallery-lightbox-open');
+    document.removeEventListener('keydown', onLightboxKey);
+  }
+
+  function stepLightbox(dir) {
+    if (!lbState.slides.length) return;
+    var n = lbState.slides.length;
+    lbState.index = (lbState.index + dir + n) % n;
+    renderLightbox();
+  }
+
+  function onLightboxKey(e) {
+    if (e.key === 'Escape') closeLightbox();
+    else if (e.key === 'ArrowLeft') stepLightbox(-1);
+    else if (e.key === 'ArrowRight') stepLightbox(1);
   }
 
   function boot() {
