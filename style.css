@@ -2068,12 +2068,12 @@ footer {
 }
 .gallery__dot.is-active { background: var(--color-primary); width: 22px; }
 
-/* 桌機：一次顯示兩張半 */
+/* 平板與桌機：一次一張完整大圖，左右露出少許前後張當「還有更多」提示 */
 @media (min-width: 768px) {
-  .gallery__slide { flex-basis: 46%; }
+  .gallery__slide { flex-basis: 72%; }
 }
 @media (min-width: 1100px) {
-  .gallery__slide { flex-basis: 38%; }
+  .gallery__slide { flex-basis: 64%; }
 }
 
 /* ── FLOAT CONTACT z-index fix ────────── */
