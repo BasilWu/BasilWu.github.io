@@ -1320,6 +1320,60 @@ footer {
   max-width: 65ch;
 }
 
+.faq__heading {
+  font-size: var(--text-2xl);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  color: var(--color-text);
+  margin-top: var(--space-4);
+  margin-bottom: var(--space-8);
+  max-width: 20ch;
+}
+
+/* ── NAV CTA BUTTON ───────────────────── */
+.nav__cta {
+  padding: var(--space-2) var(--space-4);
+  font-size: var(--text-sm);
+  white-space: nowrap;
+}
+
+@media (max-width: 900px) {
+  .nav__cta { display: none; }
+}
+
+/* ── SERVICE TILE PRICE ───────────────── */
+.service-tile__price {
+  margin-top: var(--space-3);
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-2);
+}
+
+.service-tile__price strong {
+  font-size: var(--text-base);
+  font-weight: 700;
+  color: var(--color-text);
+  letter-spacing: -0.01em;
+}
+
+/* ── CONSULT EMAIL LINE ───────────────── */
+.consult-email {
+  margin-top: var(--space-5);
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+}
+
+.consult-email a {
+  color: var(--color-text);
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.consult-email a:hover { color: var(--color-primary); }
+
 /* ── CONTACT PAGE RESPONSIVE ──────────── */
 @media (max-width: 768px) {
   .contact-page__inner {
