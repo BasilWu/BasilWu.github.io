@@ -2076,6 +2076,19 @@ footer {
   .gallery__slide { flex-basis: 64%; }
 }
 
+/* ══ 輪播進場：每張卡片依序淡入（不用位移 transform，以免干擾橫向捷動）══ */
+.gallery.reveal.is-visible .gallery__card {
+  animation: gallerySlideIn 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation-delay: var(--slide-delay, 0ms);
+}
+@keyframes gallerySlideIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .gallery.reveal.is-visible .gallery__card { animation: none; }
+}
+
 /* ══ STAT 數字看板：大標題不換行，字級隨欄寬自動縮放 ══ */
 .stat-figure {
   margin: 0;

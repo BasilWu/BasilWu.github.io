@@ -805,6 +805,13 @@ const I18N = {
     stagger('.testimonials', '.testimonial', 120);
     stagger('.price-tiers', '.price-tier', 130);
     stagger('.process', '.process__step', 110);
+
+    // 輪播：為前幾張可見 slide 設定淡入延遲，做出「一張接一張」進場
+    document.querySelectorAll('.gallery').forEach(function (g) {
+      g.querySelectorAll('.gallery__slide').forEach(function (slide, i) {
+        slide.style.setProperty('--slide-delay', Math.min(i * 110, 660) + 'ms');
+      });
+    });
   }
 
   /* ---------- C. 視差捲動 Parallax ---------- */
