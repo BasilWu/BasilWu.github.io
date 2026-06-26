@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="zh-TW" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <script>document.documentElement.setAttribute("data-theme",localStorage.getItem("theme")||(matchMedia("(prefers-color-scheme:dark)").matches?"dark":"light"));</script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="服務業預約系統案例 — 客人自己上網選時段、付訂金，後台整合行事曆、預約管理、器材庫存、帳務報表與 LINE 通知。適合攝影棚、美業、診所、教室、民宿。" />
+  <title>服務業預約系統案例 — MosStack Studio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/x-icon" href="/assets/favicon.ico" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png" />
+  <meta name="theme-color" content="#080c14" />
+  <meta property="og:title" content="服務業預約系統案例 — MosStack Studio" />
+  <meta property="og:description" content="客人自己上網選時段、付訂金，後台整合行事曆、預約管理、器材庫存、帳務報表與 LINE 通知。" />
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://mosstack.studio/reservation-case.html" />
+  <meta property="og:image" content="https://mosstack.studio/assets/work/reservation.jpg" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="800" />
+  <meta property="og:locale" content="zh_TW" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="服務業預約系統案例 — MosStack Studio" />
+  <meta name="twitter:description" content="客人自己上網選時段、付訂金，後台整合行事曆、預約管理、器材庫存、帳務報表與 LINE 通知。" />
+  <meta name="twitter:image" content="https://mosstack.studio/assets/work/reservation.jpg" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <nav class="nav">
+    <div class="nav__inner">
+      <a href="/" class="nav__logo" data-i18n="nav.logo">MosStack</a>
+      <ul class="nav__links">
+        <li><a href="/portfolio.html" class="nav__link--active" data-i18n="nav.work">精選案例</a></li>
+        <li><a href="/services.html" data-i18n="nav.services">服務項目</a></li>
+        <li><a href="/#studio" data-i18n="nav.studio">關於工作室</a></li>
+        <li><a href="/contact.html" data-i18n="nav.contact">聯絡我們</a></li>
+      </ul>
+      <div class="nav__right">
+        <div class="lang-switch" aria-label="Language switcher">
+          <button class="lang-switch__btn" type="button" data-lang-switch="en">EN</button>
+          <button class="lang-switch__btn is-active" type="button" data-lang-switch="zh">中</button>
+        </div>
+        <div class="nav__social">
+          <a href="https://github.com/BasilWu" target="_blank" rel="noopener" aria-label="GitHub">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5C5.65.5.5 5.65.5 12c0 5.1 3.29 9.42 7.86 10.95.57.1.78-.25.78-.55v-2.1c-3.2.7-3.87-1.54-3.87-1.54-.52-1.33-1.27-1.69-1.27-1.69-1.04-.71.08-.7.08-.7 1.15.08 1.75 1.18 1.75 1.18 1.02 1.75 2.68 1.24 3.33.95.1-.74.4-1.24.72-1.53-2.55-.29-5.23-1.28-5.23-5.68 0-1.25.45-2.28 1.18-3.08-.12-.3-.51-1.46.11-3.04 0 0 .96-.31 3.15 1.18a10.94 10.94 0 0 1 5.74 0C17.04 5.8 18 6.11 18 6.11c.62 1.58.23 2.74.11 3.04.73.8 1.18 1.83 1.18 3.08 0 4.41-2.69 5.38-5.25 5.67.41.36.78 1.07.78 2.15v3.18c0 .31.2.66.79.55A11.51 11.51 0 0 0 23.5 12C23.5 5.65 18.35.5 12 .5z"/></svg>
+          </a>
+        </div>
+        <button class="theme-toggle" data-theme-toggle aria-label="切換深色模式">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        </button>
+        <button class="hamburger" id="hamburger" type="button" aria-label="開啟選單" aria-expanded="false">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <div class="mobile-nav" id="mobileNav" aria-hidden="true">
+    <ul>
+      <li><a href="/portfolio.html" data-i18n="nav.work">精選案例</a></li>
+      <li><a href="/services.html" data-i18n="nav.services">服務項目</a></li>
+      <li><a href="/#studio" data-i18n="nav.studio">關於工作室</a></li>
+      <li><a href="/contact.html" data-i18n="nav.contact">聯絡我們</a></li>
+    </ul>
+  </div>
+
+  <!-- ── HERO ── -->
+  <section class="hero">
+    <div class="container">
+      <p class="hero__eyebrow">案例研究 · 預約 &amp; 訂房系統</p>
+      <h1 class="hero__title">服務業預約系統<br><span>讓客人自己預約，你少回一百句 LINE。</span></h1>
+      <p class="hero__subtitle">攝影棚、美業、診所、教室、民宿都適用。客人自己上網選時段、線上付訂金，預約滿了自動關閉，系統主動提醒，後台一頁看清所有預約、庫存與帳務。</p>
+      <div class="hero__cta">
+        <a href="/contact.html" class="btn btn--primary">聊聊你的預約流程</a>
+        <a href="https://reservation-template-virid.vercel.app" target="_blank" rel="noopener noreferrer" class="btn btn--ghost">↗ 開啟線上 Demo</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── 案例主視覺 ── -->
+  <section style="padding:0 0 var(--space-10)">
+    <div class="container--wide">
+      <div style="border:1px solid var(--color-border);border-radius:16px;overflow:hidden;background:var(--color-surface)">
+        <img src="/assets/work/reservation.jpg" alt="Frame &amp; Light Studio 服務業預約系統 — 實際 Demo 畫面" width="1200" height="800" loading="lazy" style="display:block;width:100%;height:auto" />
+      </div>
+      <p style="margin:var(--space-3) 0 0;font-size:var(--text-sm);color:var(--color-text-muted)">Demo 範例：Frame &amp; Light Studio（攝影棚預約）。實際畫面、品牌與功能依你的需求調整。</p>
+    </div>
+  </section>
+
+  <div id="case-body">
+
+    <!-- ── 01 解決什麼問題 ── -->
+    <section class="service-section" id="problem">
+      <div class="container">
+        <div class="service-section__inner">
+          <div class="service-section__header">
+            <span class="service-section__num">01</span>
+            <h2 class="service-section__title">解決什麼問題</h2>
+            <p class="service-section__desc">服務業最花時間的不是服務本身，是「喬時間」。手動用 LINE 一句一句回、怕重複排約、怕客人放鳥、月底還要翻對話記錄算帳——這套系統把這些全部自動化。</p>
+          </div>
+          <div class="service-section__body">
+            <div class="service-detail-block">
+              <p class="service-detail-block__label">原本的痛點</p>
+              <ul class="service-checklist">
+                <li>客人私訊問「這個時段還有嗎」，你得隨時盯著手機回。</li>
+                <li>口頭約定沒收訂金，臨時取消或放鳥損失難追。</li>
+                <li>同一時段不小心收了兩組客人，得低頭道歉。</li>
+                <li>器材、空間有沒有被借走，全憑記憶。</li>
+                <li>月底對帳要翻 LINE、翻轉帳記錄，算到頭痛。</li>
+              </ul>
+            </div>
+            <div class="service-detail-block">
+              <p class="service-detail-block__label">這套系統怎麼解</p>
+              <ul class="service-checklist">
+                <li>客人 24 小時自己上網看可預約時段、直接下訂。</li>
+                <li>線上收訂金，降低臨時取消與放鳥。</li>
+                <li>同時段被約滿後自動關閉，不會重複收單。</li>
+                <li>器材與空間庫存連動，借出狀態一目了然。</li>
+                <li>預約、收款、帳務自動匯整成報表。</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── 02 核心功能 ── -->
+    <section class="service-section service-section--alt" id="features">
+      <div class="container">
+        <div class="service-section__inner">
+          <div class="service-section__header">
+            <span class="service-section__num">02</span>
+            <h2 class="service-section__title">核心功能</h2>
+            <p class="service-section__desc">前台給客人順暢的預約體驗，後台給你一頁掌握全店營運。前後台同一套資料，不用兩邊對。</p>
+          </div>
+          <div class="service-section__body">
+            <div class="service-detail-block">
+              <p class="service-detail-block__label">客人端（前台）</p>
+              <ul class="service-checklist">
+                <li>選日期、時段、人數，即時顯示可預約狀態。</li>
+                <li>線上付訂金 / 全額（綠界金流，信用卡、ATM、超商）。</li>
+                <li>預約完成自動寄出確認，行程前主動提醒。</li>
+                <li>手機操作優化，客人不用安裝任何 App。</li>
+              </ul>
+            </div>
+            <div class="service-detail-block">
+              <p class="service-detail-block__label">老闆端（後台）</p>
+              <ul class="service-checklist">
+                <li>行事曆檢視：一頁看完所有預約與空檔。</li>
+                <li>預約管理：手動新增、改期、取消、標記到店。</li>
+                <li>器材 / 空間庫存：借出與歸還狀態連動。</li>
+                <li>帳務報表：營收、訂金、預約量一鍵匯整。</li>
+                <li>LINE 客戶訊息整合，溝通記錄不漏接。</li>
+              </ul>
+            </div>
+            <div class="service-detail-block">
+              <p class="service-detail-block__label">技術棧</p>
+              <div class="skills__list">
+                <span class="tag">Next.js 14</span><span class="tag">TypeScript</span>
+                <span class="tag">PostgreSQL / Neon</span><span class="tag">Prisma</span>
+                <span class="tag">Auth.js</span><span class="tag">FullCalendar</span>
+                <span class="tag">綠界 ECPay</span><span class="tag">LINE Messaging API</span>
+                <span class="tag">Vercel</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── 03 適合什麼客戶 ── -->
+    <section class="service-section" id="fit">
+      <div class="container">
+        <div class="service-section__inner">
+          <div class="service-section__header">
+            <span class="service-section__num">03</span>
+            <h2 class="service-section__title">適合什麼客戶</h2>
+            <p class="service-section__desc">只要你的生意是「按時段 / 按空間」在賣，而且還在用 LINE、表單或紙本排約，這套就適合你。</p>
+          </div>
+          <div class="service-section__body">
+            <div class="service-detail-block">
+              <p class="service-detail-block__label">特別適合</p>
+              <div class="service-section__cases">
+                <span class="service-case-tag">→ 攝影棚 / 場地租借</span>
+                <span class="service-case-tag">→ 美容 / 美甲 / 美睫</span>
+                <span class="service-case-tag">→ 診所 / 牙醫 / 物理治療</span>
+                <span class="service-case-tag">→ 教室 / 講師 / 工作坊</span>
+                <span class="service-case-tag">→ 民宿 / 包棟 / 旅宿</span>
+              </div>
+            </div>
+            <div class="service-detail-block">
+              <p class="service-detail-block__label">什麼時候該換系統</p>
+              <ul class="service-checklist">
+                <li>每天花太多時間在 LINE 回覆排約。</li>
+                <li>曾經重複收單、漏約或忘記提醒客人。</li>
+                <li>現成預約軟體的版型 / 抽成 / 限制讓你綁手綁腳。</li>
+                <li>想要自己的品牌頁面，而不是掛在別人平台上。</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── 04 可客製哪些地方 ── -->
+    <section class="service-section service-section--alt" id="custom">
+      <div class="container">
+        <div class="service-section__inner">
+          <div class="service-section__header">
+            <span class="service-section__num">04</span>
+            <h2 class="service-section__title">可客製哪些地方</h2>
+            <p class="service-section__desc">Demo 是基礎版，實際交付會依你的營運方式調整。常見的客製方向如下。</p>
+          </div>
+          <div class="service-section__body">
+            <div class="service-detail-block">
+              <p class="service-detail-block__label">預約邏輯</p>
+              <ul class="service-checklist">
+                <li>時段長度、緩衝時間、提前 / 截止預約規則。</li>
+                <li>多服務項目、多人員 / 多空間分別排程。</li>
+                <li>訂金比例、取消政策與退款規則。</li>
+              </ul>
+            </div>
+            <div class="service-detail-block">
+              <p class="service-detail-block__label">通知與金流</p>
+              <ul class="service-checklist">
+                <li>LINE / Email / 簡訊提醒，文案與時機可調。</li>
+                <li>金流可換成藍新、街口或其他支付。</li>
+                <li>串接你現有的 LINE 官方帳號。</li>
+              </ul>
+            </div>
+            <div class="service-detail-block">
+              <p class="service-detail-block__label">品牌與整合</p>
+              <ul class="service-checklist">
+                <li>套用你的品牌色、Logo、網域。</li>
+                <li>與官網、會員系統或既有後台整合。</li>
+                <li>多分店 / 多館營運與權限分層。</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── 線上 Demo 區 ── -->
+    <section class="service-section" id="demo">
+      <div class="container">
+        <div class="service-section__inner">
+          <div class="service-section__header">
+            <span class="service-section__num">05</span>
+            <h2 class="service-section__title">線上 Demo</h2>
+            <p class="service-section__desc">可以直接點開試完整預約流程，也能登入後台看老闆端的管理畫面。</p>
+          </div>
+          <div class="service-section__body">
+            <div class="service-detail-block">
+              <p class="service-detail-block__label">前台預約體驗</p>
+              <p>實際走一次選時段、填資料到付訂金的流程，感受客人會看到什麼。</p>
+            </div>
+            <div class="service-detail-block">
+              <p class="service-detail-block__label">後台試用帳號</p>
+              <p style="margin:0 0 4px">登入路徑：<code>/admin/login</code></p>
+              <p style="margin:0;color:var(--color-text-muted);font-size:var(--text-sm)">帳號：owner@example.com　·　密碼：changeme</p>
+            </div>
+            <div style="display:flex; gap: var(--space-3); flex-wrap:wrap;">
+              <a href="https://reservation-template-virid.vercel.app" target="_blank" rel="noopener noreferrer" class="btn btn--primary">↗ 開啟線上 Demo</a>
+              <a href="https://reservation-template-virid.vercel.app/admin/login" target="_blank" rel="noopener noreferrer" class="btn btn--ghost">↗ 進入後台 Demo</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+  <!-- ── CTA：聯絡取得報價 ── -->
+  <section class="contact">
+    <div class="container">
+      <div class="contact__inner">
+        <p class="section-label">聯絡我們</p>
+        <h2 class="contact__heading">想要一套這樣的預約系統？</h2>
+        <p class="contact__sub">告訴我們你的服務類型與排約方式，我們會依需求規劃功能並提供報價。把這頁網址直接丟給我們，溝通更快。</p>
+        <div class="contact__links">
+          <a href="/contact.html" class="btn btn--primary">聯絡取得報價</a>
+          <a href="/portfolio.html" class="btn btn--ghost">回到精選案例</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="footer__inner">
+      <div class="footer__brand">
+        <p class="footer__brand-name">MosStack Studio</p>
+        <p class="footer__tagline" data-i18n="footer.tagline">位於台中的全端接案工作室，專注於電商、品牌官網、預約系統與 B2B 後台開發。</p>
+        <div class="footer__social">
+          <a href="https://github.com/BasilWu" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .5C5.65.5.5 5.65.5 12c0 5.1 3.29 9.42 7.86 10.95.57.1.78-.25.78-.55v-2.1c-3.2.7-3.87-1.54-3.87-1.54-.52-1.33-1.27-1.69-1.27-1.69-1.04-.71.08-.7.08-.7 1.15.08 1.75 1.18 1.75 1.18 1.02 1.75 2.68 1.24 3.33.95.1-.74.4-1.24.72-1.53-2.55-.29-5.23-1.28-5.23-5.68 0-1.25.45-2.28 1.18-3.08-.12-.3-.51-1.46.11-3.04 0 0 .96-.31 3.15 1.18a10.94 10.94 0 0 1 5.74 0C17.04 5.8 18 6.11 18 6.11c.62 1.58.23 2.74.11 3.04.73.8 1.18 1.83 1.18 3.08 0 4.41-2.69 5.38-5.25 5.67.41.36.78 1.07.78 2.15v3.18c0 .31.2.66.79.55A11.51 11.51 0 0 0 23.5 12C23.5 5.65 18.35.5 12 .5z"/></svg>
+          </a>
+          <a href="https://wa.me/886980054850" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+          </a>
+          <a href="https://line.me/ti/p/hz6EePU4Ha" target="_blank" rel="noopener noreferrer" aria-label="Line">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M19.365 9.863c.349 0 .63.285.63.631 0 .345-.281.63-.63.63H17.61v1.125h1.755c.349 0 .63.283.63.63 0 .344-.281.629-.63.629h-2.386c-.345 0-.627-.285-.627-.629V8.108c0-.345.282-.63.63-.63h2.386c.349 0 .63.285.63.63 0 .349-.281.63-.63.63H17.61v1.125h1.755zm-3.855 3.016c0 .27-.174.51-.432.596-.064.021-.133.031-.199.031-.211 0-.391-.09-.51-.25l-2.443-3.317v2.94c0 .344-.279.629-.631.629-.346 0-.626-.285-.626-.629V8.108c0-.27.173-.51.43-.595.06-.023.136-.033.194-.033.195 0 .375.104.495.254l2.462 3.33V8.108c0-.345.282-.63.63-.63.345 0 .63.285.63.63v4.771zm-5.741 0c0 .344-.282.629-.631.629-.345 0-.627-.285-.627-.629V8.108c0-.345.282-.63.627-.63.349 0 .631.285.631.63v4.771zm-2.466.629H4.917c-.345 0-.63-.285-.63-.629V8.108c0-.345.285-.63.63-.63.348 0 .63.285.63.63v4.141h1.756c.348 0 .629.283.629.63 0 .344-.281.629-.629.629M24 10.314C24 4.943 18.615.572 12 .572S0 4.943 0 10.314c0 4.811 4.27 8.842 10.035 9.608.391.082.923.258 1.058.59.12.301.079.766.038 1.08l-.164 1.02c-.045.301-.24 1.186 1.049.645 1.291-.539 6.916-4.078 9.436-6.975C23.176 14.393 24 12.458 24 10.314"/></svg>
+          </a>
+        </div>
+      </div>
+      <div class="footer__col">
+        <p class="footer__col-title" data-i18n="footer.col.explore">瀏覽</p>
+        <nav class="footer__list">
+          <a href="/portfolio.html" data-i18n="nav.work">精選案例</a>
+          <a href="/services.html" data-i18n="nav.services">服務項目</a>
+          <a href="/index.html#studio" data-i18n="nav.studio">關於工作室</a>
+          <a href="/contact.html" data-i18n="nav.contact">聯絡我們</a>
+        </nav>
+      </div>
+      <div class="footer__col">
+        <p class="footer__col-title" data-i18n="footer.col.contact">聯絡</p>
+        <nav class="footer__list">
+          <a href="https://wa.me/886980054850" target="_blank" rel="noopener noreferrer">WhatsApp</a>
+          <a href="https://line.me/ti/p/hz6EePU4Ha" target="_blank" rel="noopener noreferrer">LINE</a>
+          <a href="https://github.com/BasilWu" target="_blank" rel="noopener noreferrer">GitHub</a>
+        </nav>
+      </div>
+    </div>
+    <div class="footer__bottom">
+      <div class="footer__bottom-inner">
+        <p data-i18n="footer.copy">© 2026 MosStack Studio. 版權所有。</p>
+        <div class="footer__legal">
+          <span data-i18n="footer.location">位於台中，服務來自各地的客戶。</span>
+          <a href="/privacy.html" data-i18n="footer.privacy">隱私權政策</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <div class="float-contact" aria-label="快速聯絡">
+    <a href="https://wa.me/886980054850?text=%E4%BD%A0%E5%A5%BD%EF%BC%8C%E6%88%91%E6%83%B3%E8%AB%AE%E8%A9%A2%E9%A0%90%E7%B4%84%E7%B3%BB%E7%B5%B1" target="_blank" rel="noopener noreferrer" class="float-btn float-btn--whatsapp" aria-label="WhatsApp">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+    </a>
+    <a href="https://line.me/ti/p/hz6EePU4Ha" target="_blank" rel="noopener noreferrer" class="float-btn float-btn--line" aria-label="Line">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M19.365 9.863c.349 0 .63.285.63.631 0 .345-.281.63-.63.63H17.61v1.125h1.755c.349 0 .63.283.63.63 0 .344-.281.629-.63.629h-2.386c-.345 0-.627-.285-.627-.629V8.108c0-.345.282-.63.63-.63h2.386c.349 0 .63.285.63.63 0 .349-.281.63-.63.63H17.61v1.125h1.755zm-3.855 3.016c0 .27-.174.51-.432.596-.064.021-.133.031-.199.031-.211 0-.391-.09-.51-.25l-2.443-3.317v2.94c0 .344-.279.629-.631.629-.346 0-.626-.285-.626-.629V8.108c0-.27.173-.51.43-.595.06-.023.136-.033.194-.033.195 0 .375.104.495.254l2.462 3.33V8.108c0-.345.282-.63.63-.63.345 0 .63.285.63.63v4.771zm-5.741 0c0 .344-.282.629-.631.629-.345 0-.627-.285-.627-.629V8.108c0-.345.282-.63.627-.63.349 0 .631.285.631.63v4.771zm-2.466.629H4.917c-.345 0-.63-.285-.63-.629V8.108c0-.345.285-.63.63-.63.348 0 .63.285.63.63v4.141h1.756c.348 0 .629.283.629.63 0 .344-.281.629-.629.629M24 10.314C24 4.943 18.615.572 12 .572S0 4.943 0 10.314c0 4.811 4.27 8.842 10.035 9.608.391.082.923.258 1.058.59.12.301.079.766.038 1.08l-.164 1.02c-.045.301-.24 1.186 1.049.645 1.291-.539 6.916-4.078 9.436-6.975C23.176 14.393 24 12.458 24 10.314"/></svg>
+    </a>
+  </div>
+
+  <script src="i18n.js"></script>
+</body>
+</html>

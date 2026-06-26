@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="zh-TW" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <script>document.documentElement.setAttribute("data-theme",localStorage.getItem("theme")||(matchMedia("(prefers-color-scheme:dark)").matches?"dark":"light"));</script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="品牌電商系統案例 — 有自己品牌的網路商店，不用靠平台抽成。商品、購物車、結帳、超商取貨、會員點數、後台訂單與庫存一次到位。多金流物流可串接。" />
+  <title>品牌電商系統案例 — MosStack Studio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/x-icon" href="/assets/favicon.ico" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png" />
+  <meta name="theme-color" content="#080c14" />
+  <meta property="og:title" content="品牌電商系統案例 — MosStack Studio" />
+  <meta property="og:description" content="有自己品牌的網路商店，不用靠平台抽成。商品、購物車、結帳、超商取貨、會員點數、後台訂單與庫存一次到位。" />
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://mosstack.studio/ecommerce-case.html" />
+  <meta property="og:image" content="https://mosstack.studio/assets/work/ecommerce.jpg" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:locale" content="zh_TW" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="品牌電商系統案例 — MosStack Studio" />
+  <meta name="twitter:description" content="有自己品牌的網路商店，不用靠平台抽成。商品、購物車、結帳、超商取貨、會員點數、後台訂單與庫存一次到位。" />
+  <meta name="twitter:image" content="https://mosstack.studio/assets/work/ecommerce.jpg" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <nav class="nav">
+    <div class="nav__inner">
+      <a href="/" class="nav__logo" data-i18n="nav.logo">MosStack</a>
+      <ul class="nav__links">
+        <li><a href="/portfolio.html" class="nav__link--active" data-i18n="nav.work">精選案例</a></li>
+        <li><a href="/services.html" data-i18n="nav.services">服務項目</a></li>
+        <li><a href="/#studio" data-i18n="nav.studio">關於工作室</a></li>
+        <li><a href="/contact.html" data-i18n="nav.contact">聯絡我們</a></li>
+      </ul>
+      <div class="nav__right">
+        <div class="lang-switch" aria-label="Language switcher">
+          <button class="lang-switch__btn" type="button" data-lang-switch="en">EN</button>
+          <button class="lang-switch__btn is-active" type="button" data-lang-switch="zh">中</button>
+        </div>
+        <div class="nav__social">
+          <a href="https://github.com/BasilWu" target="_blank" rel="noopener" aria-label="GitHub">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5C5.65.5.5 5.65.5 12c0 5.1 3.29 9.42 7.86 10.95.57.1.78-.25.78-.55v-2.1c-3.2.7-3.87-1.54-3.87-1.54-.52-1.33-1.27-1.69-1.27-1.69-1.04-.71.08-.7.08-.7 1.15.08 1.75 1.18 1.75 1.18 1.02 1.75 2.68 1.24 3.33.95.1-.74.4-1.24.72-1.53-2.55-.29-5.23-1.28-5.23-5.68 0-1.25.45-2.28 1.18-3.08-.12-.3-.51-1.46.11-3.04 0 0 .96-.31 3.15 1.18a10.94 10.94 0 0 1 5.74 0C17.04 5.8 18 6.11 18 6.11c.62 1.58.23 2.74.11 3.04.73.8 1.18 1.83 1.18 3.08 0 4.41-2.69 5.38-5.25 5.67.41.36.78 1.07.78 2.15v3.18c0 .31.2.66.79.55A11.51 11.51 0 0 0 23.5 12C23.5 5.65 18.35.5 12 .5z"/></svg>
+          </a>
+        </div>
+        <button class="theme-toggle" data-theme-toggle aria-label="切換深色模式">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        </button>
+        <button class="hamburger" id="hamburger" type="button" aria-label="開啟選單" aria-expanded="false">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <div class="mobile-nav" id="mobileNav" aria-hidden="true">
+    <ul>
+      <li><a href="/portfolio.html" data-i18n="nav.work">精選案例</a></li>
+      <li><a href="/services.html" data-i18n="nav.services">服務項目</a></li>
+      <li><a href="/#studio" data-i18n="nav.studio">關於工作室</a></li>
+      <li><a href="/contact.html" data-i18n="nav.contact">聯絡我們</a></li>
+    </ul>
+  </div>
+
+  <!-- ── HERO ── -->
+  <section class="hero">
+    <div class="container">
+      <p class="hero__eyebrow">案例研究 · 電商 &amp; 金流系統</p>
+      <h1 class="hero__title">品牌電商系統<br><span>有自己的店，不用靠平台抽成。</span></h1>
+      <p class="hero__subtitle">完整的品牌網路商店：客人結帳、超商取貨、會員點數集點，你在後台一眼看清訂單、庫存與營收。多金流、多物流可串接，從第一間店到品牌規模都接得上。</p>
+      <div class="hero__cta">
+        <a href="/contact.html" class="btn btn--primary">聊聊你的商品與規模</a>
+        <a href="https://ecommerce-template-seven-sage.vercel.app" target="_blank" rel="noopener noreferrer" class="btn btn--ghost">↗ 開啟線上 Demo</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── 案例主視覺 ── -->
+  <section style="padding:0 0 var(--space-10)">
+    <div class="container--wide">
+      <div style="border:1px solid var(--color-border);border-radius:16px;overflow:hidden;background:var(--color-surface)">
+        <img src="/assets/work/ecommerce.jpg" alt="STREET LAB 街頭實驗室 品牌電商系統 — 實際 Demo 畫面" width="1600" height="1000" loading="lazy" style="display:block;width:100%;height:auto" />
+      </div>
+      <p style="margin:var(--space-3) 0 0;font-size:var(--text-sm);color:var(--color-text-muted)">Demo 範例：STREET LAB 街頭實驗室（品牌選物電商）。實際畫面、品牌與功能依你的需求調整。</p>
+    </div>
+  </section>
+
+  <div id="case-body">
+
+    <!-- ── 01 解決什麼問題 ── -->
+    <section class="service-section" id="problem">
+      <div class="container">
+        <div class="service-section__inner">
+          <div class="service-section__header">
+            <span class="service-section__num">01</span>
+            <h2 class="service-section__title">解決什麼問題</h2>
+            <p class="service-section__desc">在蝦皮、IG 賣東西很快，但成長到一個程度就會卡：平台抽成吃掉利潤、客資留不住、訂單與庫存散在各通路。自己的品牌電商，把流量、客人與數據都收回自己手上。</p>
+          </div>
+          <div class="service-section__body">
+            <div class="service-detail-block">
+              <p class="service-detail-block__label">原本的痛點</p>
+              <ul class="service-checklist">
+                <li>平台每筆都抽成，賣越多被抽越多。</li>
+                <li>客人是平台的，不是你的，無法經營回購。</li>
+                <li>IG 私訊接單，手動對帳、手動排單很容易出錯。</li>
+                <li>多通路庫存對不起來，超賣或缺貨。</li>
+                <li>版型受限，做不出品牌該有的質感。</li>
+              </ul>
+            </div>
+            <div class="service-detail-block">
+              <p class="service-detail-block__label">這套系統怎麼解</p>
+              <ul class="service-checklist">
+                <li>自己的網域與品牌頁，沒有平台抽成。</li>
+                <li>會員制度把客人留在自己的名單裡。</li>
+                <li>客人線上自助下單、付款、選取貨，不用人工接。</li>
+                <li>庫存即時連動，下單就扣，不怕超賣。</li>
+                <li>後台一頁看訂單、金流、物流與營收。</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── 02 核心功能 ── -->
+    <section class="service-section service-section--alt" id="features">
+      <div class="container">
+        <div class="service-section__inner">
+          <div class="service-section__header">
+            <span class="service-section__num">02</span>
+            <h2 class="service-section__title">核心功能</h2>
+            <p class="service-section__desc">八大模組覆蓋從逛店到出貨的完整流程，前台給客人順暢購物，後台給你清楚營運。</p>
+          </div>
+          <div class="service-section__body">
+            <div class="service-detail-block">
+              <p class="service-detail-block__label">客人端（前台）</p>
+              <ul class="service-checklist">
+                <li>商品列表、分類、搜尋、商品詳情與規格選擇。</li>
+                <li>購物車與結帳流程，支援優惠券與點數折抵。</li>
+                <li>多金流：信用卡、ATM、超商代碼（綠界 / 藍新 / Stripe / PayPal）。</li>
+                <li>多物流：宅配與超商取貨付款。</li>
+                <li>會員註冊 / 登入（Email OTP）、訂單查詢、點數集點。</li>
+              </ul>
+            </div>
+            <div class="service-detail-block">
+              <p class="service-detail-block__label">老闆端（後台）</p>
+              <ul class="service-checklist">
+                <li>訂單管理：狀態流轉、出貨、退換貨。</li>
+                <li>商品與庫存：上下架、規格、即時庫存扣減。</li>
+                <li>會員管理：分級、點數、消費記錄。</li>
+                <li>行銷工具：優惠券、活動、折扣設定。</li>
+                <li>營收與報表：銷售、客單價、熱銷品一目了然。</li>
+              </ul>
+            </div>
+            <div class="service-detail-block">
+              <p class="service-detail-block__label">技術棧</p>
+              <div class="skills__list">
+                <span class="tag">Next.js 14</span><span class="tag">TypeScript</span>
+                <span class="tag">PostgreSQL / Neon</span><span class="tag">Prisma</span>
+                <span class="tag">綠界 / 藍新</span><span class="tag">Stripe / PayPal</span>
+                <span class="tag">超商物流</span><span class="tag">Vercel</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── 03 適合什麼客戶 ── -->
+    <section class="service-section" id="fit">
+      <div class="container">
+        <div class="service-section__inner">
+          <div class="service-section__header">
+            <span class="service-section__num">03</span>
+            <h2 class="service-section__title">適合什麼客戶</h2>
+            <p class="service-section__desc">想把生意從平台搬到自己品牌、想經營回購、或現成開店平台已經綁手綁腳的賣家，都適合。</p>
+          </div>
+          <div class="service-section__body">
+            <div class="service-detail-block">
+              <p class="service-detail-block__label">特別適合</p>
+              <div class="service-section__cases">
+                <span class="service-case-tag">→ 品牌服飾 / 選物店</span>
+                <span class="service-case-tag">→ 美妝 / 保健 / 食品</span>
+                <span class="service-case-tag">→ 代購 / 團購業者</span>
+                <span class="service-case-tag">→ 訂閱制 / 會員制商品</span>
+                <span class="service-case-tag">→ 想做自有品牌的賣家</span>
+              </div>
+            </div>
+            <div class="service-detail-block">
+              <p class="service-detail-block__label">什麼時候該自建電商</p>
+              <ul class="service-checklist">
+                <li>平台抽成已經明顯吃掉利潤。</li>
+                <li>想經營會員、推回購與點數，而不是一次性成交。</li>
+                <li>需要客製化購物流程，現成平台做不到。</li>
+                <li>想要品牌該有的質感與完整數據掌控權。</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── 04 可客製哪些地方 ── -->
+    <section class="service-section service-section--alt" id="custom">
+      <div class="container">
+        <div class="service-section__inner">
+          <div class="service-section__header">
+            <span class="service-section__num">04</span>
+            <h2 class="service-section__title">可客製哪些地方</h2>
+            <p class="service-section__desc">系統依規模分三種起點，再依你的商品與流程調整。Demo 是基礎版，實際交付會貼合你的營運。</p>
+          </div>
+          <div class="service-section__body">
+            <div class="service-detail-block">
+              <p class="service-detail-block__label">三種規模起點</p>
+              <ul class="service-checklist">
+                <li><strong>Store Lite</strong>：個人賣家、第一間店，基本商品、購物車、結帳與單一金流。</li>
+                <li><strong>Brand Store</strong>：品牌電商、選物店，多金流物流、會員點數、優惠券與行銷工具。</li>
+                <li><strong>Pro</strong>：多 SKU、需整合 ERP / CRM 或客製化流程。</li>
+              </ul>
+            </div>
+            <div class="service-detail-block">
+              <p class="service-detail-block__label">商品與流程</p>
+              <ul class="service-checklist">
+                <li>商品規格、組合、預購 / 限量 / 開賣時間。</li>
+                <li>運費規則、滿額免運、地區與物流限制。</li>
+                <li>會員分級、點數規則與專屬優惠。</li>
+              </ul>
+            </div>
+            <div class="service-detail-block">
+              <p class="service-detail-block__label">品牌與整合</p>
+              <ul class="service-checklist">
+                <li>套用你的品牌色、Logo、網域與視覺。</li>
+                <li>金流 / 物流換成你慣用的供應商。</li>
+                <li>串接 LINE、Email 行銷、ERP 或既有後台。</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── 線上 Demo 區 ── -->
+    <section class="service-section" id="demo">
+      <div class="container">
+        <div class="service-section__inner">
+          <div class="service-section__header">
+            <span class="service-section__num">05</span>
+            <h2 class="service-section__title">線上 Demo</h2>
+            <p class="service-section__desc">可以直接點開試完整購物：逛商品、加入購物車、一路走到結帳流程。</p>
+          </div>
+          <div class="service-section__body">
+            <div class="service-detail-block">
+              <p class="service-detail-block__label">前台購物體驗</p>
+              <p>從首頁逛到商品頁、加入購物車、選物流與付款方式，感受客人實際會走的流程。</p>
+            </div>
+            <div class="service-detail-block">
+              <p class="service-detail-block__label">提醒</p>
+              <p style="margin:0;color:var(--color-text-muted);font-size:var(--text-sm)">Demo 為示範用途，金流為測試模式，不會真的扣款。</p>
+            </div>
+            <div style="display:flex; gap: var(--space-3); flex-wrap:wrap;">
+              <a href="https://ecommerce-template-seven-sage.vercel.app" target="_blank" rel="noopener noreferrer" class="btn btn--primary">↗ 開啟線上 Demo</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+  <!-- ── CTA：聯絡取得報價 ── -->
+  <section class="contact">
+    <div class="container">
+      <div class="contact__inner">
+        <p class="section-label">聯絡我們</p>
+        <h2 class="contact__heading">想要自己的品牌電商？</h2>
+        <p class="contact__sub">告訴我們你的商品類型、規模與想要的金流物流，我們會依需求規劃方案並提供報價。把這頁網址直接丟給我們，溝通更快。</p>
+        <div class="contact__links">
+          <a href="/contact.html" class="btn btn--primary">聯絡取得報價</a>
+          <a href="/portfolio.html" class="btn btn--ghost">回到精選案例</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="footer__inner">
+      <div class="footer__brand">
+        <p class="footer__brand-name">MosStack Studio</p>
+        <p class="footer__tagline" data-i18n="footer.tagline">位於台中的全端接案工作室，專注於電商、品牌官網、預約系統與 B2B 後台開發。</p>
+        <div class="footer__social">
+          <a href="https://github.com/BasilWu" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .5C5.65.5.5 5.65.5 12c0 5.1 3.29 9.42 7.86 10.95.57.1.78-.25.78-.55v-2.1c-3.2.7-3.87-1.54-3.87-1.54-.52-1.33-1.27-1.69-1.27-1.69-1.04-.71.08-.7.08-.7 1.15.08 1.75 1.18 1.75 1.18 1.02 1.75 2.68 1.24 3.33.95.1-.74.4-1.24.72-1.53-2.55-.29-5.23-1.28-5.23-5.68 0-1.25.45-2.28 1.18-3.08-.12-.3-.51-1.46.11-3.04 0 0 .96-.31 3.15 1.18a10.94 10.94 0 0 1 5.74 0C17.04 5.8 18 6.11 18 6.11c.62 1.58.23 2.74.11 3.04.73.8 1.18 1.83 1.18 3.08 0 4.41-2.69 5.38-5.25 5.67.41.36.78 1.07.78 2.15v3.18c0 .31.2.66.79.55A11.51 11.51 0 0 0 23.5 12C23.5 5.65 18.35.5 12 .5z"/></svg>
+          </a>
+          <a href="https://wa.me/886980054850" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+          </a>
+          <a href="https://line.me/ti/p/hz6EePU4Ha" target="_blank" rel="noopener noreferrer" aria-label="Line">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M19.365 9.863c.349 0 .63.285.63.631 0 .345-.281.63-.63.63H17.61v1.125h1.755c.349 0 .63.283.63.63 0 .344-.281.629-.63.629h-2.386c-.345 0-.627-.285-.627-.629V8.108c0-.345.282-.63.63-.63h2.386c.349 0 .63.285.63.63 0 .349-.281.63-.63.63H17.61v1.125h1.755zm-3.855 3.016c0 .27-.174.51-.432.596-.064.021-.133.031-.199.031-.211 0-.391-.09-.51-.25l-2.443-3.317v2.94c0 .344-.279.629-.631.629-.346 0-.626-.285-.626-.629V8.108c0-.27.173-.51.43-.595.06-.023.136-.033.194-.033.195 0 .375.104.495.254l2.462 3.33V8.108c0-.345.282-.63.63-.63.345 0 .63.285.63.63v4.771zm-5.741 0c0 .344-.282.629-.631.629-.345 0-.627-.285-.627-.629V8.108c0-.345.282-.63.627-.63.349 0 .631.285.631.63v4.771zm-2.466.629H4.917c-.345 0-.63-.285-.63-.629V8.108c0-.345.285-.63.63-.63.348 0 .63.285.63.63v4.141h1.756c.348 0 .629.283.629.63 0 .344-.281.629-.629.629M24 10.314C24 4.943 18.615.572 12 .572S0 4.943 0 10.314c0 4.811 4.27 8.842 10.035 9.608.391.082.923.258 1.058.59.12.301.079.766.038 1.08l-.164 1.02c-.045.301-.24 1.186 1.049.645 1.291-.539 6.916-4.078 9.436-6.975C23.176 14.393 24 12.458 24 10.314"/></svg>
+          </a>
+        </div>
+      </div>
+      <div class="footer__col">
+        <p class="footer__col-title" data-i18n="footer.col.explore">瀏覽</p>
+        <nav class="footer__list">
+          <a href="/portfolio.html" data-i18n="nav.work">精選案例</a>
+          <a href="/services.html" data-i18n="nav.services">服務項目</a>
+          <a href="/index.html#studio" data-i18n="nav.studio">關於工作室</a>
+          <a href="/contact.html" data-i18n="nav.contact">聯絡我們</a>
+        </nav>
+      </div>
+      <div class="footer__col">
+        <p class="footer__col-title" data-i18n="footer.col.contact">聯絡</p>
+        <nav class="footer__list">
+          <a href="https://wa.me/886980054850" target="_blank" rel="noopener noreferrer">WhatsApp</a>
+          <a href="https://line.me/ti/p/hz6EePU4Ha" target="_blank" rel="noopener noreferrer">LINE</a>
+          <a href="https://github.com/BasilWu" target="_blank" rel="noopener noreferrer">GitHub</a>
+        </nav>
+      </div>
+    </div>
+    <div class="footer__bottom">
+      <div class="footer__bottom-inner">
+        <p data-i18n="footer.copy">© 2026 MosStack Studio. 版權所有。</p>
+        <div class="footer__legal">
+          <span data-i18n="footer.location">位於台中，服務來自各地的客戶。</span>
+          <a href="/privacy.html" data-i18n="footer.privacy">隱私權政策</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <div class="float-contact" aria-label="快速聯絡">
+    <a href="https://wa.me/886980054850?text=%E4%BD%A0%E5%A5%BD%EF%BC%8C%E6%88%91%E6%83%B3%E8%AB%AE%E8%A9%A2%E5%93%81%E7%89%8C%E9%9B%BB%E5%95%86%E7%B3%BB%E7%B5%B1" target="_blank" rel="noopener noreferrer" class="float-btn float-btn--whatsapp" aria-label="WhatsApp">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+    </a>
+    <a href="https://line.me/ti/p/hz6EePU4Ha" target="_blank" rel="noopener noreferrer" class="float-btn float-btn--line" aria-label="Line">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M19.365 9.863c.349 0 .63.285.63.631 0 .345-.281.63-.63.63H17.61v1.125h1.755c.349 0 .63.283.63.63 0 .344-.281.629-.63.629h-2.386c-.345 0-.627-.285-.627-.629V8.108c0-.345.282-.63.63-.63h2.386c.349 0 .63.285.63.63 0 .349-.281.63-.63.63H17.61v1.125h1.755zm-3.855 3.016c0 .27-.174.51-.432.596-.064.021-.133.031-.199.031-.211 0-.391-.09-.51-.25l-2.443-3.317v2.94c0 .344-.279.629-.631.629-.346 0-.626-.285-.626-.629V8.108c0-.27.173-.51.43-.595.06-.023.136-.033.194-.033.195 0 .375.104.495.254l2.462 3.33V8.108c0-.345.282-.63.63-.63.345 0 .63.285.63.63v4.771zm-5.741 0c0 .344-.282.629-.631.629-.345 0-.627-.285-.627-.629V8.108c0-.345.282-.63.627-.63.349 0 .631.285.631.63v4.771zm-2.466.629H4.917c-.345 0-.63-.285-.63-.629V8.108c0-.345.285-.63.63-.63.348 0 .63.285.63.63v4.141h1.756c.348 0 .629.283.629.63 0 .344-.281.629-.629.629M24 10.314C24 4.943 18.615.572 12 .572S0 4.943 0 10.314c0 4.811 4.27 8.842 10.035 9.608.391.082.923.258 1.058.59.12.301.079.766.038 1.08l-.164 1.02c-.045.301-.24 1.186 1.049.645 1.291-.539 6.916-4.078 9.436-6.975C23.176 14.393 24 12.458 24 10.314"/></svg>
+    </a>
+  </div>
+
+  <script src="i18n.js"></script>
+</body>
+</html>
