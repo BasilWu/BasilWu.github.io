@@ -2076,6 +2076,21 @@ footer {
   .gallery__slide { flex-basis: 64%; }
 }
 
+/* ══ STAT 數字看板：大標題不換行，字級隨欄寬自動縮放 ══ */
+.stat-figure {
+  margin: 0;
+  font-weight: 700;
+  color: var(--color-primary);
+  line-height: 1.1;
+  white-space: nowrap;                 /* 4 字標題不被擠到第二行 */
+  font-size: clamp(1.25rem, 1rem + 1.6vw, 1.9rem); /* 窄欄縮小、寬欄放大，永遠塞得下一行 */
+}
+.stat-caption {
+  margin: 6px 0 0;
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+}
+
 /* ── FLOAT CONTACT z-index fix ────────── */
 /* 確保浮動按鈕不遮住 nav 的點擊範圍 */
 .float-contact {
