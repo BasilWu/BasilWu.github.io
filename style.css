@@ -1790,7 +1790,7 @@ footer {
   padding: var(--space-3) var(--space-4);
   border-right: 1px solid var(--color-divider);
   white-space: nowrap;
-  flex: 1 1 0;          /* 平均分配，允許縮短 */
+  flex: 1 1 0;          /* 桌機平均分配 */
   min-width: 0;
   transition: background var(--transition-interactive);
   overflow: hidden;
@@ -1936,6 +1936,35 @@ footer {
   .service-section__inner { grid-template-columns: 1fr; }
   .service-section__header { position: static; }
   .services-overview__item { padding-inline: var(--space-4); }
+}
+
+/* 估價結果卡片：首次出現時的高亮脈衝，引導視線 */
+.est-result--flash {
+  animation: estFlash 1.4s cubic-bezier(0.22, 1, 0.36, 1);
+}
+@keyframes estFlash {
+  0%   { box-shadow: 0 0 0 0 color-mix(in oklab, var(--color-primary) 55%, transparent); transform: scale(0.985); }
+  40%  { box-shadow: 0 0 0 6px color-mix(in oklab, var(--color-primary) 22%, transparent); transform: scale(1); }
+  100% { box-shadow: 0 0 0 0 transparent; transform: scale(1); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .est-result--flash { animation: none; }
+}
+
+/* 手機：服務總覽 strip 改為可橫向滑動，避免五欄碎字 */
+@media (max-width: 760px) {
+  .services-overview__grid {
+    scroll-snap-type: x proximity;
+    -webkit-overflow-scrolling: touch;
+  }
+  .services-overview__item {
+    flex: 0 0 auto;            /* 不再平均壓縮，保留完整文字 */
+    scroll-snap-align: start;
+  }
+  .services-overview__name {
+    overflow: visible;
+    text-overflow: clip;       /* 手機不裁字，改用滑動看完 */
+  }
 }
 
 /* ── FLOAT CONTACT z-index fix ────────── */

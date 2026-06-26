@@ -801,7 +801,7 @@ const I18N = {
     }
     stagger('.project-grid', '.project-card', 140);
     stagger('.services-strip__grid', '.service-tile', 130);
-    stagger('.services-overview', '.service-tile', 130);
+    // （服務總覽 strip 是橫向條目，不用卡片縮放 stagger——以免干擾手機橫滑佈局）
     stagger('.testimonials', '.testimonial', 120);
     stagger('.price-tiers', '.price-tier', 130);
     stagger('.process', '.process__step', 110);

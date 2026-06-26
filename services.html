@@ -551,6 +551,7 @@
       render();
     });
 
+    var firstReveal = true;
     function render() {
       if (!picks.type || !picks.scale) return; // 預算非必填，但 type+scale 才出結果
       var t = TYPE[picks.type];
@@ -561,7 +562,20 @@
       if (picks.budget) note += ' ' + BUDGET_NOTE[picks.budget];
       document.getElementById('est-note').textContent = note;
       var box = document.getElementById('est-result');
+      var wasHidden = box.hidden;
       box.hidden = false;
+
+      // 第一次顯示結果時：平滑捲到結果卡片並短暫高亮，讓使用者明確看到「拿這個結果去諮詢」
+      if (wasHidden && firstReveal) {
+        firstReveal = false;
+        requestAnimationFrame(function () {
+          var reduce = window.matchMedia &&
+            window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+          box.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'center' });
+          box.classList.add('est-result--flash');
+          setTimeout(function () { box.classList.remove('est-result--flash'); }, 1400);
+        });
+      }
     }
   })();
   </script>
