@@ -30,7 +30,24 @@
   <link rel="stylesheet" href="style.css" />
   <style>
     @media (max-width: 640px) {
-      .price-tiers { grid-template-columns: 1fr !important; }
+      .price-tiers-wrap {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        margin: 0 calc(-1 * var(--space-5));
+        padding: 0 var(--space-5) var(--space-3);
+      }
+      .price-tiers {
+        display: flex !important;
+        flex-wrap: nowrap !important;
+        width: max-content;
+        scroll-snap-type: x mandatory;
+        gap: var(--space-3) !important;
+      }
+      .price-tiers > div {
+        width: 75vw;
+        flex: 0 0 75vw;
+        scroll-snap-align: start;
+      }
     }
     @media (max-width: 900px) and (min-width: 641px) {
       .price-tiers { grid-template-columns: 1fr 1fr !important; }
@@ -165,7 +182,7 @@
           </div>
         </div>
         <!-- ── 方案與報價（全寬）── -->
-        <div style="margin-top:var(--space-8);padding-top:var(--space-6);border-top:1px solid var(--color-border)">
+        <div class="price-tiers-wrap" style="margin-top:var(--space-8);padding-top:var(--space-6);border-top:1px solid var(--color-border)">
           <p class="service-detail-block__label" style="margin-bottom:var(--space-3)">方案與報價</p>
           <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:var(--space-3)">
             <div style="border:1px solid var(--color-border);border-radius:12px;padding:var(--space-4)">
