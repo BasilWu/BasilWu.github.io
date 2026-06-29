@@ -66,6 +66,7 @@
     <ul>
       <li><a href="/portfolio.html" data-i18n="nav.work">精選案例</a></li>
       <li><a href="/services.html" data-i18n="nav.services">服務項目</a></li>
+      <li><a href="/blog.html">Blog</a></li>
       <li><a href="/#studio" data-i18n="nav.studio">關於工作室</a></li>
       <li><a href="/contact.html" data-i18n="nav.contact">聯絡我們</a></li>
     </ul>
@@ -76,7 +77,7 @@
     <div class="container">
       <p class="hero__eyebrow" data-i18n="services.hero.eyebrow">服務項目</p>
       <h1 class="hero__title" data-i18n="services.hero.title">做過的，才是我們<br><span>真正能幫你的。</span></h1>
-      <p class="hero__subtitle" data-i18n="services.hero.subtitle">以下五個服務方向，都有對應的真實案例。不是服務清單，是我們實際交付過的東西。</p>
+      <p class="hero__subtitle" data-i18n="services.hero.subtitle">以下四個服務方向，都有對應的真實案例。不是服務清單，是我們實際交付過的東西。</p>
       <div class="hero__cta">
         <a href="#service-list" class="btn btn--primary" data-i18n="services.hero.primary">查看服務內容</a>
         <a href="/portfolio.html" class="btn btn--ghost" data-i18n="services.hero.secondary">查看精選案例</a>
@@ -103,10 +104,6 @@
         <a href="#s4" class="services-overview__item">
           <span class="services-overview__num">04</span>
           <span class="services-overview__name" data-i18n="services.s4.title">企業後台 & 管理系統</span>
-        </a>
-        <a href="#s5" class="services-overview__item">
-          <span class="services-overview__num">05</span>
-          <span class="services-overview__name" data-i18n="services.s5.title">POS & 零售系統</span>
         </a>
 
       </div>
@@ -327,48 +324,6 @@
       </div>
     </section>
 
-    <!-- ── S5：POS & 零售系統 ── -->
-    <section class="service-section" id="s5">
-      <div class="container">
-        <div class="service-section__inner">
-          <div class="service-section__header">
-            <span class="service-section__num">05</span>
-            <h2 class="service-section__title" data-i18n="services.s5.title">POS & 零售系統</h2>
-            <p class="service-section__price"><span data-i18n="services.price.from">起價</span> <strong data-i18n="services.s5.price">NT$ 80,000</strong></p>
-            <p class="service-section__desc" data-i18n="services.s5.desc">為零售現場打造的 POS 收銀系統，支援平板與桌機雙場景操作，整合收銀流程、庫存管理與日報表，不需要購買昂貴的現成設備。</p>
-            <div class="service-section__cases">
-              <span class="service-case-tag" data-i18n="services.s5.case1">→ POS 機系統</span>
-              <span class="service-case-tag" data-i18n="services.s5.case2">→ 跨裝置管理介面</span>
-            </div>
-          </div>
-          <div class="service-section__body">
-            <div class="service-detail-block">
-              <p class="service-detail-block__label" data-i18n="services.detail.suitable">適合對象</p>
-              <p data-i18n="services.s5.suitable">實體零售店、餐廳收銀、小型連鎖門市。需要客製化 POS 或希望整合線上線下庫存的業者。</p>
-            </div>
-            <div class="service-detail-block">
-              <p class="service-detail-block__label" data-i18n="services.detail.includes">包含項目</p>
-              <ul class="service-checklist">
-                <li data-i18n="services.s5.i1">收銀介面（商品快速選取、折扣、退貨）</li>
-                <li data-i18n="services.s5.i2">平板 iPad + 桌機雙裝置優化</li>
-                <li data-i18n="services.s5.i3">即時庫存扣減 & 低庫存警示</li>
-                <li data-i18n="services.s5.i4">每日 / 每月銷售報表</li>
-                <li data-i18n="services.s5.i5">多員工帳號 & 班次管理</li>
-                <li data-i18n="services.s5.i6">部署上線 + 60 天技術支援</li>
-              </ul>
-            </div>
-            <div class="service-detail-block">
-              <p class="service-detail-block__label" data-i18n="services.detail.stack">技術棧</p>
-              <div class="skills__list">
-                <span class="tag">React</span><span class="tag">Node.js</span>
-                <span class="tag">iPad 優化</span><span class="tag">即時同步</span>
-              </div>
-            </div>
-            <a href="/contact.html" class="btn btn--primary" data-i18n="services.cta.consult">免費 30 分鐘諮詢</a>
-          </div>
-        </div>
-      </div>
-    </section>
 
   </div>
 
@@ -386,7 +341,7 @@
             <button type="button" class="est-btn" data-v="ecom">品牌電商 / 網路商店</button>
             <button type="button" class="est-btn" data-v="booking">預約 / 訂房系統</button>
             <button type="button" class="est-btn" data-v="site">品牌 / 企業官網</button>
-            <button type="button" class="est-btn" data-v="backend">企業後台 / POS</button>
+            <button type="button" class="est-btn" data-v="backend">企業後台系統</button>
           </div>
         </div>
 
@@ -521,7 +476,7 @@
       ecom:    { name: '品牌電商 / 網路商店', base: 'ecom' },
       booking: { name: '預約 / 訂房系統',     base: 'booking' },
       site:    { name: '品牌 / 企業官網',      base: 'site' },
-      backend: { name: '企業後台 / POS 系統',  base: 'backend' }
+      backend: { name: '企業後台系統 系統',  base: 'backend' }
     };
 
     // 各類型依規模給方案；預算僅用於補充提示
@@ -543,7 +498,7 @@
       },
       backend: {
         small: { plan: '輕量管理後台', price: 'NT$ 60,000 – 90,000', note: '取代 Excel 的 CRUD 後台、篩選搜尋與基本報表。' },
-        mid:   { plan: '企業後台 / POS', price: 'NT$ 80,000 起', note: '權限管理、報表匯出、API 串接，或平板＋桌機 POS 收銀。' },
+        mid:   { plan: '企業後台系統', price: 'NT$ 80,000 起', note: '權限管理、報表匯出、API 串接，或平板＋桌機 POS 收銀。' },
         large: { plan: '企業系統整合', price: 'NT$ 150,000 起', note: '多模組整合、線上線下庫存或客製工作流。' }
       }
     };
