@@ -153,7 +153,7 @@ const I18N = {
     "contact.faq.a4": "Yes. We offer ongoing maintenance plans that cover updates, bug fixes, and small improvements.",
 
     "services.hero.eyebrow": "Services",
-    "services.hero.title": "Built from real projects, tailored to real business needs.",
+    "services.hero.title": "Built from real projects,<br>tailored to real business needs.",
     "services.hero.subtitle": "Our services are shaped by hands-on experience across e-commerce, hospitality, operations, and branded websites.",
     "services.hero.primary": "View Services",
     "services.hero.secondary": "View Selected Work",
@@ -240,8 +240,8 @@ const I18N = {
     "services.fit.2.body": "Clear structure, maintainable code, thoughtful interfaces, and systems that support how a business actually runs.",
 
     "services.contact.label": "Contact",
-    "services.contact.title": "Got a project in mind?",
-    "services.contact.sub": "No need to have everything figured out — a rough direction is enough to start.",
+    "services.contact.title": "What kind of project are you planning?",
+    "services.contact.sub": "If you already know the direction, we can start the conversation with more focus.",
     "services.contact.primary": "Get in Touch",
     "services.contact.secondary": "View Selected Work",
 
@@ -313,8 +313,8 @@ const I18N = {
     "nav.logo": "MosStack",
     "nav.work": "精選案例",
     "nav.services": "服務項目",
-    "nav.studio": "關於工作室",
-    "nav.contact": "聯絡我們",
+    "nav.studio": "工作室",
+    "nav.contact": "聯絡",
     "nav.home": "首頁",
     "nav.faq": "常見問題",
     "nav.cta": "免費諮詢",
@@ -465,7 +465,7 @@ const I18N = {
     "contact.faq.a4": "有，提供持續維護方案，包含更新、Bug 修正與小幅調整。",
 
     "services.hero.eyebrow": "服務項目",
-    "services.hero.title": "做過的，才敢拿來當服務。",
+    "services.hero.title": "做過的，才敢<br>拿來當服務。",
     "services.hero.subtitle": "這些不是想像中的服務清單，而是我們實際做過、交付過的專案類型。",
     "services.hero.primary": "查看服務內容",
     "services.hero.secondary": "查看精選案例",
@@ -561,8 +561,8 @@ const I18N = {
     "services.fit.2.body": "結構清楚、程式可維護、介面好操作，以及系統真的能支撐日常營運。",
 
     "services.contact.label": "聯絡",
-    "services.contact.title": "有正在規劃的專案嗎？",
-    "services.contact.sub": "不需要想得很完整，有一個方向就能開始聊。",
+    "services.contact.title": "你的專案比較接近哪一種？",
+    "services.contact.sub": "如果你已經有大致方向，我們可以更快進入重點。",
     "services.contact.primary": "開始聯絡",
     "services.contact.secondary": "查看精選案例",
 
