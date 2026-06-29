@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <script>document.documentElement.setAttribute("data-theme",localStorage.getItem("theme")||(matchMedia("(prefers-color-scheme:dark)").matches?"dark":"light"));</script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="MosStack Studio 服務：電商系統、預約訂房、品牌官網、企業後台、POS 零售系統，起價 NT$25,000。" />
+  <meta name="description" content="MosStack Studio 服務：電商系統、預約訂房、品牌官網、企業後台，全端客製開發，起價 NT$80,000。" />
   <title>服務項目 — MosStack Studio</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -16,7 +16,7 @@
   <link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png" />
   <meta name="theme-color" content="#080c14" />
   <meta property="og:title" content="服務項目 — MosStack Studio" />
-  <meta property="og:description" content="MosStack Studio 服務：電商系統、預約訂房、品牌官網、企業後台、POS 零售系統，起價 NT$25,000。" />
+  <meta property="og:description" content="MosStack Studio 服務：電商系統、預約訂房、品牌官網、企業後台，全端客製開發，起價 NT$80,000。" />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://mosstack.studio/services.html" />
   <meta property="og:image" content="https://mosstack.studio/assets/og-image.jpg" />
@@ -25,7 +25,7 @@
   <meta property="og:locale" content="zh_TW" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="服務項目 — MosStack Studio" />
-  <meta name="twitter:description" content="MosStack Studio 服務：電商系統、預約訂房、品牌官網、企業後台、POS 零售系統，起價 NT$25,000。" />
+  <meta name="twitter:description" content="MosStack Studio 服務：電商系統、預約訂房、品牌官網、企業後台，全端客製開發，起價 NT$80,000。" />
   <meta name="twitter:image" content="https://mosstack.studio/assets/og-image.jpg" />
   <link rel="stylesheet" href="style.css" />
 </head>
@@ -122,8 +122,8 @@
           <div class="service-section__header">
             <span class="service-section__num">01</span>
             <h2 class="service-section__title" data-i18n="services.s1.title">電商 & 金流系統</h2>
-            <p class="service-section__price"><span data-i18n="services.price.from">起價</span> <strong data-i18n="services.s1.price">NT$ 80,000</strong></p>
-            <p class="service-section__desc" data-i18n="services.s1.desc">從前台購物體驗到後台訂單管理，包含金流串接、會員機制與庫存管理，完整交付可實際營運的電商系統。</p>
+            <p class="service-section__price"><span data-i18n="services.price.from">起價</span> <strong data-i18n="services.s1.price">NT$ 150,000</strong></p>
+            <p class="service-section__desc" data-i18n="services.s1.desc">完整品牌電商一次到位：前台購物體驗、多金流結帳（綠界／藍新／Stripe）、超商取貨、會員點數、優惠券，後台訂單、庫存、報表、AI 文案一鍵生成。自己的網域、自己的客戶數據，不再被平台抽成。</p>
             <div class="service-section__cases">
               <span class="service-case-tag" data-i18n="services.s1.case1">→ 全端電商平台</span>
               <span class="service-case-tag" data-i18n="services.s1.case2">→ 金流串接整合</span>
@@ -138,31 +138,34 @@
             <div class="service-detail-block">
               <p class="service-detail-block__label" data-i18n="services.detail.includes">包含項目</p>
               <ul class="service-checklist">
-                <li data-i18n="services.s1.i1">商品列表、分類、搜尋、購物車、結帳流程</li>
-                <li data-i18n="services.s1.i2">綠界 / 藍新金流串接（信用卡、ATM、超商）</li>
-                <li data-i18n="services.s1.i3">會員系統（註冊、登入、訂單查詢）</li>
-                <li data-i18n="services.s1.i4">後台訂單管理、庫存追蹤、報表</li>
-                <li data-i18n="services.s1.i5">部署上線 + 60 天技術支援</li>
+                <li data-i18n="services.s1.i1">商品 Catalog：分類、規格（顏色 / 尺寸）、多圖、即時庫存扣減</li>
+                <li data-i18n="services.s1.i2">購物車 + 結帳：優惠券、點數折抵、訪客 / 會員雙軌</li>
+                <li data-i18n="services.s1.i3">多金流：綠界 / 藍新（信用卡、ATM、超商代碼）、Stripe / PayPal 選配</li>
+                <li data-i18n="services.s1.i4">多物流：超商取貨付款（7-11 / 全家）、宅配、自取</li>
+                <li data-i18n="services.s1.i5">會員系統：Email OTP 登入、訂單查詢、點數集點、分級</li>
+                <li data-i18n="services.s1.i6">後台全功能：訂單管理、庫存警示、營收報表、AI 商品文案一鍵生成</li>
+                <li data-i18n="services.s1.i7">行銷工具：Banner、公告、棄單追蹤、商品推薦</li>
+                <li data-i18n="services.s1.i8">部署上線（Vercel）+ 60 天技術支援</li>
               </ul>
             </div>
             <div class="service-detail-block">
               <p class="service-detail-block__label">方案與報價</p>
               <div class="price-tiers" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:var(--space-3);margin-top:var(--space-2)">
                 <div style="border:1px solid var(--color-border);border-radius:12px;padding:var(--space-4)">
-                  <p style="font-weight:700;margin:0 0 4px">入門店</p>
-                  <p style="color:var(--color-primary);font-weight:700;margin:0 0 8px">NT$ 35,000 – 50,000</p>
-                  <p style="font-size:var(--text-sm);color:var(--color-text-muted);margin:0">個人賣家、第一間店。基本商品、購物車、結帳與單一金流。</p>
+                  <p style="font-weight:700;margin:0 0 4px">入門電商</p>
+                  <p style="color:var(--color-primary);font-weight:700;margin:0 0 8px">NT$ 60,000 – 80,000</p>
+                  <p style="font-size:var(--text-sm);color:var(--color-text-muted);margin:0">個人賣家、第一間店。商品上架、購物車、結帳、單一金流，快速上線可營運。</p>
                 </div>
                 <div style="border:2px solid var(--color-primary);border-radius:12px;padding:var(--space-4);position:relative">
                   <span style="position:absolute;top:-10px;left:var(--space-4);background:var(--color-primary);color:#fff;font-size:var(--text-xs);font-weight:600;padding:2px 8px;border-radius:6px">最熱門</span>
                   <p style="font-weight:700;margin:0 0 4px">品牌電商</p>
-                  <p style="color:var(--color-primary);font-weight:700;margin:0 0 8px">NT$ 80,000 – 120,000</p>
-                  <p style="font-size:var(--text-sm);color:var(--color-text-muted);margin:0">品牌電商、選物店。多金流物流、會員點數、優惠券、行銷工具。</p>
+                  <p style="color:var(--color-primary);font-weight:700;margin:0 0 8px">NT$ 150,000 – 220,000</p>
+                  <p style="font-size:var(--text-sm);color:var(--color-text-muted);margin:0">品牌電商、選物店。多金流多物流、會員點數、優惠券、AI 文案、棄單追蹤，完整品牌體驗。</p>
                 </div>
                 <div style="border:1px solid var(--color-border);border-radius:12px;padding:var(--space-4)">
                   <p style="font-weight:700;margin:0 0 4px">進階整合</p>
-                  <p style="color:var(--color-primary);font-weight:700;margin:0 0 8px">NT$ 150,000 起</p>
-                  <p style="font-size:var(--text-sm);color:var(--color-text-muted);margin:0">多 SKU、需整合 ERP / CRM 或客製化流程。</p>
+                  <p style="color:var(--color-primary);font-weight:700;margin:0 0 8px">NT$ 280,000 起</p>
+                  <p style="font-size:var(--text-sm);color:var(--color-text-muted);margin:0">多 SKU 大量商品、需整合 ERP / CRM 或特殊業務邏輯的規模化電商。</p>
                 </div>
               </div>
             </div>
@@ -187,8 +190,8 @@
           <div class="service-section__header">
             <span class="service-section__num">02</span>
             <h2 class="service-section__title" data-i18n="services.s2.title">預約 & 訂房系統</h2>
-            <p class="service-section__price"><span data-i18n="services.price.from">起價</span> <strong data-i18n="services.s2.price">NT$ 60,000</strong></p>
-            <p class="service-section__desc" data-i18n="services.s2.desc">不論是攝影棚、美業、診所、教室還是旅宿，讓客人自己上網選時段、付訂金、收到提醒。預約、房態、訂單與金流前後台一體整合。</p>
+            <p class="service-section__price"><span data-i18n="services.price.from">起價</span> <strong data-i18n="services.s2.price">NT$ 120,000</strong></p>
+            <p class="service-section__desc" data-i18n="services.s2.desc">客人 24 小時自己選時段、線上付訂金，系統自動發確認、自動提醒，後台行事曆一覽預約狀況。LINE 官方帳號整合 AI 自動回覆，溝通不漏接。攝影棚、美業、診所、教室、民宿，取代手動 LINE 接單。</p>
             <div class="service-section__cases">
               <span class="service-case-tag" data-i18n="services.s2.case2">→ 服務業預約系統</span>
               <span class="service-case-tag" data-i18n="services.s2.case1">→ 飯店前後台整合服務</span>
@@ -202,10 +205,14 @@
             <div class="service-detail-block">
               <p class="service-detail-block__label" data-i18n="services.detail.includes">包含項目</p>
               <ul class="service-checklist">
-                <li data-i18n="services.s2.i1">線上預約流程（選日期 / 時段、人數、即時可預約時段）</li>
-                <li data-i18n="services.s2.i2">訂金 / 全額線上收款與金流串接</li>
-                <li data-i18n="services.s2.i3">後台時段 / 房態管理（滿額自動關閉、一覽表）</li>
-                <li data-i18n="services.s2.i4">LINE / Email 自動提醒與取消流程</li>
+                <li data-i18n="services.s2.i1">預約 Wizard：服務 → 員工 / 資源 → 時段 → 客戶資料 → 金流，全程引導</li>
+                <li data-i18n="services.s2.i2">智慧時段：已預約、緩衝、休息自動排除；多人課程上限控管</li>
+                <li data-i18n="services.s2.i3">訂金 / 全額收款：綠界信用卡、ATM、超商；30% 訂金或全額可設</li>
+                <li data-i18n="services.s2.i4">LINE Messaging API 整合：新預約、狀態變更、行前提醒自動送出</li>
+                <li data-i18n="services.s2.i5">AI 客服助理：24 小時自動回覆常見問題，不確定才轉真人</li>
+                <li data-i18n="services.s2.i6">後台全功能：FullCalendar 行事曆、CRUD 管理、帳務報表一鍵匯出</li>
+                <li data-i18n="services.s2.i7">Config-Driven 設定：品牌色、業態、營業時間、預約規則全在後台改，不用改程式</li>
+                <li data-i18n="services.s2.i8">部署上線（Vercel）+ 60 天技術支援</li>
                 <li data-i18n="services.s2.i5">訂單管理、營收與預約報表</li>
                 <li data-i18n="services.s2.i6">部署上線 + 60 天技術支援</li>
               </ul>
@@ -234,8 +241,8 @@
           <div class="service-section__header">
             <span class="service-section__num">03</span>
             <h2 class="service-section__title" data-i18n="services.s3.title">品牌 & 餐廳官網</h2>
-            <p class="service-section__price"><span data-i18n="services.price.from">起價</span> <strong data-i18n="services.s3.price">NT$ 25,000</strong></p>
-            <p class="service-section__desc" data-i18n="services.s3.desc">企業形象網站、個人品牌頁、餐廳 / 咖啡廳品牌網站。快速建立可信賴的數位門面，SEO 優化，讓客戶找得到你。</p>
+            <p class="service-section__price"><span data-i18n="services.price.from">起價</span> <strong data-i18n="services.s3.price">NT$ 80,000</strong></p>
+            <p class="service-section__desc" data-i18n="services.s3.desc">全客製 RWD 設計，每頁獨立排版，不用套版受限。內建 SEO 架構（JSON-LD、sitemap、meta）、中英雙語選配、聯絡表單寄信。第一次看到你網站的客戶，就留下專業印象。</p>
             <div class="service-section__cases">
               <span class="service-case-tag" data-i18n="services.s3.case1">→ 品牌官網系統</span>
               <span class="service-case-tag" data-i18n="services.s3.case2">→ 餐廳品牌網站</span>
@@ -244,16 +251,18 @@
           <div class="service-section__body">
             <div class="service-detail-block">
               <p class="service-detail-block__label" data-i18n="services.detail.suitable">適合對象</p>
-              <p data-i18n="services.s3.suitable">企業、創辦人、餐廳、咖啡廳、小型店面。需要專業的網路形象，但不需要複雜系統。</p>
+              <p data-i18n="services.s3.suitable">企業、創辦人、連鎖品牌、餐廳、咖啡廳。需要真正客製的數位形象，而非套版模板。每頁獨立設計，符合品牌視覺識別。</p>
             </div>
             <div class="service-detail-block">
               <p class="service-detail-block__label" data-i18n="services.detail.includes">包含項目</p>
               <ul class="service-checklist">
-                <li data-i18n="services.s3.i1">首頁、關於、服務 / 菜單、聯絡共 4–6 頁</li>
-                <li data-i18n="services.s3.i2">SEO 優化（meta、sitemap、Google 搜尋可見）</li>
-                <li data-i18n="services.s3.i3">聯絡 / 訂位表單串接（實際寄信）</li>
-                <li data-i18n="services.s3.i4">中英雙語（選配）</li>
-                <li data-i18n="services.s3.i5">部署上線 + 網域設定協助 + 30 天支援</li>
+                <li data-i18n="services.s3.i1">全頁獨立設計：首頁、關於、服務 / 菜單、案例、聯絡，每頁客製排版</li>
+                <li data-i18n="services.s3.i2">完整 SEO 架構：JSON-LD Schema、sitemap.xml、robots.txt、canonical、Open Graph</li>
+                <li data-i18n="services.s3.i3">無障礙 + 效能：語意化 HTML、ARIA、next/image 最佳化、Core Web Vitals 優化</li>
+                <li data-i18n="services.s3.i4">中英雙語（選配）：i18n 架構預留，一套 codebase 支援多語</li>
+                <li data-i18n="services.s3.i5">深淺色模式、RWD 全斷點、聯絡表單實際寄信（Resend）</li>
+                <li data-i18n="services.s3.i6">Headless CMS 預留介面：內容由本地 JSON / MDX 管理，未來可切換 CMS 不改架構</li>
+                <li data-i18n="services.s3.i7">部署上線（Vercel）+ 網域設定協助 + 30 天支援</li>
               </ul>
             </div>
             <div class="service-detail-block">
@@ -278,8 +287,8 @@
           <div class="service-section__header">
             <span class="service-section__num">04</span>
             <h2 class="service-section__title" data-i18n="services.s4.title">企業後台 & 管理系統</h2>
-            <p class="service-section__price"><span data-i18n="services.price.from">起價</span> <strong data-i18n="services.s4.price">NT$ 80,000</strong></p>
-            <p class="service-section__desc" data-i18n="services.s4.desc">專為企業內部打造的管理後台與 Dashboard，整合訂單、庫存、人員權限與報表，讓日常營運更清楚、更有效率。</p>
+            <p class="service-section__price"><span data-i18n="services.price.from">起價</span> <strong data-i18n="services.s4.price">NT$ 150,000</strong></p>
+            <p class="service-section__desc" data-i18n="services.s4.desc">取代 Excel 與 Google 試算表的客製化後台，依你的業務流程量身設計。多角色權限分級、CRUD 操作介面、儀表板數據視覺化、帳務與庫存報表一鍵匯出，真正貼合你的工作方式。</p>
             <div class="service-section__cases">
               <span class="service-case-tag" data-i18n="services.s4.case1">→ 內部管理後台</span>
               <span class="service-case-tag" data-i18n="services.s4.case2">→ 租賃系統後台</span>
@@ -288,13 +297,17 @@
           <div class="service-section__body">
             <div class="service-detail-block">
               <p class="service-detail-block__label" data-i18n="services.detail.suitable">適合對象</p>
-              <p data-i18n="services.s4.suitable">需要取代 Excel、Google 試算表或現成軟體的企業。有特殊工作流、希望系統真正貼合業務需求的團隊。</p>
+              <p data-i18n="services.s4.suitable">需要取代 Excel、Google 試算表或現成 SaaS 的企業。有多角色、特殊工作流、或需要整合現有系統的團隊。</p>
             </div>
             <div class="service-detail-block">
               <p class="service-detail-block__label" data-i18n="services.detail.includes">包含項目</p>
               <ul class="service-checklist">
-                <li data-i18n="services.s4.i1">需求訪談 & 工作流盤點</li>
-                <li data-i18n="services.s4.i2">後台介面設計 & 開發（CRUD、篩選、搜尋）</li>
+                <li data-i18n="services.s4.i1">需求訪談 & 工作流盤點（把你的業務邏輯轉成系統規格）</li>
+                <li data-i18n="services.s4.i2">Dashboard 數據視覺化：KPI 卡片、圖表、即時更新</li>
+                <li data-i18n="services.s4.i3">多角色權限分級：管理員 / 店長 / 員工，各自看到對應功能</li>
+                <li data-i18n="services.s4.i4">CRUD 介面：篩選、搜尋、排序、批次操作、匯出 CSV</li>
+                <li data-i18n="services.s4.i5">帳務 & 庫存報表：收支、應收帳齡、庫存水位、趨勢分析</li>
+                <li data-i18n="services.s4.i6">第三方串接：金流、LINE、物流、ERP / CRM API</li>
                 <li data-i18n="services.s4.i3">角色 & 權限管理系統</li>
                 <li data-i18n="services.s4.i4">數據報表 & 匯出功能</li>
                 <li data-i18n="services.s4.i5">API 串接 & 資料庫設計</li>
@@ -514,9 +527,9 @@
     // 各類型依規模給方案；預算僅用於補充提示
     var PLANS = {
       ecom: {
-        small: { plan: '入門電商店', price: 'NT$ 35,000 – 50,000', note: '個人賣家、第一間店。基本商品、購物車、結帳與單一金流。' },
-        mid:   { plan: '品牌電商（最熱門）', price: 'NT$ 80,000 – 120,000', note: '多金流物流、會員點數、優惠券與行銷工具，可實際營運。' },
-        large: { plan: '進階電商整合', price: 'NT$ 150,000 起', note: '多 SKU、需整合 ERP / CRM 或客製化流程。' }
+        small: { plan: '入門電商店', price: 'NT$ 60,000 – 80,000', note: '個人賣家、第一間店。商品上架、購物車、結帳、單一金流，快速上線可營運。' },
+        mid:   { plan: '品牌電商（最熱門）', price: 'NT$ 150,000 – 220,000', note: '多金流物流、會員點數、優惠券與行銷工具，可實際營運。' },
+        large: { plan: '進階電商整合', price: 'NT$ 150,000 起', note: '多 SKU 大量商品、需整合 ERP / CRM 或特殊業務邏輯的規模化電商。' }
       },
       booking: {
         small: { plan: '輕量預約系統', price: 'NT$ 60,000 – 90,000', note: '單點預約 / 訂房、時段或房況管理與基本後台。適合攝影棚、美業、診所、民宿。' },
