@@ -41,7 +41,16 @@ Next.js、React、Node.js、TypeScript、PostgreSQL、Prisma、Tailwind CSS、LI
 - [服務項目](https://mosstack.studio/services.html)
 - [品牌電商案例](https://mosstack.studio/ecommerce-case.html)
 - [預約系統案例](https://mosstack.studio/reservation-case.html)
+- [Blog](https://mosstack.studio/blog.html)
 - [聯絡我們](https://mosstack.studio/contact.html)
+
+## Blog 文章
+
+- [預約系統開發要多少錢？2026 台灣行情完整解析](https://mosstack.studio/blog/appointment-system-cost-taiwan-2026.html) — SaaS 到全客製的報價比較，附費用試算表
+- [網頁設計費用怎麼算？台中網頁設計報價懶人包（2026）](https://mosstack.studio/blog/web-design-cost-taichung-2026.html) — 一頁式到電商的完整市場行情
+- [自架電商 vs 蝦皮開店：品牌電商該怎麼選？](https://mosstack.studio/blog/self-hosted-ecommerce-vs-shopee-taiwan.html) — 蝦皮真實成本分析與自架電商評估
+- [為什麼你的網站該用 Next.js 而不是 WordPress？](https://mosstack.studio/blog/nextjs-vs-wordpress-website-development.html) — 效能數據與技術選型建議
+- [LINE Bot 串接與客服自動化：中小企業導入指南（2026）](https://mosstack.studio/blog/line-bot-automation-sme-guide-2026.html) — 費用行情與各行業使用情境
 
 ## 聯絡資訊
 
