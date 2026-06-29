@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="zh-TW" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <script>document.documentElement.setAttribute("data-theme",localStorage.getItem("theme")||(matchMedia("(prefers-color-scheme:dark)").matches?"dark":"light"));</script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="WordPress 慢、外掛地雷、維護成本高？2026 年用 Next.js 開發網站的 6 大優勢完整解析，附實際效能數據與適用場景比較。" />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://mosstack.studio/blog/nextjs-vs-wordpress-website-development.html" />
+  <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"BlogPosting","@id":"https://mosstack.studio/blog/nextjs-vs-wordpress-website-development.html#post","mainEntityOfPage":{"@type":"WebPage","@id":"https://mosstack.studio/blog/nextjs-vs-wordpress-website-development.html"},"headline":"為什麼你的網站該用 Next.js 而不是 WordPress？","description":"WordPress 慢、外掛地雷、維護成本高？2026 年用 Next.js 開發網站的 6 大優勢完整解析，附實際效能數據與適用場景比較。","datePublished":"2026-06-29T08:00:00+08:00","dateModified":"2026-06-29T08:00:00+08:00","author":{"@type":"Organization","@id":"https://mosstack.studio/#business","name":"MosStack Studio"},"publisher":{"@type":"Organization","@id":"https://mosstack.studio/#business","name":"MosStack Studio","logo":{"@type":"ImageObject","url":"https://mosstack.studio/assets/favicon-32.png","width":32,"height":32}},"url":"https://mosstack.studio/blog/nextjs-vs-wordpress-website-development.html","inLanguage":"zh-TW","articleSection":"技術","wordCount":172,"timeRequired":"PT9M"},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"首頁","item":"https://mosstack.studio/"},{"@type":"ListItem","position":2,"name":"Blog","item":"https://mosstack.studio/blog.html"},{"@type":"ListItem","position":3,"name":"為什麼你的網站該用 Next.js 而不是 WordPress？","item":"https://mosstack.studio/blog/nextjs-vs-wordpress-website-development.html"}]}]}</script>
+  <title>為什麼你的網站該用 Next.js 而不是 WordPress？ — MosStack Studio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/x-icon" href="/assets/favicon.ico" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png" />
+  <meta name="theme-color" content="#080c14" />
+  <meta property="og:title" content="為什麼你的網站該用 Next.js 而不是 WordPress？" />
+  <meta property="og:description" content="WordPress 慢、外掛地雷、維護成本高？2026 年用 Next.js 開發網站的 6 大優勢完整解析，附實際效能數據與適用場景比較。" />
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://mosstack.studio/blog/nextjs-vs-wordpress-website-development.html" />
+  <meta property="og:image" content="https://mosstack.studio/assets/og-image.jpg" />
+  <meta property="og:locale" content="zh_TW" />
+  <meta property="og:site_name" content="MosStack Studio" />
+  <meta property="article:published_time" content="2026-06-29T08:00:00+08:00" />
+  <meta property="article:author" content="https://mosstack.studio/" />
+  <meta property="article:section" content="技術" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="為什麼你的網站該用 Next.js 而不是 WordPress？" />
+  <meta name="twitter:description" content="WordPress 慢、外掛地雷、維護成本高？2026 年用 Next.js 開發網站的 6 大優勢完整解析，附實際效能數據與適用場景比較。" />
+  <meta name="twitter:image" content="https://mosstack.studio/assets/og-image.jpg" />
+  <link rel="stylesheet" href="/style.css" />
+  <style>
+    /* ── BLOG ARTICLE STYLES ── */
+    .blog-breadcrumb {
+      padding: var(--space-6) 0 0;
+      font-size: var(--text-xs);
+      color: var(--color-text-muted);
+    }
+    .blog-breadcrumb a { color: var(--color-text-muted); text-decoration: none; }
+    .blog-breadcrumb a:hover { color: var(--color-text); }
+    .blog-breadcrumb__sep { margin: 0 var(--space-2); }
+
+    .blog-article {
+      padding: var(--space-10) 0 var(--space-24);
+    }
+    .blog-article__layout {
+      display: grid;
+      grid-template-columns: 1fr 260px;
+      gap: var(--space-16);
+      align-items: start;
+    }
+    @media (max-width: 900px) {
+      .blog-article__layout { grid-template-columns: 1fr; }
+      .blog-toc { display: none; }
+    }
+
+    .blog-article__header {
+      margin-bottom: var(--space-10);
+      padding-bottom: var(--space-8);
+      border-bottom: 1px solid var(--color-divider);
+    }
+    .blog-article__tag {
+      display: inline-block;
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      background: var(--color-tag-bg);
+      color: var(--color-tag-text);
+      padding: 3px 8px;
+      border-radius: var(--radius-sm);
+      margin-bottom: var(--space-4);
+    }
+    .blog-article__title {
+      font-family: var(--font-display);
+      font-size: var(--text-2xl);
+      font-weight: 700;
+      color: var(--color-text);
+      letter-spacing: -0.03em;
+      line-height: 1.15;
+      margin-bottom: var(--space-5);
+    }
+    .blog-article__meta {
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+      font-size: 13px;
+      color: var(--color-text-faint);
+      flex-wrap: wrap;
+    }
+    .blog-article__meta-dot {
+      width: 3px; height: 3px;
+      border-radius: 50%;
+      background: var(--color-text-faint);
+    }
+
+    /* ── ARTICLE BODY TYPOGRAPHY ── */
+    .blog-body { max-width: 720px; }
+    .blog-body h2 {
+      font-family: var(--font-display);
+      font-size: var(--text-lg);
+      font-weight: 700;
+      color: var(--color-text);
+      letter-spacing: -0.02em;
+      margin: var(--space-12) 0 var(--space-4);
+      padding-top: var(--space-4);
+      border-top: 1px solid var(--color-divider);
+    }
+    .blog-body h3 {
+      font-size: var(--text-base);
+      font-weight: 600;
+      color: var(--color-text);
+      margin: var(--space-8) 0 var(--space-3);
+    }
+    .blog-body p {
+      font-size: var(--text-base);
+      line-height: 1.75;
+      color: var(--color-text-secondary);
+      margin-bottom: var(--space-5);
+    }
+    .blog-body ul, .blog-body ol {
+      padding-left: var(--space-6);
+      margin-bottom: var(--space-5);
+    }
+    .blog-body li {
+      font-size: var(--text-base);
+      line-height: 1.7;
+      color: var(--color-text-secondary);
+      margin-bottom: var(--space-2);
+    }
+    .blog-body strong { color: var(--color-text); font-weight: 600; }
+    .blog-body blockquote {
+      border-left: 3px solid var(--color-border);
+      padding-left: var(--space-5);
+      margin: var(--space-6) 0;
+      color: var(--color-text-muted);
+      font-style: italic;
+    }
+    .blog-body hr {
+      border: none;
+      border-top: 1px solid var(--color-divider);
+      margin: var(--space-10) 0;
+    }
+    .blog-body a {
+      color: var(--color-text);
+      text-decoration: underline;
+      text-decoration-color: var(--color-border);
+      text-underline-offset: 3px;
+      transition: text-decoration-color var(--transition-interactive);
+    }
+    .blog-body a:hover { text-decoration-color: var(--color-text); }
+
+    /* Tables */
+    .blog-table-wrap { overflow-x: auto; margin: var(--space-6) 0; }
+    .blog-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: var(--text-sm);
+    }
+    .blog-table th {
+      text-align: left;
+      font-weight: 600;
+      color: var(--color-text);
+      background: var(--color-surface-offset);
+      padding: var(--space-3) var(--space-4);
+      border-bottom: 2px solid var(--color-border);
+    }
+    .blog-table td {
+      padding: var(--space-3) var(--space-4);
+      border-bottom: 1px solid var(--color-divider);
+      color: var(--color-text-secondary);
+      vertical-align: top;
+    }
+    .blog-table tr:last-child td { border-bottom: none; }
+
+    /* Code */
+    .blog-code {
+      background: var(--color-surface-offset);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-md);
+      padding: var(--space-5);
+      overflow-x: auto;
+      margin: var(--space-5) 0;
+      font-size: 14px;
+      line-height: 1.6;
+    }
+    .blog-inline-code {
+      background: var(--color-surface-offset);
+      border: 1px solid var(--color-divider);
+      border-radius: var(--radius-sm);
+      padding: 1px 6px;
+      font-size: 0.9em;
+      color: var(--color-text);
+    }
+
+    /* TOC */
+    .blog-toc {
+      position: sticky;
+      top: calc(var(--space-16) + var(--space-8));
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-lg);
+      padding: var(--space-5);
+    }
+    .blog-toc__title {
+      font-size: var(--text-xs);
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--color-text-muted);
+      margin-bottom: var(--space-4);
+    }
+    .toc__list { list-style: none; padding: 0; }
+    .toc__item { margin-bottom: var(--space-1); }
+    .toc__item--h3 { padding-left: var(--space-3); }
+    .toc__link {
+      font-size: var(--text-sm);
+      color: var(--color-text-muted);
+      text-decoration: none;
+      line-height: 1.5;
+      display: block;
+      padding: 2px 0;
+      transition: color var(--transition-interactive);
+    }
+    .toc__link:hover, .toc__link.is-active { color: var(--color-text); }
+
+    /* CTA Block */
+    .blog-cta {
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-xl);
+      padding: var(--space-8);
+      margin-top: var(--space-12);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-6);
+      flex-wrap: wrap;
+    }
+    .blog-cta__text h3 {
+      font-family: var(--font-display);
+      font-size: var(--text-lg);
+      font-weight: 700;
+      color: var(--color-text);
+      letter-spacing: -0.02em;
+      margin-bottom: var(--space-2);
+    }
+    .blog-cta__text p {
+      font-size: var(--text-sm);
+      color: var(--color-text-muted);
+      margin: 0;
+    }
+    .blog-cta__badge {
+      display: inline-block;
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--color-text-muted);
+      margin-bottom: var(--space-3);
+    }
+  </style>
+</head>
+<body>
+  <nav class="nav">
+    <div class="nav__inner">
+      <a href="/" class="nav__logo">MosStack</a>
+      <ul class="nav__links">
+        <li><a href="/portfolio.html">精選案例</a></li>
+        <li><a href="/services.html">服務項目</a></li>
+        <li><a href="/blog.html" class="nav__link--active">Blog</a></li>
+        <li><a href="/#studio">關於工作室</a></li>
+        <li><a href="/contact.html">聯絡我們</a></li>
+      </ul>
+      <div class="nav__right">
+        <button class="theme-toggle" type="button" data-theme-toggle aria-label="切換深色模式">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        </button>
+        <a href="/contact.html" class="btn btn--primary nav__cta">免費諮詢</a>
+        <button class="hamburger" id="hamburger" type="button" aria-label="開啟選單" aria-expanded="false">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </nav>
+  <div class="mobile-nav" id="mobileNav" aria-hidden="true">
+    <ul>
+      <li><a href="/portfolio.html">精選案例</a></li>
+      <li><a href="/services.html">服務項目</a></li>
+      <li><a href="/blog.html">Blog</a></li>
+      <li><a href="/#studio">關於工作室</a></li>
+      <li><a href="/contact.html">聯絡我們</a></li>
+      <li><a href="/contact.html" class="btn btn--primary" style="display:inline-flex;margin-top:var(--space-2)">免費諮詢</a></li>
+    </ul>
+  </div>
+
+  <main>
+    <div class="container">
+      <nav class="blog-breadcrumb" aria-label="麵包屑">
+        <a href="/">首頁</a>
+        <span class="blog-breadcrumb__sep">›</span>
+        <a href="/blog.html">Blog</a>
+        <span class="blog-breadcrumb__sep">›</span>
+        <span>為什麼你的網站該用 Next.js 而不是 WordPress？</span>
+      </nav>
+    </div>
+
+    <article class="blog-article">
+      <div class="container">
+        <header class="blog-article__header">
+          <span class="blog-article__tag">技術</span>
+          <h1 class="blog-article__title">為什麼你的網站該用 Next.js 而不是 WordPress？</h1>
+          <div class="blog-article__meta">
+            <span>MosStack Studio</span>
+            <span class="blog-article__meta-dot"></span>
+            <span>2026-06-29</span>
+            <span class="blog-article__meta-dot"></span>
+            <span>9 min read</span>
+          </div>
+        </header>
+
+        <div class="blog-article__layout">
+          <div class="blog-body">
+            
+<h2 id="自架電商-vs-蝦皮開店-品牌電商該怎麼選-2026-完整比較">自架電商 vs 蝦皮開店：品牌電商該怎麼選？（2026 完整比較）</h2>
+
+<p>「蝦皮上面已經有在賣了，還需要自己做網站嗎？」</p>
+
+<p>這是很多台灣賣家會問的問題。答案不是非此即彼，但如果你在意品牌、在乎利潤，這篇文章會讓你看清楚兩條路的本質差異。</p>
+
+<hr>
+
+<h2 id="蝦皮開店的真實成本">蝦皮開店的真實成本</h2>
+
+<p>蝦皮看起來免費，但仔細算：</p>
+
+<h3 id="平台抽成">平台抽成</h3>
+<p>蝦皮對台灣賣家的成交手續費視品類不同，<strong>一般約 2%–3.5%</strong>，部分品類更高。如果你一個月賣 NT$300,000，光手續費就要付出 NT$6,000–10,500。</p>
+
+<h3 id="廣告費">廣告費</h3>
+<p>蝦皮自然流量競爭激烈，「商品加強曝光」幾乎是必要投入。很多賣家每月廣告費佔營收 5%–15%。</p>
+
+<h3 id="折扣活動壓力">折扣活動壓力</h3>
+<p>雙 11、週年慶、蝦皮大促，平台幾乎強迫你參加折扣活動，毛利直接被壓縮。</p>
+
+<h3 id="顧客資料不屬於你">顧客資料不屬於你</h3>
+<p>在蝦皮上賣了三年，累積了 10,000 個客人——但那些顧客資料蝦皮不會給你。你沒辦法自行發 EDM、做會員再行銷、建立私域流量。</p>
+
+<strong>加總起來，蝦皮的真實成本往往是表面抽成的 2–3 倍。</strong>
+
+<hr>
+
+<h2 id="自架電商能解決什麼問題">自架電商能解決什麼問題？</h2>
+
+<h3 id="完整的品牌控制權">完整的品牌控制權</h3>
+
+<p>從首頁設計、購物流程到結帳頁面，全部按你的品牌風格執行。消費者從第一眼到結帳完成，都在你的品牌宇宙裡——而不是蝦皮的橘色介面。</p>
+
+<h3 id="顧客資料完全自有">顧客資料完全自有</h3>
+
+<p>每個下單的客人，Email、手機、購買紀錄都在你自己的系統裡。你可以做會員分級、點數累積、生日優惠、個人化推薦——這是品牌忠誠度的基礎。</p>
+
+<h3 id="不依賴平台演算法">不依賴平台演算法</h3>
+
+<p>蝦皮改規則、調抽成、限制曝光，你只能被動接受。自架電商的流量來自你自己的 SEO、社群、廣告——規則你說了算。</p>
+
+<h3 id="長期利潤更高">長期利潤更高</h3>
+
+<p>假設你的月營收 NT$500,000，蝦皮抽成 3%＋廣告費 8% = 每月 NT$55,000 外流。自架電商的金流手續費通常 1.5%–2.5%，沒有平台抽成，每年可以多留下超過 NT$50 萬。</p>
+
+<hr>
+
+<h2 id="自架電商的前期投入">自架電商的前期投入</h2>
+
+<p>台灣 2026 年電商網站建置的市場行情：</p>
+
+<div class="blog-table-wrap"><table class="blog-table"><thead><tr><th>方案類型</th><th>費用範圍</th><th>適合對象</th></tr></thead><tbody><tr><td>Shopify（SaaS）</td><td>月租 NT$1,000–3,000，加客製化費用</td><td>預算有限、快速上線</td></tr><tr><td>WordPress + WooCommerce</td><td>NT$50,000–150,000</td><td>預算中等，接受套版限制</td></tr><tr><td>全客製電商系統</td><td>NT$100,000–500,000</td><td>重視品牌、有擴充需求</td></tr></tbody></table></div>
+<h3 id="shopify-的隱藏限制">Shopify 的隱藏限制</h3>
+
+<p>很多人覺得 Shopify 便宜，但：月租費用持續累積（5 年下來 NT$60,000–180,000）；客製設計受限；台灣金流串接有額外摩擦；資料同樣存放在第三方。</p>
+
+<h3 id="全客製電商的優勢">全客製電商的優勢</h3>
+
+<p>用 Next.js 等現代技術打造的電商，效能比 WooCommerce 快 2–5 倍（載入速度直接影響轉換率）；完全按業務邏輯設計；長期維護成本低。</p>
+
+<hr>
+
+<h2 id="什麼時候應該自架電商">什麼時候應該自架電商？</h2>
+
+<p>以下任一條件成立，就建議認真考慮自架：</p>
+
+<ol>
+<li>月營收已超過 NT$200,000</li>
+<li>你有自己的品牌，不想品牌形象被平台稀釋</li>
+<li>你有實體通路，需要線上線下庫存同步</li>
+<li>你的商品有會員制、訂閱制或特殊購買流程</li>
+<li>你計畫長期經營，而不是短期測試</li>
+<p></ol></p>
+
+<hr>
+
+<h2 id="兩者可以並行嗎">兩者可以並行嗎？</h2>
+
+<p>可以。很多品牌的最佳策略是：</p>
+
+<strong>蝦皮負責引流和曝光，自架電商負責品牌經營和會員留存。</strong>
+
+<p>讓新客戶在蝦皮發現你，購買後引導加入你的官網會員體系，再透過點數、優惠、EDM 讓他們回流到自架電商。長期下來，自架電商的佔比會越來越高，平台抽成負擔越來越低。</p>
+
+<hr>
+
+<h2 id="mosstack-studio-品牌電商實績">MosStack Studio 品牌電商實績</h2>
+
+<p>MosStack Studio 已完成台中在地品牌的電商系統，功能包含：</p>
+
+<ul>
+<li>完整購物車與結帳流程（信用卡、超商付款）</li>
+<li>顧客會員系統與點數集點</li>
+<li>後台商品 / 訂單管理</li>
+<li>RWD 手機優化體驗</li>
+<p></ul></p>
+
+<p>你可以直接試用 Live Demo，從選商品到結帳走一遍完整流程，不用看截圖猜品質。技術棧為 Next.js + TypeScript + PostgreSQL，採固定報價制。</p>
+
+<hr>
+
+<h2 id="想脫離平台抽成-30-分鐘免費諮詢幫你規劃">想脫離平台抽成？30 分鐘免費諮詢幫你規劃</h2>
+
+<p>不確定自架電商適不適合你的現況？告訴我們你現在的月營收、商品品類和預算，我們幫你評估性價比最高的方案，並給出清楚的固定報價。</p>
+
+<p>目前接受新專案洽詢，台中在地，快速回應。</p>
+
+
+            <!-- CTA -->
+            <div class="blog-cta">
+              <div class="blog-cta__text">
+                <span class="blog-cta__badge">目前接受新專案</span>
+                <h3>需要類似的系統或網站？</h3>
+                <p>告訴我們你在建什麼，我們提供免費 30 分鐘需求諮詢，沒有模糊報價。</p>
+              </div>
+              <a href="/contact.html" class="btn btn--primary">免費 30 分鐘諮詢 →</a>
+            </div>
+          </div>
+
+          <aside>
+            <nav class="blog-toc" aria-label="文章目錄"><p class="blog-toc__title">目錄</p><ul class="toc__list"><li class="toc__item toc__item--h2"><a class="toc__link" href="#自架電商-vs-蝦皮開店-品牌電商該怎麼選-2026-完整比較">自架電商 vs 蝦皮開店：品牌電商該怎麼選？（2026 完整比較）</a></li>
+<li class="toc__item toc__item--h2"><a class="toc__link" href="#蝦皮開店的真實成本">蝦皮開店的真實成本</a></li>
+<li class="toc__item toc__item--h3"><a class="toc__link" href="#平台抽成">平台抽成</a></li>
+<li class="toc__item toc__item--h3"><a class="toc__link" href="#廣告費">廣告費</a></li>
+<li class="toc__item toc__item--h3"><a class="toc__link" href="#折扣活動壓力">折扣活動壓力</a></li>
+<li class="toc__item toc__item--h3"><a class="toc__link" href="#顧客資料不屬於你">顧客資料不屬於你</a></li>
+<li class="toc__item toc__item--h2"><a class="toc__link" href="#自架電商能解決什麼問題">自架電商能解決什麼問題？</a></li>
+<li class="toc__item toc__item--h3"><a class="toc__link" href="#完整的品牌控制權">完整的品牌控制權</a></li>
+<li class="toc__item toc__item--h3"><a class="toc__link" href="#顧客資料完全自有">顧客資料完全自有</a></li>
+<li class="toc__item toc__item--h3"><a class="toc__link" href="#不依賴平台演算法">不依賴平台演算法</a></li>
+<li class="toc__item toc__item--h3"><a class="toc__link" href="#長期利潤更高">長期利潤更高</a></li>
+<li class="toc__item toc__item--h2"><a class="toc__link" href="#自架電商的前期投入">自架電商的前期投入</a></li>
+<li class="toc__item toc__item--h3"><a class="toc__link" href="#shopify-的隱藏限制">Shopify 的隱藏限制</a></li>
+<li class="toc__item toc__item--h3"><a class="toc__link" href="#全客製電商的優勢">全客製電商的優勢</a></li>
+<li class="toc__item toc__item--h2"><a class="toc__link" href="#什麼時候應該自架電商">什麼時候應該自架電商？</a></li>
+<li class="toc__item toc__item--h2"><a class="toc__link" href="#兩者可以並行嗎">兩者可以並行嗎？</a></li>
+<li class="toc__item toc__item--h2"><a class="toc__link" href="#mosstack-studio-品牌電商實績">MosStack Studio 品牌電商實績</a></li>
+<li class="toc__item toc__item--h2"><a class="toc__link" href="#想脫離平台抽成-30-分鐘免費諮詢幫你規劃">想脫離平台抽成？30 分鐘免費諮詢幫你規劃</a></li></ul></nav>
+          </aside>
+        </div>
+      </div>
+    </article>
+  </main>
+
+  <footer>
+    <div class="footer__inner">
+      <div class="footer__brand">
+        <p class="footer__brand-name">MosStack Studio</p>
+        <p class="footer__tagline">位於台中的全端接案工作室，專注於電商、品牌官網、預約系統與 B2B 後台開發。</p>
+      </div>
+      <div class="footer__col">
+        <p class="footer__col-title">瀏覽</p>
+        <nav class="footer__list">
+          <a href="/portfolio.html">精選案例</a>
+          <a href="/services.html">服務項目</a>
+          <a href="/blog.html">Blog</a>
+          <a href="/contact.html">聯絡我們</a>
+        </nav>
+      </div>
+      <div class="footer__col">
+        <p class="footer__col-title">聯絡</p>
+        <nav class="footer__list">
+          <a href="https://wa.me/886980054850" target="_blank" rel="noopener noreferrer">WhatsApp</a>
+          <a href="https://line.me/ti/p/hz6EePU4Ha" target="_blank" rel="noopener noreferrer">LINE</a>
+          <a href="https://github.com/BasilWu" target="_blank" rel="noopener noreferrer">GitHub</a>
+        </nav>
+      </div>
+    </div>
+    <div class="footer__bottom">
+      <div class="footer__bottom-inner">
+        <p>© 2026 MosStack Studio. 版權所有。</p>
+        <div class="footer__legal">
+          <span>位於台中，服務來自各地的客戶。</span>
+          <a href="/privacy.html">隱私權政策</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <div class="float-contact" aria-label="快速聯絡">
+    <a href="https://wa.me/886980054850?text=%E4%BD%A0%E5%A5%BD%EF%BC%8C%E6%88%91%E6%83%B3%E8%AB%AE%E8%A9%A2%E7%B6%B2%E7%AB%99%E9%96%8B%E7%99%BC%E5%B0%88%E6%A1%88" target="_blank" rel="noopener noreferrer" class="float-btn float-btn--whatsapp" aria-label="WhatsApp">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+    </a>
+    <a href="https://line.me/ti/p/hz6EePU4Ha" target="_blank" rel="noopener noreferrer" class="float-btn float-btn--line" aria-label="Line">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M19.365 9.863c.349 0 .63.285.63.631 0 .345-.281.63-.63.63H17.61v1.125h1.755c.349 0 .63.283.63.63 0 .344-.281.629-.63.629h-2.386c-.345 0-.627-.285-.627-.629V8.108c0-.345.282-.63.63-.63h2.386c.349 0 .63.285.63.63 0 .349-.281.63-.63.63H17.61v1.125h1.755zm-3.855 3.016c0 .27-.174.51-.432.596-.064.021-.133.031-.199.031-.211 0-.391-.09-.51-.25l-2.443-3.317v2.94c0 .344-.279.629-.631.629-.346 0-.626-.285-.626-.629V8.108c0-.27.173-.51.43-.595.06-.023.136-.033.194-.033.195 0 .375.104.495.254l2.462 3.33V8.108c0-.345.282-.63.63-.63.345 0 .63.285.63.63v4.771zm-5.741 0c0 .344-.282.629-.631.629-.345 0-.627-.285-.627-.629V8.108c0-.345.282-.63.627-.63.349 0 .631.285.631.63v4.771zm-2.466.629H4.917c-.345 0-.63-.285-.63-.629V8.108c0-.345.285-.63.63-.63.348 0 .63.285.63.63v4.141h1.756c.348 0 .629.283.629.63 0 .344-.281.629-.629.629M24 10.314C24 4.943 18.615.572 12 .572S0 4.943 0 10.314c0 4.811 4.27 8.842 10.035 9.608.391.082.923.258 1.058.59.12.301.079.766.038 1.08l-.164 1.02c-.045.301-.24 1.186 1.049.645 1.291-.539 6.916-4.078 9.436-6.975C23.176 14.393 24 12.458 24 10.314"/></svg>
+    </a>
+  </div>
+
+  <script>
+    // Theme toggle
+    (function(){
+      const btn = document.querySelector('[data-theme-toggle]');
+      if (!btn) return;
+      btn.addEventListener('click', function(){
+        const next = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+        document.documentElement.setAttribute('data-theme', next);
+        localStorage.setItem('theme', next);
+      });
+    })();
+
+    // Hamburger
+    (function(){
+      const btn = document.getElementById('hamburger');
+      const nav = document.getElementById('mobileNav');
+      if (!btn || !nav) return;
+      btn.addEventListener('click', function(){
+        const open = btn.getAttribute('aria-expanded') === 'true';
+        btn.setAttribute('aria-expanded', String(!open));
+        nav.setAttribute('aria-hidden', String(open));
+        nav.classList.toggle('is-open', !open);
+      });
+    })();
+
+    // Active TOC link on scroll
+    (function(){
+      const links = document.querySelectorAll('.toc__link');
+      if (!links.length) return;
+      const headings = Array.from(document.querySelectorAll('.blog-body h2, .blog-body h3'));
+      const observer = new IntersectionObserver(entries => {
+        entries.forEach(e => {
+          if (e.isIntersecting) {
+            links.forEach(l => l.classList.remove('is-active'));
+            const active = document.querySelector('.toc__link[href="#' + e.target.id + '"]');
+            if (active) active.classList.add('is-active');
+          }
+        });
+      }, { rootMargin: '-20% 0px -70% 0px' });
+      headings.forEach(h => observer.observe(h));
+    })();
+  </script>
+</body>
+</html>
