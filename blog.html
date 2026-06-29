@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="zh-TW" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <script>document.documentElement.setAttribute("data-theme",localStorage.getItem("theme")||(matchMedia("(prefers-color-scheme:dark)").matches?"dark":"light"));</script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="MosStack Studio 技術 Blog — 網頁設計費用、電商開發、預約系統、LINE Bot 整合等實用指南，由台中全端工作室撰寫。" />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://mosstack.studio/blog.html" />
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"Blog","name":"MosStack Studio Blog","description":"台中全端網頁開發工作室的技術部落格，涵蓋網頁設計費用、電商系統、預約系統、LINE Bot 等主題。","url":"https://mosstack.studio/blog.html","publisher":{"@id":"https://mosstack.studio/#business"},"inLanguage":"zh-TW"}</script>
+  <title>Blog — MosStack Studio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/x-icon" href="/assets/favicon.ico" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png" />
+  <meta name="theme-color" content="#080c14" />
+  <meta property="og:title" content="Blog — MosStack Studio" />
+  <meta property="og:description" content="台中全端網頁開發工作室的技術 Blog，涵蓋網頁設計費用、電商、預約系統、LINE Bot 等實用指南。" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://mosstack.studio/blog.html" />
+  <meta property="og:image" content="https://mosstack.studio/assets/og-image.jpg" />
+  <meta property="og:locale" content="zh_TW" />
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    /* ── BLOG LISTING PAGE STYLES ── */
+    .blog-hero {
+      padding: var(--space-20) 0 var(--space-16);
+      border-bottom: 1px solid var(--color-divider);
+    }
+    .blog-hero__label {
+      font-size: var(--text-xs);
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--color-text-muted);
+      margin-bottom: var(--space-4);
+    }
+    .blog-hero__title {
+      font-family: var(--font-display);
+      font-size: var(--text-2xl);
+      font-weight: 700;
+      color: var(--color-text);
+      letter-spacing: -0.03em;
+      line-height: 1.1;
+      margin-bottom: var(--space-4);
+    }
+    .blog-hero__sub {
+      font-size: var(--text-base);
+      color: var(--color-text-muted);
+      max-width: 520px;
+    }
+
+    /* ── FILTER TAGS ── */
+    .blog-filters {
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
+      padding: var(--space-8) 0 var(--space-6);
+      flex-wrap: wrap;
+    }
+    .blog-filter-btn {
+      appearance: none;
+      border: 1px solid var(--color-border);
+      background: transparent;
+      color: var(--color-text-muted);
+      font-family: var(--font-body);
+      font-size: var(--text-xs);
+      font-weight: 500;
+      letter-spacing: 0.05em;
+      padding: var(--space-1) var(--space-3);
+      border-radius: var(--radius-full);
+      cursor: pointer;
+      transition: all var(--transition-interactive);
+    }
+    .blog-filter-btn:hover,
+    .blog-filter-btn.is-active {
+      background: var(--color-text);
+      color: var(--color-text-inverse);
+      border-color: var(--color-text);
+    }
+
+    /* ── CARD GRID ── */
+    .blog-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--space-6);
+      padding-bottom: var(--space-24);
+    }
+    @media (max-width: 900px) {
+      .blog-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 600px) {
+      .blog-grid { grid-template-columns: 1fr; gap: var(--space-4); }
+    }
+
+    /* ── BLOG CARD ── */
+    .blog-card {
+      display: flex;
+      flex-direction: column;
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-lg);
+      padding: var(--space-6);
+      text-decoration: none;
+      color: inherit;
+      transition: border-color var(--transition-interactive), transform var(--transition-interactive), box-shadow var(--transition-interactive);
+    }
+    .blog-card:hover {
+      border-color: var(--color-text-muted);
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-md);
+    }
+    .blog-card__tag {
+      display: inline-block;
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--color-text-muted);
+      background: var(--color-tag-bg);
+      color: var(--color-tag-text);
+      padding: 3px 8px;
+      border-radius: var(--radius-sm);
+      margin-bottom: var(--space-4);
+      width: fit-content;
+    }
+    .blog-card__title {
+      font-family: var(--font-display);
+      font-size: var(--text-base);
+      font-weight: 600;
+      color: var(--color-text);
+      line-height: 1.4;
+      margin-bottom: var(--space-3);
+      letter-spacing: -0.01em;
+    }
+    .blog-card__excerpt {
+      font-size: var(--text-sm);
+      color: var(--color-text-muted);
+      line-height: 1.6;
+      flex: 1;
+      margin-bottom: var(--space-5);
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+    .blog-card__meta {
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+      font-size: 12px;
+      color: var(--color-text-faint);
+      font-variant-numeric: tabular-nums;
+      border-top: 1px solid var(--color-divider);
+      padding-top: var(--space-4);
+      margin-top: auto;
+    }
+    .blog-card__meta-dot {
+      width: 3px;
+      height: 3px;
+      border-radius: 50%;
+      background: var(--color-text-faint);
+      flex-shrink: 0;
+    }
+
+    /* ── FEATURED CARD (first card larger) ── */
+    .blog-card--featured {
+      grid-column: 1 / -1;
+      flex-direction: row;
+      align-items: flex-start;
+      gap: var(--space-8);
+      padding: var(--space-8);
+    }
+    .blog-card--featured .blog-card__content {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      min-height: 100%;
+    }
+    .blog-card--featured .blog-card__tag {
+      margin-bottom: var(--space-3);
+    }
+    .blog-card--featured .blog-card__title {
+      font-size: var(--text-xl);
+      margin-bottom: var(--space-4);
+      letter-spacing: -0.02em;
+    }
+    .blog-card--featured .blog-card__excerpt {
+      font-size: var(--text-base);
+      -webkit-line-clamp: 3;
+    }
+    .blog-card--featured-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-1);
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--color-text-muted);
+      margin-bottom: var(--space-3);
+    }
+    .blog-card--featured-badge::before {
+      content: '';
+      display: block;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--color-text-muted);
+    }
+    .blog-card__arrow {
+      font-size: var(--text-base);
+      color: var(--color-text-faint);
+      transition: color var(--transition-interactive), transform var(--transition-interactive);
+      align-self: center;
+      flex-shrink: 0;
+    }
+    .blog-card:hover .blog-card__arrow {
+      color: var(--color-text);
+      transform: translateX(4px);
+    }
+    @media (max-width: 700px) {
+      .blog-card--featured {
+        flex-direction: column;
+        grid-column: 1;
+      }
+      .blog-card__arrow { display: none; }
+    }
+
+    /* ── HIDDEN CARDS (filter) ── */
+    .blog-card[data-hidden="true"] {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <nav class="nav">
+    <div class="nav__inner">
+      <a href="/" class="nav__logo">MosStack</a>
+      <ul class="nav__links">
+        <li><a href="/portfolio.html">精選案例</a></li>
+        <li><a href="/services.html">服務項目</a></li>
+        <li><a href="/blog.html" class="nav__link--active">Blog</a></li>
+        <li><a href="/#studio">關於工作室</a></li>
+        <li><a href="/contact.html">聯絡我們</a></li>
+      </ul>
+      <div class="nav__right">
+        <div class="lang-switch" aria-label="Language switcher">
+          <button class="lang-switch__btn" type="button" data-lang-switch="en">EN</button>
+          <button class="lang-switch__btn is-active" type="button" data-lang-switch="zh">中</button>
+        </div>
+        <button class="theme-toggle" type="button" data-theme-toggle aria-label="切換深色模式">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        </button>
+        <a href="/contact.html" class="btn btn--primary nav__cta">免費諮詢</a>
+        <button class="hamburger" id="hamburger" type="button" aria-label="開啟選單" aria-expanded="false">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <div class="mobile-nav" id="mobileNav" aria-hidden="true">
+    <ul>
+      <li><a href="/portfolio.html">精選案例</a></li>
+      <li><a href="/services.html">服務項目</a></li>
+      <li><a href="/blog.html">Blog</a></li>
+      <li><a href="/#studio">關於工作室</a></li>
+      <li><a href="/contact.html">聯絡我們</a></li>
+      <li><a href="/contact.html" class="btn btn--primary" style="display:inline-flex;margin-top:var(--space-2)">免費諮詢</a></li>
+    </ul>
+  </div>
+
+  <main>
+    <section class="blog-hero">
+      <div class="container">
+        <p class="blog-hero__label">Blog</p>
+        <h1 class="blog-hero__title">開發實戰與<br>市場觀點</h1>
+        <p class="blog-hero__sub">費用行情、技術選型、系統設計——來自台中全端工作室的第一手觀點。</p>
+      </div>
+    </section>
+
+    <section style="padding-top: 0;">
+      <div class="container">
+        <!-- Filter -->
+        <div class="blog-filters" role="group" aria-label="文章分類篩選">
+          <button class="blog-filter-btn is-active" data-filter="all">全部</button>
+          <button class="blog-filter-btn" data-filter="費用指南">費用指南</button>
+          <button class="blog-filter-btn" data-filter="電商">電商</button>
+          <button class="blog-filter-btn" data-filter="技術">技術</button>
+          <button class="blog-filter-btn" data-filter="預約系統">預約系統</button>
+          <button class="blog-filter-btn" data-filter="LINE">LINE</button>
+        </div>
+
+        <!-- Blog Grid -->
+        <div class="blog-grid" id="blogGrid">
+
+          <!-- Article 1: Featured -->
+          <a class="blog-card blog-card--featured" href="/blog/appointment-system-cost-taiwan-2026.html" data-category="費用指南 預約系統">
+            <div class="blog-card__content">
+              <span class="blog-card--featured-badge">最新文章</span>
+              <span class="blog-card__tag">費用指南</span>
+              <h2 class="blog-card__title">預約系統開發要多少錢？2026 台灣行情完整解析</h2>
+              <p class="blog-card__excerpt">SaaS 月租、WordPress 外掛、全客製開發三條路的真實報價與比較。附服務業適用情境分析與費用試算表，幫你在預算有限的情況下做出最適合的決定。</p>
+              <div class="blog-card__meta">
+                <span>MosStack Studio</span>
+                <span class="blog-card__meta-dot"></span>
+                <span>2026-06-29</span>
+                <span class="blog-card__meta-dot"></span>
+                <span>8 min read</span>
+              </div>
+            </div>
+            <span class="blog-card__arrow" aria-hidden="true">→</span>
+          </a>
+
+          <!-- Article 2 -->
+          <a class="blog-card" href="/blog/web-design-cost-taichung-2026.html" data-category="費用指南">
+            <span class="blog-card__tag">費用指南</span>
+            <h2 class="blog-card__title">網頁設計費用怎麼算？台中網頁設計報價懶人包（2026）</h2>
+            <p class="blog-card__excerpt">一頁式、品牌官網、電商、客製系統——四種類型的 2026 年台灣市場行情，附套版 vs 客製開發的總擁有成本比較。</p>
+            <div class="blog-card__meta">
+              <span>MosStack Studio</span>
+              <span class="blog-card__meta-dot"></span>
+              <span>2026-06-29</span>
+              <span class="blog-card__meta-dot"></span>
+              <span>7 min read</span>
+            </div>
+          </a>
+
+          <!-- Article 3 -->
+          <a class="blog-card" href="/blog/self-hosted-ecommerce-vs-shopee-taiwan.html" data-category="電商">
+            <span class="blog-card__tag">電商</span>
+            <h2 class="blog-card__title">自架電商 vs 蝦皮開店：品牌電商該怎麼選？</h2>
+            <p class="blog-card__excerpt">蝦皮 3% 抽成＋廣告費，算下來到底多貴？自架電商的前期投入值不值？月營收超過 NT$200,000 的賣家必看分析。</p>
+            <div class="blog-card__meta">
+              <span>MosStack Studio</span>
+              <span class="blog-card__meta-dot"></span>
+              <span>2026-06-29</span>
+              <span class="blog-card__meta-dot"></span>
+              <span>8 min read</span>
+            </div>
+          </a>
+
+          <!-- Article 4 -->
+          <a class="blog-card" href="/blog/nextjs-vs-wordpress-website-development.html" data-category="技術">
+            <span class="blog-card__tag">技術</span>
+            <h2 class="blog-card__title">為什麼你的網站該用 Next.js 而不是 WordPress？</h2>
+            <p class="blog-card__excerpt">2026 年還在用 WordPress？外掛地雷、效能瓶頸、安全漏洞——Next.js 的 6 大優勢與實際效能數據完整解析。</p>
+            <div class="blog-card__meta">
+              <span>MosStack Studio</span>
+              <span class="blog-card__meta-dot"></span>
+              <span>2026-06-29</span>
+              <span class="blog-card__meta-dot"></span>
+              <span>9 min read</span>
+            </div>
+          </a>
+
+          <!-- Article 5 -->
+          <a class="blog-card" href="/blog/line-bot-automation-sme-guide-2026.html" data-category="LINE">
+            <span class="blog-card__tag">LINE</span>
+            <h2 class="blog-card__title">LINE Bot 串接與客服自動化：中小企業導入指南（2026）</h2>
+            <p class="blog-card__excerpt">LINE 訊息接不完？從基礎自動回覆到 AI 強化 Bot，涵蓋費用行情、各行業使用情境與選廠商注意事項。</p>
+            <div class="blog-card__meta">
+              <span>MosStack Studio</span>
+              <span class="blog-card__meta-dot"></span>
+              <span>2026-06-29</span>
+              <span class="blog-card__meta-dot"></span>
+              <span>10 min read</span>
+            </div>
+          </a>
+
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="footer__inner">
+      <div class="footer__brand">
+        <p class="footer__brand-name">MosStack Studio</p>
+        <p class="footer__tagline">位於台中的全端接案工作室，專注於電商、品牌官網、預約系統與 B2B 後台開發。</p>
+        <div class="footer__social">
+          <a href="https://github.com/BasilWu" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .5C5.65.5.5 5.65.5 12c0 5.1 3.29 9.42 7.86 10.95.57.1.78-.25.78-.55v-2.1c-3.2.7-3.87-1.54-3.87-1.54-.52-1.33-1.27-1.69-1.27-1.69-1.04-.71.08-.7.08-.7 1.15.08 1.75 1.18 1.75 1.18 1.02 1.75 2.68 1.24 3.33.95.1-.74.4-1.24.72-1.53-2.55-.29-5.23-1.28-5.23-5.68 0-1.25.45-2.28 1.18-3.08-.12-.3-.51-1.46.11-3.04 0 0 .96-.31 3.15 1.18a10.94 10.94 0 0 1 5.74 0C17.04 5.8 18 6.11 18 6.11c.62 1.58.23 2.74.11 3.04.73.8 1.18 1.83 1.18 3.08 0 4.41-2.69 5.38-5.25 5.67.41.36.78 1.07.78 2.15v3.18c0 .31.2.66.79.55A11.51 11.51 0 0 0 23.5 12C23.5 5.65 18.35.5 12 .5z"/></svg>
+          </a>
+          <a href="https://wa.me/886980054850" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+          </a>
+          <a href="https://line.me/ti/p/hz6EePU4Ha" target="_blank" rel="noopener noreferrer" aria-label="Line">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M19.365 9.863c.349 0 .63.285.63.631 0 .345-.281.63-.63.63H17.61v1.125h1.755c.349 0 .63.283.63.63 0 .344-.281.629-.63.629h-2.386c-.345 0-.627-.285-.627-.629V8.108c0-.345.282-.63.63-.63h2.386c.349 0 .63.285.63.63 0 .349-.281.63-.63.63H17.61v1.125h1.755zm-3.855 3.016c0 .27-.174.51-.432.596-.064.021-.133.031-.199.031-.211 0-.391-.09-.51-.25l-2.443-3.317v2.94c0 .344-.279.629-.631.629-.346 0-.626-.285-.626-.629V8.108c0-.27.173-.51.43-.595.06-.023.136-.033.194-.033.195 0 .375.104.495.254l2.462 3.33V8.108c0-.345.282-.63.63-.63.345 0 .63.285.63.63v4.771zm-5.741 0c0 .344-.282.629-.631.629-.345 0-.627-.285-.627-.629V8.108c0-.345.282-.63.627-.63.349 0 .631.285.631.63v4.771zm-2.466.629H4.917c-.345 0-.63-.285-.63-.629V8.108c0-.345.285-.63.63-.63.348 0 .63.285.63.63v4.141h1.756c.348 0 .629.283.629.63 0 .344-.281.629-.629.629M24 10.314C24 4.943 18.615.572 12 .572S0 4.943 0 10.314c0 4.811 4.27 8.842 10.035 9.608.391.082.923.258 1.058.59.12.301.079.766.038 1.08l-.164 1.02c-.045.301-.24 1.186 1.049.645 1.291-.539 6.916-4.078 9.436-6.975C23.176 14.393 24 12.458 24 10.314"/></svg>
+          </a>
+        </div>
+      </div>
+      <div class="footer__col">
+        <p class="footer__col-title">瀏覽</p>
+        <nav class="footer__list">
+          <a href="/portfolio.html">精選案例</a>
+          <a href="/services.html">服務項目</a>
+          <a href="/blog.html">Blog</a>
+          <a href="/contact.html">聯絡我們</a>
+        </nav>
+      </div>
+      <div class="footer__col">
+        <p class="footer__col-title">聯絡</p>
+        <nav class="footer__list">
+          <a href="https://wa.me/886980054850" target="_blank" rel="noopener noreferrer">WhatsApp</a>
+          <a href="https://line.me/ti/p/hz6EePU4Ha" target="_blank" rel="noopener noreferrer">LINE</a>
+          <a href="https://github.com/BasilWu" target="_blank" rel="noopener noreferrer">GitHub</a>
+        </nav>
+      </div>
+    </div>
+    <div class="footer__bottom">
+      <div class="footer__bottom-inner">
+        <p>© 2026 MosStack Studio. 版權所有。</p>
+        <div class="footer__legal">
+          <span>位於台中，服務來自各地的客戶。</span>
+          <a href="/privacy.html">隱私權政策</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <div class="float-contact" aria-label="快速聯絡">
+    <a href="https://wa.me/886980054850?text=%E4%BD%A0%E5%A5%BD%EF%BC%8C%E6%88%91%E6%83%B3%E8%AB%AE%E8%A9%A2%E7%B6%B2%E7%AB%99%E9%96%8B%E7%99%BC%E5%B0%88%E6%A1%88" target="_blank" rel="noopener noreferrer" class="float-btn float-btn--whatsapp" aria-label="WhatsApp">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+    </a>
+    <a href="https://line.me/ti/p/hz6EePU4Ha" target="_blank" rel="noopener noreferrer" class="float-btn float-btn--line" aria-label="Line">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M19.365 9.863c.349 0 .63.285.63.631 0 .345-.281.63-.63.63H17.61v1.125h1.755c.349 0 .63.283.63.63 0 .344-.281.629-.63.629h-2.386c-.345 0-.627-.285-.627-.629V8.108c0-.345.282-.63.63-.63h2.386c.349 0 .63.285.63.63 0 .349-.281.63-.63.63H17.61v1.125h1.755zm-3.855 3.016c0 .27-.174.51-.432.596-.064.021-.133.031-.199.031-.211 0-.391-.09-.51-.25l-2.443-3.317v2.94c0 .344-.279.629-.631.629-.346 0-.626-.285-.626-.629V8.108c0-.27.173-.51.43-.595.06-.023.136-.033.194-.033.195 0 .375.104.495.254l2.462 3.33V8.108c0-.345.282-.63.63-.63.345 0 .63.285.63.63v4.771zm-5.741 0c0 .344-.282.629-.631.629-.345 0-.627-.285-.627-.629V8.108c0-.345.282-.63.627-.63.349 0 .631.285.631.63v4.771zm-2.466.629H4.917c-.345 0-.63-.285-.63-.629V8.108c0-.345.285-.63.63-.63.348 0 .63.285.63.63v4.141h1.756c.348 0 .629.283.629.63 0 .344-.281.629-.629.629M24 10.314C24 4.943 18.615.572 12 .572S0 4.943 0 10.314c0 4.811 4.27 8.842 10.035 9.608.391.082.923.258 1.058.59.12.301.079.766.038 1.08l-.164 1.02c-.045.301-.24 1.186 1.049.645 1.291-.539 6.916-4.078 9.436-6.975C23.176 14.393 24 12.458 24 10.314"/></svg>
+    </a>
+  </div>
+
+  <script src="i18n.js"></script>
+  <script>
+    // ── Theme toggle ──
+    (function(){
+      const btn = document.querySelector('[data-theme-toggle]');
+      if (!btn) return;
+      btn.addEventListener('click', function(){
+        const current = document.documentElement.getAttribute('data-theme');
+        const next = current === 'dark' ? 'light' : 'dark';
+        document.documentElement.setAttribute('data-theme', next);
+        localStorage.setItem('theme', next);
+      });
+    })();
+
+    // ── Hamburger ──
+    (function(){
+      const btn = document.getElementById('hamburger');
+      const nav = document.getElementById('mobileNav');
+      if (!btn || !nav) return;
+      btn.addEventListener('click', function(){
+        const open = btn.getAttribute('aria-expanded') === 'true';
+        btn.setAttribute('aria-expanded', !open);
+        nav.setAttribute('aria-hidden', open);
+        nav.classList.toggle('is-open', !open);
+      });
+    })();
+
+    // ── Blog filter ──
+    (function(){
+      const filters = document.querySelectorAll('.blog-filter-btn');
+      const cards = document.querySelectorAll('.blog-card');
+      filters.forEach(function(btn){
+        btn.addEventListener('click', function(){
+          filters.forEach(function(b){ b.classList.remove('is-active'); });
+          btn.classList.add('is-active');
+          const filter = btn.getAttribute('data-filter');
+          cards.forEach(function(card){
+            if (filter === 'all') {
+              card.removeAttribute('data-hidden');
+            } else {
+              const cats = card.getAttribute('data-category') || '';
+              card.setAttribute('data-hidden', cats.indexOf(filter) === -1 ? 'true' : 'false');
+            }
+          });
+        });
+      });
+    })();
+  </script>
+</body>
+</html>
