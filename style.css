@@ -439,7 +439,8 @@ button, a {
   font-weight: 500;
   letter-spacing: 0.06em;
   text-transform: uppercase;
-  margin-bottom: var(--space-4);
+  margin-bottom: var(--space-5);
+  line-height: 1.4;
 }
 
 .hero__title {
@@ -448,7 +449,7 @@ button, a {
   letter-spacing: -0.03em;
   color: var(--color-text);
   margin-bottom: var(--space-5);
-  line-height: 1.05;
+  line-height: 1.16;
 }
 
 /* 第二行標題：用較深的次要色，確保淺色模式下對比足夠（不再用過淺的 muted） */
@@ -2029,18 +2030,56 @@ footer {
   scroll-snap-align: center;
 }
 .gallery__card {
+  position: relative;
   border: 1px solid var(--color-border);
   border-radius: 16px;
   overflow: hidden;
-  background: var(--color-surface);
+  background: var(--color-surface-offset);
   height: 100%;
+  padding-top: 34px;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+/* ── 截圖瀏覽器外框裝飾（mockup chrome bar）── */
+.gallery__card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 34px;
+  background: var(--color-surface-offset);
+  border-bottom: 1px solid var(--color-divider);
+  z-index: 2;
+}
+.gallery__card::after {
+  content: "";
+  position: absolute;
+  top: 13px;
+  left: 14px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #ff5f57;
+  box-shadow: 14px 0 0 #febc2e, 28px 0 0 #28c840;
+  z-index: 3;
+}
+.gallery__card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+}
+@media (prefers-reduced-motion: reduce) {
+  .gallery__card:hover {
+    transform: none;
+    box-shadow: none;
+  }
 }
 .gallery__img {
   display: block;
   width: 100%;
   height: auto;
-  aspect-ratio: 16 / 10;
+  aspect-ratio: 16 / 9;
   object-fit: cover;
+  border-radius: 0;
 }
 .gallery__img--zoomable {
   cursor: zoom-in;
