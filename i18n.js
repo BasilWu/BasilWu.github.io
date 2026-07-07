@@ -634,6 +634,7 @@ const I18N = {
     "services.detail.stack": "技術棧",
 
     "services.s1.title": "電商與金流系統",
+    "services.s1.demo": "\u2197 \u770b\u5be6\u969b Demo",
     "services.s1.price": "NT$ 60,000",
     "services.s1.short": "多金流多物流、會員點數、AI 商品文案，自有品牌電商完整交付。",
     "services.s1.desc": "完整品牌電商一次到位：前台購物體驗、多金流結帳（綠界／藍新／Stripe）、超商取貨、會員點數、優惠券，後台訂單、庫存、報表、AI 文案一鍵生成。自己的網域、自己的客戶，不被平台抽成。",
