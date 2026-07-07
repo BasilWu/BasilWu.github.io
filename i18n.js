@@ -643,7 +643,7 @@ const I18N = {
     "services.s1.i5": "會員系統：Email OTP 登入、訂單查詢、點數集點、分級",
     "services.s1.i6": "後台全功能：訂單管理、庫存警示、營收報表、AI 商品文案一鍵生成",
     "services.s1.i7": "行銷工具：Banner、公告、棄單追蹤、商品推薦",
-    "services.s1.i8": "部署上線（Vercel）+ 60 天技術支援",
+    "services.s1.i8": "部署上線（Cloudflare）+ 60 天技術支援",
 
     "services.s2.title": "服務業預約系統",
     "services.s2.price": "NT$ 60,000",
@@ -659,7 +659,7 @@ const I18N = {
     "services.s2.i5": "AI 客服助理：24 小時自動回覆常見問題，不確定才轉真人",
     "services.s2.i6": "後台全功能：FullCalendar 行事曆、CRUD 管理、帳務報表一鍵匯出",
     "services.s2.i7": "Config-Driven：業態、營業時間、預約規則全在後台改，不用改程式",
-    "services.s2.i8": "部署上線（Vercel）+ 60 天技術支援",
+    "services.s2.i8": "部署上線（Cloudflare）+ 60 天技術支援",
     "services.s2.demo": "↗ 看實際 Demo",
 
     "services.s3.title": "品牌官網",
@@ -675,7 +675,7 @@ const I18N = {
     "services.s3.i4": "中英雙語選配（i18n 架構，一套 codebase 支援多語）",
     "services.s3.i5": "Headless CMS 預留：內容由 JSON / MDX 管理，未來可切換不改架構",
     "services.s3.i6": "無障礙標準：語意化 HTML、ARIA、Core Web Vitals 優化",
-    "services.s3.i7": "部署上線（Vercel）+ 網域設定協助 + 30 天支援",
+    "services.s3.i7": "部署上線（Cloudflare）+ 網域設定協助 + 30 天支援",
     "services.s3.demo": "查看餐廳網站範例",
 
     "services.s4.title": "企業後台與管理系統",
@@ -691,7 +691,7 @@ const I18N = {
     "services.s4.i4": "CRUD 介面：篩選、搜尋、排序、批次操作、匯出 CSV",
     "services.s4.i5": "帳務 & 庫存報表：收支、應收帳齡、庫存水位、趨勢分析",
     "services.s4.i6": "第三方串接：LINE、金流、物流、ERP / CRM API",
-    "services.s4.i7": "部署上線（Vercel）+ 60 天技術支援",
+    "services.s4.i7": "部署上線（Cloudflare）+ 60 天技術支援",
 
     "services.s5.title": "POS 與零售系統",
     "services.s5.price": "NT$ 80,000",
