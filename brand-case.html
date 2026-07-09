@@ -89,16 +89,62 @@
     </div>
   </section>
 
-  <!-- ── 案例主視覺（線上 Demo 卡片）── -->
+  <!-- ── 案例主視覺（線上 Demo 畫面輪播）── -->
   <section class="reveal" style="padding:0 0 var(--space-10)">
     <div class="container--wide">
-      <div style="border:1px solid var(--color-border);border-radius:16px;padding:var(--space-8) var(--space-6);background:var(--color-surface);text-align:center;display:flex;flex-direction:column;align-items:center;gap:var(--space-4)">
-        <span class="project-card__live-badge">Live Demo</span>
-        <h2 style="margin:0;font-size:var(--text-2xl);line-height:1.3;max-width:22ch">PULSE 力動健身 — 品牌形象官網</h2>
-        <p style="margin:0;max-width:52ch;color:var(--color-text-muted);line-height:1.7">這是一個示範用的健身連鎖品牌官網：從品牌故事、課程服務、會員故事到最新消息，完整呈現一個形象官網該有的樣子。點下方按鈕在新分頁直接操作，體驗深淺色切換、內容瀏覽與表單導客的完整流程。</p>
-        <a href="https://demo-brand.mosstack.studio" target="_blank" rel="noopener noreferrer" class="btn btn--primary" style="font-size:var(--text-base)">↗ 在新分頁開啟完整 Demo</a>
-        <p style="margin:0;font-size:var(--text-sm);color:var(--color-text-muted)">Demo 範例：PULSE 力動健身（示範用虛構品牌）。實際畫面、品牌與內容依你的需求量身打造。</p>
+      <div class="gallery" aria-roledescription="輪播" aria-label="PULSE 力動健身 品牌官網 Demo 畫面">
+        <div class="gallery__viewport">
+          <div class="gallery__track">
+            <div class="gallery__slide">
+              <figure class="gallery__card">
+                <img class="gallery__img" src="/assets/work/brand/01-home.jpg" alt="PULSE 力動健身 — 首頁" width="1600" height="1000" loading="lazy" />
+                <figcaption class="gallery__caption"><span class="gallery__tag">首頁</span>品牌主視覺：標語、成績數字與導客按鈕</figcaption>
+              </figure>
+            </div>
+            <div class="gallery__slide">
+              <figure class="gallery__card">
+                <img class="gallery__img" src="/assets/work/brand/02-about.jpg" alt="PULSE 力動健身 — 關於我們" width="1600" height="1000" loading="lazy" />
+                <figcaption class="gallery__caption"><span class="gallery__tag">關於我們</span>品牌故事、成立背景與使命願景</figcaption>
+              </figure>
+            </div>
+            <div class="gallery__slide">
+              <figure class="gallery__card">
+                <img class="gallery__img" src="/assets/work/brand/03-services.jpg" alt="PULSE 力動健身 — 課程服務" width="1600" height="1000" loading="lazy" />
+                <figcaption class="gallery__caption"><span class="gallery__tag">課程服務</span>服務項目卡片與行動呼籲</figcaption>
+              </figure>
+            </div>
+            <div class="gallery__slide">
+              <figure class="gallery__card">
+                <img class="gallery__img" src="/assets/work/brand/04-cases.jpg" alt="PULSE 力動健身 — 會員故事" width="1600" height="1000" loading="lazy" />
+                <figcaption class="gallery__caption"><span class="gallery__tag">會員故事</span>真實成效見證，用口碑建立信任</figcaption>
+              </figure>
+            </div>
+            <div class="gallery__slide">
+              <figure class="gallery__card">
+                <img class="gallery__img" src="/assets/work/brand/05-blog.jpg" alt="PULSE 力動健身 — 最新消息" width="1600" height="1000" loading="lazy" />
+                <figcaption class="gallery__caption"><span class="gallery__tag">最新消息</span>內容行銷與 SEO：標籤篩選的文章牆</figcaption>
+              </figure>
+            </div>
+            <div class="gallery__slide">
+              <figure class="gallery__card">
+                <img class="gallery__img" src="/assets/work/brand/06-contact.jpg" alt="PULSE 力動健身 — 預約體驗" width="1600" height="1000" loading="lazy" />
+                <figcaption class="gallery__caption"><span class="gallery__tag">預約體驗</span>導客表單、分店與目標下拉選單</figcaption>
+              </figure>
+            </div>
+          </div>
+        </div>
+        <div class="gallery__controls">
+          <div class="gallery__dots" aria-hidden="true"></div>
+          <div class="gallery__arrows">
+            <button type="button" class="gallery__arrow gallery__arrow--prev" aria-label="上一張">&#8592;</button>
+            <button type="button" class="gallery__arrow gallery__arrow--next" aria-label="下一張">&#8594;</button>
+          </div>
+        </div>
       </div>
+      <div style="text-align:center;margin:var(--space-5) 0 0">
+        <a href="https://demo-brand.mosstack.studio" target="_blank" rel="noopener noreferrer" class="btn btn--primary" style="font-size:var(--text-base)">↗ 在新分頁開啟完整 Demo</a>
+      </div>
+      <p style="margin:var(--space-4) 0 0;font-size:var(--text-sm);color:var(--color-text-muted);text-align:center">Demo 範例：PULSE 力動健身（示範用虛構品牌）。可左右滑動或點箭頭瀏覽多個實際畫面、點圖放大。品牌與內容依你的需求量身打造。</p>
     </div>
   </section>
 
