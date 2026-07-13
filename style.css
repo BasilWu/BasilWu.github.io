@@ -2417,6 +2417,44 @@ body.gallery-lightbox-open { overflow: hidden; }
   line-height: 1.7;
   margin: 0;
 }
+/* 功能亮點聚光卡（行事曆拖移改期等） */
+.feature-spotlight {
+  position: relative;
+  display: flex;
+  gap: var(--space-4);
+  align-items: flex-start;
+  padding: var(--space-5);
+  border: 1px solid var(--color-border);
+  border-left: 3px solid var(--color-primary);
+  border-radius: 14px;
+  background: var(--color-surface);
+}
+.feature-spotlight__icon {
+  font-size: 1.6rem;
+  line-height: 1;
+  flex-shrink: 0;
+}
+.feature-spotlight__body {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.feature-spotlight__title {
+  font-size: var(--text-base);
+  font-weight: 700;
+  color: var(--color-text);
+  margin: 0;
+}
+.feature-spotlight__desc {
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+  line-height: 1.75;
+  margin: 0;
+}
+@media (max-width: 480px) {
+  .feature-spotlight { flex-direction: column; gap: var(--space-3); }
+}
+
 .ai-feature-tag {
   display: inline-flex;
   align-items: center;
