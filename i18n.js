@@ -1078,7 +1078,7 @@ const I18N = {
   function setupParallax() {
     parallaxEls = [];
     // hero 背景光暈、案例主圖、服務區標題給予不同視差速度
-    document.querySelectorAll('.project-card--featured .project-card__image img, .hero__eyebrow')
+    document.querySelectorAll('.project-card--featured .project-card__image img')
       .forEach(function (el) { el.setAttribute('data-parallax', el.getAttribute('data-parallax') || '0.12'); });
     document.querySelectorAll('[data-parallax]').forEach(function (el) {
       parallaxEls.push({ el: el, speed: parseFloat(el.getAttribute('data-parallax')) || 0.1 });
