@@ -13,6 +13,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@600;700;900&display=swap" rel="stylesheet">
   <link rel="icon" type="image/x-icon" href="/assets/favicon.ico" />
   <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32.png" />
   <link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16.png" />
@@ -40,6 +41,7 @@
       <ul class="nav__links">
         <li><a href="/portfolio.html" class="nav__link--active" data-i18n="nav.work">精選案例</a></li>
         <li><a href="/services.html" data-i18n="nav.services">服務項目</a></li>
+        <li><a href="/trust.html" data-i18n="nav.trust">技術與資安</a></li>
         <li><a href="/blog.html">Blog</a></li>
         <li><a href="/#studio" data-i18n="nav.studio">關於工作室</a></li>
         <li><a href="/contact.html" data-i18n="nav.contact">聯絡我們</a></li>
@@ -69,6 +71,7 @@
     <ul>
       <li><a href="/portfolio.html" data-i18n="nav.work">精選案例</a></li>
       <li><a href="/services.html" data-i18n="nav.services">服務項目</a></li>
+        <li><a href="/trust.html" data-i18n="nav.trust">技術與資安</a></li>
       <li><a href="/#studio" data-i18n="nav.studio">關於工作室</a></li>
       <li><a href="/contact.html" data-i18n="nav.contact">聯絡我們</a></li>
     </ul>
@@ -82,7 +85,7 @@
       <p class="hero__subtitle">攝影棚、美業、診所、教室都適用。客人自己上網選時段、線上付訂金，預約滿了自動關閉，系統主動提醒，後台一頁看清所有預約、庫存與帳務。</p>
       <div class="hero__cta">
         <a href="/contact.html" class="btn btn--primary">聊聊你的預約流程</a>
-        <a href="https://reservation-template-virid.vercel.app" target="_blank" rel="noopener noreferrer" class="btn btn--ghost">↗ 開啟線上 Demo</a>
+        <a href="https://demo-booking.mosstack.studio" target="_blank" rel="noopener noreferrer" class="btn btn--ghost">↗ 開啟線上 Demo</a>
       </div>
     </div>
   </section>
@@ -132,7 +135,7 @@
             <div class="gallery__slide">
               <figure class="gallery__card">
                 <img class="gallery__img" src="/assets/work/reservation/07-admin-calendar.jpg" alt="Frame &amp; Light Studio — 後台行事曆" width="1600" height="1000" loading="lazy" />
-                <figcaption class="gallery__caption"><span class="gallery__tag gallery__tag--admin">後台</span>預約行事曆：月月檢視排程</figcaption>
+                <figcaption class="gallery__caption"><span class="gallery__tag gallery__tag--admin">後台</span>預約行事曆：檢視排程，預約卡片可直接拖到新時段改期</figcaption>
               </figure>
             </div>
             <div class="gallery__slide">
@@ -164,7 +167,7 @@
   <!-- ── 成效數字看板 ── -->
   <section class="reveal" style="padding:0 0 var(--space-10)">
     <div class="container--wide">
-      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:var(--space-4);border:1px solid var(--color-border);border-radius:16px;padding:var(--space-6);background:var(--color-surface)">
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:var(--space-4);border:1px solid var(--color-border);border-radius:var(--radius-xl);padding:var(--space-6);background:var(--color-surface)">
         <div style="text-align:center">
           <p class="stat-figure">少回 80%</p>
           <p class="stat-caption">手動排約的 LINE 訊息</p>
@@ -251,6 +254,13 @@
                 <li>帳務報表：營收、訂金、預約量一鍵匯整。</li>
                 <li>LINE 客戶訊息整合，溝通記錄不漏接。</li>
               </ul>
+              <div class="feature-spotlight">
+                <span class="feature-spotlight__icon" aria-hidden="true">🖱️</span>
+                <div class="feature-spotlight__body">
+                  <h3 class="feature-spotlight__title">行事曆拖一下，就能幫客人改期</h3>
+                  <p class="feature-spotlight__desc">客人臨時要換時間？不用重開單、也不用一格一格手動改。後台行事曆上，直接把那筆預約拖到新的時段放開，系統馬上把時段更新好——一秒改期，拖一下就完成。</p>
+                </div>
+              </div>
             </div>
             <div class="service-detail-block">
               <p class="service-detail-block__label">技術棧</p>
@@ -328,7 +338,7 @@
     <!-- ── 中段軟性 CTA + 客戶引言 ── -->
     <section style="padding:var(--space-8) 0">
       <div class="container">
-        <div style="border:1px solid var(--color-border);border-radius:16px;padding:var(--space-6);background:var(--color-surface);display:flex;flex-direction:column;gap:var(--space-4)">
+        <div style="border:1px solid var(--color-border);border-radius:var(--radius-xl);padding:var(--space-6);background:var(--color-surface);display:flex;flex-direction:column;gap:var(--space-4)">
           <blockquote style="margin:0;font-size:var(--text-lg);line-height:1.6;color:var(--color-text)">「以前每天光是回 LINE 排班就要花上一兩個小時，現在客人自己上網預約、付訂金，我只要看後台就好。月底對帳也不用再翻對話紀錄。」</blockquote>
           <p style="margin:0;font-size:var(--text-sm);color:var(--color-text-muted)">—— 攝影棚負責人（為保護客戶隱私，使用化名）</p>
           <div style="display:flex;gap:var(--space-3);flex-wrap:wrap;align-items:center;padding-top:var(--space-2)">
@@ -432,8 +442,8 @@
               <p style="margin:0;color:var(--color-text-muted);font-size:var(--text-sm)">帳號：owner@example.com　·　密碼：changeme<span style="font-size:var(--text-sm);color:var(--color-text-muted)">　（Demo 專用帳號）</span></p>
             </div>
             <div style="display:flex; gap: var(--space-3); flex-wrap:wrap;">
-              <a href="https://reservation-template-virid.vercel.app" target="_blank" rel="noopener noreferrer" class="btn btn--primary">↗ 開啟線上 Demo</a>
-              <a href="https://reservation-template-virid.vercel.app/admin/login" target="_blank" rel="noopener noreferrer" class="btn btn--ghost">↗ 進入後台 Demo</a>
+              <a href="https://demo-booking.mosstack.studio" target="_blank" rel="noopener noreferrer" class="btn btn--primary">↗ 開啟線上 Demo</a>
+              <a href="https://demo-booking.mosstack.studio/admin/login" target="_blank" rel="noopener noreferrer" class="btn btn--ghost">↗ 進入後台 Demo</a>
             </div>
           </div>
         </div>
@@ -470,7 +480,7 @@
           <a href="https://wa.me/886980054850" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
           </a>
-          <a href="https://line.me/ti/p/hz6EePU4Ha" target="_blank" rel="noopener noreferrer" aria-label="Line">
+          <a href="https://lin.ee/5LmZxWcP" target="_blank" rel="noopener noreferrer" aria-label="Line">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M19.365 9.863c.349 0 .63.285.63.631 0 .345-.281.63-.63.63H17.61v1.125h1.755c.349 0 .63.283.63.63 0 .344-.281.629-.63.629h-2.386c-.345 0-.627-.285-.627-.629V8.108c0-.345.282-.63.63-.63h2.386c.349 0 .63.285.63.63 0 .349-.281.63-.63.63H17.61v1.125h1.755zm-3.855 3.016c0 .27-.174.51-.432.596-.064.021-.133.031-.199.031-.211 0-.391-.09-.51-.25l-2.443-3.317v2.94c0 .344-.279.629-.631.629-.346 0-.626-.285-.626-.629V8.108c0-.27.173-.51.43-.595.06-.023.136-.033.194-.033.195 0 .375.104.495.254l2.462 3.33V8.108c0-.345.282-.63.63-.63.345 0 .63.285.63.63v4.771zm-5.741 0c0 .344-.282.629-.631.629-.345 0-.627-.285-.627-.629V8.108c0-.345.282-.63.627-.63.349 0 .631.285.631.63v4.771zm-2.466.629H4.917c-.345 0-.63-.285-.63-.629V8.108c0-.345.285-.63.63-.63.348 0 .63.285.63.63v4.141h1.756c.348 0 .629.283.629.63 0 .344-.281.629-.629.629M24 10.314C24 4.943 18.615.572 12 .572S0 4.943 0 10.314c0 4.811 4.27 8.842 10.035 9.608.391.082.923.258 1.058.59.12.301.079.766.038 1.08l-.164 1.02c-.045.301-.24 1.186 1.049.645 1.291-.539 6.916-4.078 9.436-6.975C23.176 14.393 24 12.458 24 10.314"/></svg>
           </a>
         </div>
@@ -480,6 +490,7 @@
         <nav class="footer__list">
           <a href="/portfolio.html" data-i18n="nav.work">精選案例</a>
           <a href="/services.html" data-i18n="nav.services">服務項目</a>
+          <a href="/trust.html" data-i18n="nav.trust">技術與資安</a>
           <a href="/index.html#studio" data-i18n="nav.studio">關於工作室</a>
           <a href="/contact.html" data-i18n="nav.contact">聯絡我們</a>
         </nav>
@@ -488,7 +499,7 @@
         <p class="footer__col-title" data-i18n="footer.col.contact">聯絡</p>
         <nav class="footer__list">
           <a href="https://wa.me/886980054850" target="_blank" rel="noopener noreferrer">WhatsApp</a>
-          <a href="https://line.me/ti/p/hz6EePU4Ha" target="_blank" rel="noopener noreferrer">LINE</a>
+          <a href="https://lin.ee/5LmZxWcP" target="_blank" rel="noopener noreferrer">LINE</a>
           <a href="https://github.com/BasilWu" target="_blank" rel="noopener noreferrer">GitHub</a>
         </nav>
       </div>
@@ -508,7 +519,7 @@
     <a href="https://wa.me/886980054850?text=%E4%BD%A0%E5%A5%BD%EF%BC%8C%E6%88%91%E6%83%B3%E8%AB%AE%E8%A9%A2%E9%A0%90%E7%B4%84%E7%B3%BB%E7%B5%B1" target="_blank" rel="noopener noreferrer" class="float-btn float-btn--whatsapp" aria-label="WhatsApp">
       <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
     </a>
-    <a href="https://line.me/ti/p/hz6EePU4Ha" target="_blank" rel="noopener noreferrer" class="float-btn float-btn--line" aria-label="Line">
+    <a href="https://lin.ee/5LmZxWcP" target="_blank" rel="noopener noreferrer" class="float-btn float-btn--line" aria-label="Line">
       <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M19.365 9.863c.349 0 .63.285.63.631 0 .345-.281.63-.63.63H17.61v1.125h1.755c.349 0 .63.283.63.63 0 .344-.281.629-.63.629h-2.386c-.345 0-.627-.285-.627-.629V8.108c0-.345.282-.63.63-.63h2.386c.349 0 .63.285.63.63 0 .349-.281.63-.63.63H17.61v1.125h1.755zm-3.855 3.016c0 .27-.174.51-.432.596-.064.021-.133.031-.199.031-.211 0-.391-.09-.51-.25l-2.443-3.317v2.94c0 .344-.279.629-.631.629-.346 0-.626-.285-.626-.629V8.108c0-.27.173-.51.43-.595.06-.023.136-.033.194-.033.195 0 .375.104.495.254l2.462 3.33V8.108c0-.345.282-.63.63-.63.345 0 .63.285.63.63v4.771zm-5.741 0c0 .344-.282.629-.631.629-.345 0-.627-.285-.627-.629V8.108c0-.345.282-.63.627-.63.349 0 .631.285.631.63v4.771zm-2.466.629H4.917c-.345 0-.63-.285-.63-.629V8.108c0-.345.285-.63.63-.63.348 0 .63.285.63.63v4.141h1.756c.348 0 .629.283.629.63 0 .344-.281.629-.629.629M24 10.314C24 4.943 18.615.572 12 .572S0 4.943 0 10.314c0 4.811 4.27 8.842 10.035 9.608.391.082.923.258 1.058.59.12.301.079.766.038 1.08l-.164 1.02c-.045.301-.24 1.186 1.049.645 1.291-.539 6.916-4.078 9.436-6.975C23.176 14.393 24 12.458 24 10.314"/></svg>
     </a>
   </div>

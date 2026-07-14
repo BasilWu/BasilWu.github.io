@@ -19,6 +19,7 @@ Next.js、React、Node.js、TypeScript、PostgreSQL、Prisma、Tailwind CSS、LI
 
 - [品牌電商系統](https://mosstack.studio/ecommerce-case.html) — 購物車、結帳、超商取貨、會員點數、後台訂單管理、AI 文案生成
 - [服務業預約系統](https://mosstack.studio/reservation-case.html) — 自助選時段、付訂金、後台行事曆、器材庫存、帳務報表、LINE 訊息整合
+- [品牌形象官網](https://mosstack.studio/brand-case.html) — 品牌故事、團隊介紹、客戶口碑、內容行銷部落格、多分店資訊、表單導客（Muji.Lab 木境設計示範）
 
 ## 合作流程
 
@@ -41,6 +42,7 @@ Next.js、React、Node.js、TypeScript、PostgreSQL、Prisma、Tailwind CSS、LI
 - [服務項目](https://mosstack.studio/services.html)
 - [品牌電商案例](https://mosstack.studio/ecommerce-case.html)
 - [預約系統案例](https://mosstack.studio/reservation-case.html)
+- [品牌官網案例](https://mosstack.studio/brand-case.html)
 - [Blog](https://mosstack.studio/blog.html)
 - [聯絡我們](https://mosstack.studio/contact.html)
 
