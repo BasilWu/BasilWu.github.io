@@ -242,7 +242,7 @@ function generateArticleHTML({ title, slug, date, category, description, readTim
       font-size: var(--text-2xl);
       font-weight: 700;
       color: var(--color-text);
-      letter-spacing: -0.03em;
+      letter-spacing: 0;
       line-height: 1.15;
       margin-bottom: var(--space-5);
     }
@@ -267,7 +267,7 @@ function generateArticleHTML({ title, slug, date, category, description, readTim
       font-size: var(--text-lg);
       font-weight: 700;
       color: var(--color-text);
-      letter-spacing: -0.02em;
+      letter-spacing: 0;
       margin: var(--space-12) 0 var(--space-4);
       padding-top: var(--space-4);
       border-top: 1px solid var(--color-divider);
@@ -369,12 +369,22 @@ function generateArticleHTML({ title, slug, date, category, description, readTim
       padding: var(--space-5);
     }
     .blog-toc__title {
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
       font-size: var(--text-xs);
       font-weight: 600;
-      letter-spacing: 0.08em;
+      letter-spacing: 0.12em;
       text-transform: uppercase;
-      color: var(--color-text-muted);
+      color: var(--color-accent);
       margin-bottom: var(--space-4);
+    }
+    .blog-toc__title::before {
+      content: '';
+      width: 16px;
+      height: 1px;
+      background: currentColor;
+      opacity: 0.7;
     }
     .toc__list { list-style: none; padding: 0; }
     .toc__item { margin-bottom: var(--space-1); }
@@ -388,7 +398,8 @@ function generateArticleHTML({ title, slug, date, category, description, readTim
       padding: 2px 0;
       transition: color var(--transition-interactive);
     }
-    .toc__link:hover, .toc__link.is-active { color: var(--color-text); }
+    .toc__link:hover { color: var(--color-text); }
+    .toc__link.is-active { color: var(--color-accent); font-weight: 600; }
 
     /* CTA Block */
     .blog-cta {
@@ -408,7 +419,7 @@ function generateArticleHTML({ title, slug, date, category, description, readTim
       font-size: var(--text-lg);
       font-weight: 700;
       color: var(--color-text);
-      letter-spacing: -0.02em;
+      letter-spacing: 0;
       margin-bottom: var(--space-2);
     }
     .blog-cta__text p {
@@ -422,7 +433,7 @@ function generateArticleHTML({ title, slug, date, category, description, readTim
       font-weight: 600;
       letter-spacing: 0.1em;
       text-transform: uppercase;
-      color: var(--color-text-muted);
+      color: var(--color-accent);
       margin-bottom: var(--space-3);
     }
   </style>
@@ -654,8 +665,8 @@ function buildFromSourceMd(sourceMdPath, outputDir) {
   if (!fs.existsSync(outputDir)) fs.mkdirSync(outputDir, { recursive: true });
 
   ARTICLES.forEach((meta, idx) => {
-    // 找到對應的 chunk（用 slug 中的關鍵字比對）
-    let chunk = articleChunks[idx] || '';
+    // 找到對應的 chunk（chunk 0 是文件前言，文章從 chunk 1 開始）
+    let chunk = articleChunks[idx + 1] || '';
 
     // 移除 front matter 部分（目標關鍵字、建議 Meta 等說明）
     // 保留從第一個 ## 開始的正文
@@ -671,7 +682,10 @@ function buildFromSourceMd(sourceMdPath, outputDir) {
 
     const { html } = parseMarkdown(cleanMd);
     const toc = generateTOC(html);
-    const wordCount = cleanMd.replace(/<[^>]+>/g, '').split(/\s+/).length;
+    const plain = cleanMd.replace(/<[^>]+>/g, '');
+    const cjkCount = (plain.match(/[\u4e00-\u9fff]/g) || []).length;
+    const latinCount = (plain.match(/[A-Za-z0-9]+/g) || []).length;
+    const wordCount = cjkCount + latinCount;
 
     const articleHtml = generateArticleHTML({
       ...meta,
