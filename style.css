@@ -1821,6 +1821,8 @@ footer {
   display: flex;
   flex-direction: column;
   gap: var(--space-2);
+  list-style: none;   /* 自訂勾勾記號，不用原生圓點 */
+  padding-left: 0;
 }
 .service-includes li {
   font-size: var(--text-sm);
@@ -2000,6 +2002,14 @@ footer {
   display: flex;
   flex-direction: column;
   gap: var(--space-2);
+  list-style: none;   /* 自訂記號，不用原生圓點 */
+  padding-left: 0;
+}
+/* 痛點清單：用破折號，不用勾勾（勾勾留給解法與清單確認項） */
+.service-checklist--pain li::before {
+  content: '—';
+  font-weight: 400;
+  color: var(--color-text-muted);
 }
 .service-checklist li {
   font-size: var(--text-sm);
