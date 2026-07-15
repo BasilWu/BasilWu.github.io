@@ -463,7 +463,8 @@ button, a {
 }
 
 .hero__title {
-  font-size: var(--text-3xl);
+  /* 手機上限制字級：確保「不只是把網站做出來」9 個字能放進一行（畫面寬 − 左右留白 − 緩衝，除以 9） */
+  font-size: min(var(--text-3xl), calc((100vw - 60px) / 9));
   font-weight: 700;
   letter-spacing: 0.005em;
   color: var(--color-text);
