@@ -1,175 +1,14 @@
-#!/usr/bin/env node
-/**
- * MosStack Studio — Blog Builder
- * Markdown → HTML 靜態文章生成器
- *
- * 使用方式：
- *   node build-blog.js                    → 生成 blog/ 目錄下所有文章
- *   node build-blog.js --watch            → 監聽 blog/posts/ 變動自動重建
- *
- * 文章放在 blog/posts/*.md，front matter 格式：
- * ---
- * title: 文章標題
- * slug: url-slug
- * date: 2026-06-29
- * category: 費用指南
- * description: Meta description
- * readTime: 8
- * ---
- */
-
-const fs = require('fs');
-const path = require('path');
-
-// ── 簡易 Markdown 解析器（不依賴外部套件）──
-function parseMarkdown(md) {
-  // front matter
-  const fmMatch = md.match(/^---\n([\s\S]*?)\n---\n([\s\S]*)$/);
-  let frontMatter = {};
-  let body = md;
-  if (fmMatch) {
-    fmMatch[1].split('\n').forEach(line => {
-      const [key, ...val] = line.split(':');
-      if (key && val.length) frontMatter[key.trim()] = val.join(':').trim();
-    });
-    body = fmMatch[2];
-  }
-
-  // Convert Markdown to HTML
-  let html = body
-    // Code blocks
-    .replace(/```([\w]*)\n([\s\S]*?)```/g, (_, lang, code) =>
-      `<pre class="blog-code"><code class="language-${lang}">${escapeHtml(code.trim())}</code></pre>`)
-    // Tables
-    .replace(/^\|(.+)\|\n\|[-| :]+\|\n((?:\|.+\|\n?)+)/gm, parseTable)
-    // Headings
-    .replace(/^### (.+)$/gm, (_, t) => `<h3 id="${slugify(t)}">${t}</h3>`)
-    .replace(/^## (.+)$/gm, (_, t) => `<h2 id="${slugify(t)}">${t}</h2>`)
-    .replace(/^# (.+)$/gm, (_, t) => `<h1>${t}</h1>`)
-    // Bold + italic
-    .replace(/\*\*\*(.+?)\*\*\*/g, '<strong><em>$1</em></strong>')
-    .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
-    .replace(/\*(.+?)\*/g, '<em>$1</em>')
-    // Inline code
-    .replace(/`([^`]+)`/g, '<code class="blog-inline-code">$1</code>')
-    // Links
-    .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank" rel="noopener noreferrer">$1</a>')
-    // Unordered lists
-    .replace(/((?:^- .+\n?)+)/gm, block => {
-      const items = block.trim().split('\n').map(l => `<li>${l.replace(/^- /, '')}</li>`).join('\n');
-      return `<ul>\n${items}\n</ul>\n`;
-    })
-    // Ordered lists
-    .replace(/((?:^\d+\. .+\n?)+)/gm, block => {
-      const items = block.trim().split('\n').map(l => `<li>${l.replace(/^\d+\. /, '')}</li>`).join('\n');
-      return `<ol>\n${items}\n</ol>\n`;
-    })
-    // Blockquotes
-    .replace(/^> (.+)$/gm, '<blockquote>$1</blockquote>')
-    // Horizontal rules
-    .replace(/^---$/gm, '<hr>')
-    // Paragraphs (wrap non-tag lines)
-    .replace(/^(?!<[a-z]|$)(.+)$/gm, '<p>$1</p>')
-    // Cleanup double newlines
-    .replace(/\n{3,}/g, '\n\n');
-
-  return { frontMatter, html };
-}
-
-function escapeHtml(str) {
-  return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
-}
-
-function slugify(str) {
-  return str.toLowerCase().replace(/[^\w\u4e00-\u9fff]+/g, '-').replace(/^-|-$/g, '');
-}
-
-function parseTable(match) {
-  const lines = match.trim().split('\n');
-  const headers = lines[0].split('|').filter(c => c.trim()).map(c => `<th>${c.trim()}</th>`);
-  const rows = lines.slice(2).map(row => {
-    const cells = row.split('|').filter(c => c.trim()).map(c => `<td>${c.trim()}</td>`);
-    return `<tr>${cells.join('')}</tr>`;
-  });
-  return `<div class="blog-table-wrap"><table class="blog-table"><thead><tr>${headers.join('')}</tr></thead><tbody>${rows.join('')}</tbody></table></div>`;
-}
-
-// ── TOC 生成 ──
-function generateTOC(html) {
-  const headings = [];
-  const re = /<h([23]) id="([^"]+)">([^<]+)<\/h[23]>/g;
-  let m;
-  while ((m = re.exec(html)) !== null) {
-    headings.push({ level: parseInt(m[1]), id: m[2], text: m[3] });
-  }
-  if (headings.length < 2) return '';
-  const items = headings.map(h =>
-    `<li class="toc__item toc__item--h${h.level}"><a class="toc__link" href="#${h.id}">${h.text}</a></li>`
-  ).join('\n');
-  return `<nav class="blog-toc" aria-label="文章目錄"><p class="blog-toc__title">目錄</p><ul class="toc__list">${items}</ul></nav>`;
-}
-
-// ── HTML 模板 ──
-function generateArticleHTML({ title, slug, date, category, description, readTime, wordCount, bodyHtml, toc }) {
-  const dateFormatted = date || '2026-06-29';
-  const schema = JSON.stringify({
-    "@context": "https://schema.org",
-    "@graph": [
-      {
-        "@type": "BlogPosting",
-        "@id": `https://mosstack.studio/blog/${slug}.html#post`,
-        "mainEntityOfPage": {
-          "@type": "WebPage",
-          "@id": `https://mosstack.studio/blog/${slug}.html`
-        },
-        "headline": title,
-        "description": description,
-        "datePublished": `${dateFormatted}T08:00:00+08:00`,
-        "dateModified": `${dateFormatted}T08:00:00+08:00`,
-        "author": {
-          "@type": "Organization",
-          "@id": "https://mosstack.studio/#business",
-          "name": "MosStack Studio"
-        },
-        "publisher": {
-          "@type": "Organization",
-          "@id": "https://mosstack.studio/#business",
-          "name": "MosStack Studio",
-          "logo": {
-            "@type": "ImageObject",
-            "url": "https://mosstack.studio/assets/favicon-32.png",
-            "width": 32,
-            "height": 32
-          }
-        },
-        "url": `https://mosstack.studio/blog/${slug}.html`,
-        "inLanguage": "zh-TW",
-        "articleSection": category || "Web Development",
-        "wordCount": wordCount || 2000,
-        "timeRequired": `PT${readTime || 8}M`
-      },
-      {
-        "@type": "BreadcrumbList",
-        "itemListElement": [
-          { "@type": "ListItem", "position": 1, "name": "首頁", "item": "https://mosstack.studio/" },
-          { "@type": "ListItem", "position": 2, "name": "Blog", "item": "https://mosstack.studio/blog.html" },
-          { "@type": "ListItem", "position": 3, "name": title, "item": `https://mosstack.studio/blog/${slug}.html` }
-        ]
-      }
-    ]
-  });
-
-  return `<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="zh-TW" data-theme="light">
 <head>
   <meta charset="UTF-8" />
   <script>document.documentElement.setAttribute("data-theme",localStorage.getItem("theme")||(matchMedia("(prefers-color-scheme:dark)").matches?"dark":"light"));</script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="${description}" />
+  <meta name="description" content="形象官網要花多少錢？2026 年台中品牌官網行情一次整理：套版、半客製、全客製報價區間、台中與台北價差、報價單避坑重點，讓你在詢價前心裡先有底。" />
   <meta name="robots" content="index, follow" />
-  <link rel="canonical" href="https://mosstack.studio/blog/${slug}.html" />
-  <script type="application/ld+json">${schema}</script>
-  <title>${title} — MosStack Studio</title>
+  <link rel="canonical" href="https://mosstack.studio/blog/brand-website-cost-taiwan-2026.html" />
+  <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"BlogPosting","@id":"https://mosstack.studio/blog/brand-website-cost-taiwan-2026.html#post","mainEntityOfPage":{"@type":"WebPage","@id":"https://mosstack.studio/blog/brand-website-cost-taiwan-2026.html"},"headline":"形象官網要花多少錢？2026 台中品牌官網製作費用行情","description":"形象官網要花多少錢？2026 年台中品牌官網行情一次整理：套版、半客製、全客製報價區間、台中與台北價差、報價單避坑重點，讓你在詢價前心裡先有底。","datePublished":"2026-07-15T08:00:00+08:00","dateModified":"2026-07-15T08:00:00+08:00","author":{"@type":"Organization","@id":"https://mosstack.studio/#business","name":"MosStack Studio"},"publisher":{"@type":"Organization","@id":"https://mosstack.studio/#business","name":"MosStack Studio","logo":{"@type":"ImageObject","url":"https://mosstack.studio/assets/favicon-32.png","width":32,"height":32}},"url":"https://mosstack.studio/blog/brand-website-cost-taiwan-2026.html","inLanguage":"zh-TW","articleSection":"費用指南","wordCount":1638,"timeRequired":"PT7M"},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"首頁","item":"https://mosstack.studio/"},{"@type":"ListItem","position":2,"name":"Blog","item":"https://mosstack.studio/blog.html"},{"@type":"ListItem","position":3,"name":"形象官網要花多少錢？2026 台中品牌官網製作費用行情","item":"https://mosstack.studio/blog/brand-website-cost-taiwan-2026.html"}]}]}</script>
+  <title>形象官網要花多少錢？2026 台中品牌官網製作費用行情 — MosStack Studio</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -180,19 +19,19 @@ function generateArticleHTML({ title, slug, date, category, description, readTim
   <link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16.png" />
   <link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png" />
   <meta name="theme-color" content="#080c14" />
-  <meta property="og:title" content="${title}" />
-  <meta property="og:description" content="${description}" />
+  <meta property="og:title" content="形象官網要花多少錢？2026 台中品牌官網製作費用行情" />
+  <meta property="og:description" content="形象官網要花多少錢？2026 年台中品牌官網行情一次整理：套版、半客製、全客製報價區間、台中與台北價差、報價單避坑重點，讓你在詢價前心裡先有底。" />
   <meta property="og:type" content="article" />
-  <meta property="og:url" content="https://mosstack.studio/blog/${slug}.html" />
+  <meta property="og:url" content="https://mosstack.studio/blog/brand-website-cost-taiwan-2026.html" />
   <meta property="og:image" content="https://mosstack.studio/assets/og-image.jpg" />
   <meta property="og:locale" content="zh_TW" />
   <meta property="og:site_name" content="MosStack Studio" />
-  <meta property="article:published_time" content="${dateFormatted}T08:00:00+08:00" />
+  <meta property="article:published_time" content="2026-07-15T08:00:00+08:00" />
   <meta property="article:author" content="https://mosstack.studio/" />
-  <meta property="article:section" content="${category || 'Web Development'}" />
+  <meta property="article:section" content="費用指南" />
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="${title}" />
-  <meta name="twitter:description" content="${description}" />
+  <meta name="twitter:title" content="形象官網要花多少錢？2026 台中品牌官網製作費用行情" />
+  <meta name="twitter:description" content="形象官網要花多少錢？2026 年台中品牌官網行情一次整理：套版、半客製、全客製報價區間、台中與台北價差、報價單避坑重點，讓你在詢價前心裡先有底。" />
   <meta name="twitter:image" content="https://mosstack.studio/assets/og-image.jpg" />
   <link rel="stylesheet" href="/style.css" />
   <style>
@@ -478,27 +317,135 @@ function generateArticleHTML({ title, slug, date, category, description, readTim
         <span class="blog-breadcrumb__sep">›</span>
         <a href="/blog.html">Blog</a>
         <span class="blog-breadcrumb__sep">›</span>
-        <span>${title}</span>
+        <span>形象官網要花多少錢？2026 台中品牌官網製作費用行情</span>
       </nav>
     </div>
 
     <article class="blog-article">
       <div class="container">
         <header class="blog-article__header">
-          <span class="blog-article__tag">${category || 'Blog'}</span>
-          <h1 class="blog-article__title">${title}</h1>
+          <span class="blog-article__tag">費用指南</span>
+          <h1 class="blog-article__title">形象官網要花多少錢？2026 台中品牌官網製作費用行情</h1>
           <div class="blog-article__meta">
             <span>MosStack Studio</span>
             <span class="blog-article__meta-dot"></span>
-            <span>${dateFormatted}</span>
+            <span>2026-07-15</span>
             <span class="blog-article__meta-dot"></span>
-            <span>${readTime || 8} min read</span>
+            <span>7 min read</span>
           </div>
         </header>
 
         <div class="blog-article__layout">
           <div class="blog-body">
-            ${bodyHtml}
+            
+<h2 id="形象官網要花多少錢-2026-台中品牌官網製作費用行情">形象官網要花多少錢？2026 台中品牌官網製作費用行情</h2>
+
+<p>「做一個形象官網要多少錢？」——這幾乎是每個客戶開口的第一句話。</p>
+
+<p>而答案的範圍大得驚人：同樣叫「形象官網」，有人花 3 萬搞定，有人花 30 萬還嫌不夠。差別不是誰在亂喊價，而是「形象官網」四個字背後，包含的工作量可以差十倍。</p>
+
+<p>這篇文章把 2026 年台灣、特別是台中的形象官網行情整理清楚，讓你在詢價之前心裡先有底。</p>
+
+<hr>
+
+<h2 id="先搞清楚-形象官網是什麼">先搞清楚：形象官網是什麼？</h2>
+
+<p>形象官網（也叫品牌官網）是以「建立信任、帶來詢問」為目標的網站，通常包含首頁、關於我們、服務項目、案例作品、聯絡表單等 5–10 頁。它不是電商，不需要購物車和金流。</p>
+
+<p>但別小看它——對 B2B 和專業服務業（設計、顧問、醫療、工程）來說，形象官網往往是成交前最重要的信任資產。客戶在 Google 搜尋你的公司名稱時，官網給人的專業感，直接決定他要不要拿起電話或填下詢價表單。</p>
+
+<hr>
+
+<h2 id="2026-年形象官網行情總覽">2026 年形象官網行情總覽</h2>
+
+<p>綜合台灣多家業者的公開報價與接案平台統計，2026 年的形象官網行情大致分三級：</p>
+
+<div class="blog-table-wrap"><table class="blog-table"><thead><tr><th>方案類型</th><th>價格區間</th><th>你會得到什麼</th></tr></thead><tbody><tr><td>套版網站</td><td>NT$30,000–80,000</td><td>現成模板改字改圖，快速上線，設計彈性低</td></tr><tr><td>半客製網站</td><td>NT$50,000–150,000</td><td>以模板為基礎調整版面與視覺，中小企業的主流選擇</td></tr><tr><td>全客製網站</td><td>NT$150,000 起</td><td>從品牌定位到 UI/UX 從零打造，含完整 SEO 基礎</td></tr></tbody></table></div>
+<p>實務上觀察，<strong>五到八頁的形象官網，市場成交最多的區間落在 NT$50,000–90,000</strong>。低於 3 萬的方案幾乎都是純套版，高於 20 萬的通常包含品牌策略、文案企劃或系統功能。</p>
+
+<h3 id="台中行情比台北便宜嗎">台中行情比台北便宜嗎？</h3>
+
+<p>是的，而且差距明顯。台中的報價普遍比台北低 10–20%，主要來自人力與租金成本結構不同。同樣規格的半客製形象官網，台北報 15 萬，台中往往 10–12 萬就能做到相同水準。</p>
+
+<p>這也是近年不少北部企業願意找台中團隊遠端合作的原因——品質相同，預算更漂亮。</p>
+
+<hr>
+
+<h2 id="找誰做-台中三種常見選擇">找誰做？台中三種常見選擇</h2>
+
+<h3 id="1-個人接案者-約-nt-30-000-80-000">1. 個人接案者（約 NT$30,000–80,000）</h3>
+
+<p>價格最低，溝通直接。但品質落差極大，最大的風險是「人不見了」——網站上線半年後出問題，訊息已讀不回，你的官網變成沒人管的孤兒。</p>
+
+<h3 id="2-小型工作室-約-nt-80-000-200-000">2. 小型工作室（約 NT$80,000–200,000）</h3>
+
+<p>通常由設計加工程的核心組合構成，有明確的對接窗口，是台中 5–15 頁客製形象官網的主力承接者。選這個級距時，重點看兩件事：過往案例的實際品質，以及交件後的維護承諾。</p>
+
+<h3 id="3-中大型設計公司-nt-200-000-起">3. 中大型設計公司（NT$200,000 起）</h3>
+
+<p>分工完整、流程正式、有 PM 對接。但案子規模通常從 30 萬起跳，預算不到位的案子，實務上容易被用套版方案處理，客製深度打折。</p>
+
+<hr>
+
+<h2 id="報價單裡最容易踩的三個坑">報價單裡最容易踩的三個坑</h2>
+
+<h3 id="1-建置費和年費混在一起">1. 建置費和年費混在一起</h3>
+
+<p>好的報價單會把「一次性建置費」和「每年固定費用」分開列清楚。網域、主機、SSL 憑證每年合計約 NT$5,000–15,000，有些看起來便宜的方案，其實是靠後續年費慢慢賺回來的。</p>
+
+<h3 id="2-原始檔與網站所有權沒講清楚">2. 原始檔與網站所有權沒講清楚</h3>
+
+<p>合約結束後，網站的程式碼、設計稿、圖片素材是不是你的？很多套版方案不提供原始檔，等於把你綁死在該廠商——想搬家就得整個重做。</p>
+
+<h3 id="3-含-seo-到底含了什麼">3. 「含 SEO」到底含了什麼</h3>
+
+<p>Meta 標籤、sitemap、結構化資料這些基礎 SEO 建設，2026 年應該是標配而不是加購項目。如果對方對「SEO 包含哪些」含糊帶過，或是開口就要另收數萬元「SEO 費用」，要特別小心。想了解合理的網站報價結構，可以參考我們的<a href="/blog/web-design-cost-taichung-2026.html" target="_blank" rel="noopener noreferrer">台中網頁設計報價懶人包</a>。</p>
+
+<hr>
+
+<h2 id="什麼時候值得投資全客製">什麼時候值得投資全客製？</h2>
+
+<p>如果官網對你只是「名片的延伸」，套版或半客製就夠用了，把預算省下來投廣告更實際。</p>
+
+<p>但符合以下任何一種情況，全客製的投資報酬率會明顯更高：</p>
+
+<ul>
+<li>官網是主要獲客管道，需要長期靠 SEO 和內容帶詢問</li>
+<li>品牌定位明確，需要獨特的視覺語言，不能跟同業「撞版型」</li>
+<li>未來計畫擴充功能：線上預約、會員系統、多語系</li>
+<p></ul></p>
+
+<p>以我們近期完成的<a href="/brand-case.html" target="_blank" rel="noopener noreferrer">品牌形象官網案例</a>為例，一個室內設計工作室的官網，從品牌色彩、字體系統到作品集的呈現動線都是量身設計，搭配完整的 SEO 與結構化資料建設——因為對設計業來說，官網本身就是作品集的第一件作品。</p>
+
+<hr>
+
+<h2 id="mosstack-studio-的做法">MosStack Studio 的做法</h2>
+
+<p>MosStack Studio 位於台中，形象官網採用 Next.js 技術棧開發，不用 WordPress 套版——這代表更快的載入速度、更好的 SEO 體質，以及不用每年付外掛授權費。</p>
+
+<p>我們的報價原則：</p>
+
+<ul>
+<li><strong>固定報價</strong>，簽約前就知道總價，沒有模糊地帶</li>
+<li><strong>原始碼完整交付</strong>，網站所有權百分之百是你的</li>
+<li><strong>基礎 SEO 是標配</strong>，包含結構化資料與 sitemap，不另外收費</li>
+<li><strong>交件後持續提供維護支援</strong>，不會人間蒸發</li>
+<p></ul></p>
+
+<p>詳細的<a href="/services.html" target="_blank" rel="noopener noreferrer">服務項目與方案說明在這裡</a>。</p>
+
+<hr>
+
+<h2 id="詢價前-先花-30-分鐘把需求聊清楚">詢價前，先花 30 分鐘把需求聊清楚</h2>
+
+<p>不確定自己該做套版還是客製？不知道預算該抓多少才合理？告訴我們你的產業和目標，我們幫你評估最適合的方案，給出清楚的固定報價——就算最後沒有合作，你也會帶著更清楚的預算概念離開。</p>
+
+<p>台中在地工作室，形象官網＋客製系統開發，目前接受新專案洽詢。</p>
+
+<hr>
+
+<em>© MosStack Studio — 台中全端網頁開發工作室 | <a href="https://mosstack.studio" target="_blank" rel="noopener noreferrer">mosstack.studio</a></em>
+
 
             <!-- CTA -->
             <div class="blog-cta">
@@ -512,7 +459,21 @@ function generateArticleHTML({ title, slug, date, category, description, readTim
           </div>
 
           <aside>
-            ${toc}
+            <nav class="blog-toc" aria-label="文章目錄"><p class="blog-toc__title">目錄</p><ul class="toc__list"><li class="toc__item toc__item--h2"><a class="toc__link" href="#形象官網要花多少錢-2026-台中品牌官網製作費用行情">形象官網要花多少錢？2026 台中品牌官網製作費用行情</a></li>
+<li class="toc__item toc__item--h2"><a class="toc__link" href="#先搞清楚-形象官網是什麼">先搞清楚：形象官網是什麼？</a></li>
+<li class="toc__item toc__item--h2"><a class="toc__link" href="#2026-年形象官網行情總覽">2026 年形象官網行情總覽</a></li>
+<li class="toc__item toc__item--h3"><a class="toc__link" href="#台中行情比台北便宜嗎">台中行情比台北便宜嗎？</a></li>
+<li class="toc__item toc__item--h2"><a class="toc__link" href="#找誰做-台中三種常見選擇">找誰做？台中三種常見選擇</a></li>
+<li class="toc__item toc__item--h3"><a class="toc__link" href="#1-個人接案者-約-nt-30-000-80-000">1. 個人接案者（約 NT$30,000–80,000）</a></li>
+<li class="toc__item toc__item--h3"><a class="toc__link" href="#2-小型工作室-約-nt-80-000-200-000">2. 小型工作室（約 NT$80,000–200,000）</a></li>
+<li class="toc__item toc__item--h3"><a class="toc__link" href="#3-中大型設計公司-nt-200-000-起">3. 中大型設計公司（NT$200,000 起）</a></li>
+<li class="toc__item toc__item--h2"><a class="toc__link" href="#報價單裡最容易踩的三個坑">報價單裡最容易踩的三個坑</a></li>
+<li class="toc__item toc__item--h3"><a class="toc__link" href="#1-建置費和年費混在一起">1. 建置費和年費混在一起</a></li>
+<li class="toc__item toc__item--h3"><a class="toc__link" href="#2-原始檔與網站所有權沒講清楚">2. 原始檔與網站所有權沒講清楚</a></li>
+<li class="toc__item toc__item--h3"><a class="toc__link" href="#3-含-seo-到底含了什麼">3. 「含 SEO」到底含了什麼</a></li>
+<li class="toc__item toc__item--h2"><a class="toc__link" href="#什麼時候值得投資全客製">什麼時候值得投資全客製？</a></li>
+<li class="toc__item toc__item--h2"><a class="toc__link" href="#mosstack-studio-的做法">MosStack Studio 的做法</a></li>
+<li class="toc__item toc__item--h2"><a class="toc__link" href="#詢價前-先花-30-分鐘把需求聊清楚">詢價前，先花 30 分鐘把需求聊清楚</a></li></ul></nav>
           </aside>
         </div>
       </div>
@@ -606,117 +567,4 @@ function generateArticleHTML({ title, slug, date, category, description, readTim
     })();
   </script>
 </body>
-</html>`;
-}
-
-// ── 文章定義（從 docs/ 草稿轉換）──
-const ARTICLES = [
-  {
-    title: '預約系統開發要多少錢？2026 台灣行情完整解析',
-    slug: 'appointment-system-cost-taiwan-2026',
-    date: '2026-06-29',
-    category: '費用指南',
-    description: '預約系統開發要多少錢？2026 年台灣行情從 SaaS 月租到客製開發一次整理。附實際報價範圍、功能比較與選購建議，幫服務業老闆找到最划算的方案。',
-    readTime: 8,
-    mdFile: null, // null = use inline content below
-    inlineContent: null // will be set from parsed articles
-  },
-  {
-    title: '網頁設計費用怎麼算？台中網頁設計報價懶人包（2026）',
-    slug: 'web-design-cost-taichung-2026',
-    date: '2026-06-29',
-    category: '費用指南',
-    description: '台中網頁設計費用一次看懂！2026 年一頁式、形象站、電商、客製系統完整報價範圍，加上選廠商避坑指南，讓你不再被模糊報價搞混。',
-    readTime: 7,
-  },
-  {
-    title: '自架電商 vs 蝦皮開店：品牌電商該怎麼選？',
-    slug: 'self-hosted-ecommerce-vs-shopee-taiwan',
-    date: '2026-06-29',
-    category: '電商',
-    description: '蝦皮開店抽成吃掉你的利潤？2026 年自架電商 vs 蝦皮完整比較，從費用、品牌控制、顧客資料到長期經營，幫品牌電商老闆做出最划算的選擇。',
-    readTime: 8,
-  },
-  {
-    title: '為什麼你的網站該用 Next.js 而不是 WordPress？',
-    slug: 'nextjs-vs-wordpress-website-development',
-    date: '2026-06-29',
-    category: '技術',
-    description: 'WordPress 慢、外掛地雷、維護成本高？2026 年用 Next.js 開發網站的 6 大優勢完整解析，附實際效能數據與適用場景比較。',
-    readTime: 9,
-  },
-  {
-    title: 'LINE Bot 串接與客服自動化：中小企業導入指南（2026）',
-    slug: 'line-bot-automation-sme-guide-2026',
-    date: '2026-06-29',
-    category: 'LINE',
-    description: 'LINE 訊息接不完？2026 年中小企業 LINE Bot 導入完整指南，涵蓋費用、功能規劃、常見使用情境與選廠商建議，讓你的 LINE 客服從人工變自動。',
-    readTime: 10,
-  },
-  {
-    title: '形象官網要花多少錢？2026 台中品牌官網製作費用行情',
-    slug: 'brand-website-cost-taiwan-2026',
-    date: '2026-07-15',
-    category: '費用指南',
-    description: '形象官網要花多少錢？2026 年台中品牌官網行情一次整理：套版、半客製、全客製報價區間、台中與台北價差、報價單避坑重點，讓你在詢價前心裡先有底。',
-    readTime: 7,
-  }
-];
-
-// ── 主程式：從草稿 MD 生成文章 HTML ──
-function buildFromSourceMd(sourceMdPath, outputDir) {
-  const raw = fs.readFileSync(sourceMdPath, 'utf8');
-
-  // 分割每篇文章（以 # 文章 開頭）
-  const articleChunks = raw.split(/\n---\n\n---\n\n# /).map((chunk, i) => i === 0 ? chunk : '# ' + chunk);
-
-  if (!fs.existsSync(outputDir)) fs.mkdirSync(outputDir, { recursive: true });
-
-  ARTICLES.forEach((meta, idx) => {
-    // 找到對應的 chunk（chunk 0 是文件前言，文章從 chunk 1 開始）
-    let chunk = articleChunks[idx + 1] || '';
-
-    // 移除 front matter 部分（目標關鍵字、建議 Meta 等說明）
-    // 保留從第一個 ## 開始的正文
-    const bodyStart = chunk.indexOf('\n## ');
-    const bodyMd = bodyStart >= 0 ? chunk.slice(bodyStart) : chunk;
-
-    // 移除 CTA 連結行（會用統一的 HTML CTA 取代）
-    const cleanMd = bodyMd
-      .replace(/\*\*\[立即填表.+?\]\(.+?\)\*\*/g, '')
-      .replace(/\*\*\[想脫離.+?\]\(.+?\)\*\*/g, '')
-      .replace(/\*\*\[立即預約.+?\]\(.+?\)\*\*/g, '')
-      .replace(/\*\*\[如果你正在.+?\]\(.+?\)\*\*/g, '');
-
-    const { html } = parseMarkdown(cleanMd);
-    const toc = generateTOC(html);
-    const plain = cleanMd.replace(/<[^>]+>/g, '');
-    const cjkCount = (plain.match(/[\u4e00-\u9fff]/g) || []).length;
-    const latinCount = (plain.match(/[A-Za-z0-9]+/g) || []).length;
-    const wordCount = cjkCount + latinCount;
-
-    const articleHtml = generateArticleHTML({
-      ...meta,
-      bodyHtml: html,
-      toc,
-      wordCount
-    });
-
-    const outPath = path.join(outputDir, `${meta.slug}.html`);
-    fs.writeFileSync(outPath, articleHtml, 'utf8');
-    console.log(`✅ Generated: ${outPath}`);
-  });
-
-  console.log(`\n🎉 Built ${ARTICLES.length} articles to ${outputDir}/`);
-}
-
-// ── Entry point ──
-const sourceMd = path.resolve(__dirname, 'docs/mosstack_seo_articles.md');
-const outputDir = path.resolve(__dirname, 'blog');
-
-if (!fs.existsSync(sourceMd)) {
-  console.error('❌ Source file not found:', sourceMd);
-  process.exit(1);
-}
-
-buildFromSourceMd(sourceMd, outputDir);
+</html>
