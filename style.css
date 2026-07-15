@@ -124,12 +124,12 @@ html {
   -moz-osx-font-smoothing: grayscale;
   scroll-behavior: smooth;
   scroll-padding-top: var(--space-16);
-  overflow-x: hidden;        /* 防止任何超寬元素造成整頁橫向拖動 */
+  overflow-x: clip;          /* 防橫向拖動；用 clip 才不會破壞 sticky 導覽列 */
 }
 
 body {
   min-height: 100dvh;
-  overflow-x: hidden;        /* 雙重防護：手機上門頁不會出現右側空白 */
+  overflow-x: clip;          /* 雙重防護；clip 不產生捲動容器，sticky 才有效 */
   max-width: 100%;
   line-height: 1.7;
   font-family: var(--font-body);
