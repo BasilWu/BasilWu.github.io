@@ -934,7 +934,7 @@ const I18N = {
     mobileNav.classList.add('is-open');
     hamburger.setAttribute('aria-expanded', 'true');
     mobileNav.setAttribute('aria-hidden', 'false');
-    document.body.style.overflow = 'hidden';
+    document.documentElement.style.overflow = 'hidden'; // 鎖 html 而非 body，捲動位置不會跳、sticky 導覽列不會被推走
   }
 
   function closeMenu() {
@@ -942,7 +942,7 @@ const I18N = {
     mobileNav.classList.remove('is-open');
     hamburger.setAttribute('aria-expanded', 'false');
     mobileNav.setAttribute('aria-hidden', 'true');
-    document.body.style.overflow = '';
+    document.documentElement.style.overflow = '';
   }
 
   hamburger.addEventListener('click', function() {

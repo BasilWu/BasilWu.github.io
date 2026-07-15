@@ -465,6 +465,7 @@ function generateArticleHTML({ title, slug, date, category, description, readTim
     <ul>
       <li><a href="/portfolio.html">精選案例</a></li>
       <li><a href="/services.html">服務項目</a></li>
+      <li><a href="/trust.html">技術與資安</a></li>
       <li><a href="/blog.html">Blog</a></li>
       <li><a href="/#studio">關於工作室</a></li>
       <li><a href="/contact.html">聯絡我們</a></li>
