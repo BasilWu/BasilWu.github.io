@@ -406,7 +406,7 @@ const I18N = {
     "services.s6.i6": "Deploy to Cloudflare + domain setup + 30-day support",
     "services.s7.title":  "E-commerce System Template",
     "services.s7.price":  "NT$ 60,000",
-    "services.s7.desc":   "Next.js 14 full-stack e-commerce for brand stores and boutiques. Three pricing tiers.",
+    "services.s7.desc":   "Next.js 14 full-stack e-commerce for brand stores and boutiques.",
     "services.s7.case1":  "Brand E-commerce System (Live Demo)",
     "services.s7.suitable": "Brand e-commerce, boutique stores, personal shoppers, subscription products.",
     "services.s7.i1": "Frontend: product catalog, categories, search, cart, checkout",

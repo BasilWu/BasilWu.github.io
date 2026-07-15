@@ -185,28 +185,6 @@
             </div>
           </div>
         </div>
-        <!-- ── 方案與報價（全寬）── -->
-        <div class="price-tiers-wrap" style="margin-top:var(--space-8);padding-top:var(--space-6);border-top:1px solid var(--color-border)">
-          <p class="service-detail-block__label" style="margin-bottom:var(--space-3)">方案與報價</p>
-          <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:var(--space-3)">
-            <div style="border:1px solid var(--color-border);border-radius:12px;padding:var(--space-4)">
-                  <p style="font-weight:700;margin:0 0 4px">入門電商</p>
-                  <p style="color:var(--color-primary);font-weight:700;margin:0 0 8px;white-space:nowrap">NT$ 60,000 – 90,000</p>
-                  <p style="font-size:var(--text-sm);color:var(--color-text-muted);margin:0">個人賣家、第一間店。商品上架、購物車、結帳、單一金流，快速上線可營運。</p>
-                </div>
-            <div style="border:2px solid var(--color-primary);border-radius:12px;padding:var(--space-4);position:relative">
-                  <span style="position:absolute;top:-10px;left:var(--space-4);background:var(--color-primary);color:#fff;font-size:var(--text-xs);font-weight:600;padding:2px 8px;border-radius:6px">最熱門</span>
-                  <p style="font-weight:700;margin:0 0 4px">品牌電商</p>
-                  <p style="color:var(--color-primary);font-weight:700;margin:0 0 8px;white-space:nowrap">NT$ 150,000 – 220,000</p>
-                  <p style="font-size:var(--text-sm);color:var(--color-text-muted);margin:0">品牌電商、選物店。多金流多物流、會員點數、優惠券、AI 文案、棄單追蹤，完整品牌體驗。</p>
-                </div>
-            <div style="border:1px solid var(--color-border);border-radius:12px;padding:var(--space-4)">
-                  <p style="font-weight:700;margin:0 0 4px">進階整合</p>
-                  <p style="color:var(--color-primary);font-weight:700;margin:0 0 8px;white-space:nowrap">NT$ 280,000 起</p>
-                  <p style="font-size:var(--text-sm);color:var(--color-text-muted);margin:0">多 SKU 大量商品、需整合 ERP / CRM 或特殊業務邏輯的規模化電商。</p>
-                </div>
-          </div>
-        </div>
         <div style="display:flex; gap: var(--space-3); flex-wrap:wrap; margin-top:var(--space-6)">
           <a href="/contact.html" class="btn btn--primary" data-i18n="services.cta.consult">免費 30 分鐘諮詢</a>
           <a href="https://demo-shop.mosstack.studio" target="_blank" rel="noopener noreferrer" class="btn btn--ghost" data-i18n="services.s1.demo">↗ 看實際 Demo</a>
@@ -366,7 +344,7 @@
     <div class="container">
       <p class="section-label">30 秒估價</p>
       <h2 style="font-size:var(--text-2xl);margin:0 0 var(--space-2)">不確定預算？先選三個問題</h2>
-      <p style="color:var(--color-text-muted);margin:0 0 var(--space-6)">選完馬上看到建議方案與價格區間。只是初步參考，實際報價依需求討論後確認。</p>
+      <p style="color:var(--color-text-muted);margin:0 0 var(--space-6)">選完馬上看到建議方案與起價。實際金額為固定報價，免費諮詢後提供。</p>
 
       <div class="est" style="display:grid;gap:var(--space-6);max-width:760px">
         <div class="est-q" data-q="type">
@@ -401,7 +379,8 @@
           <p class="section-label" style="margin:0 0 var(--space-2)">建議方案</p>
           <h3 id="est-plan" style="font-size:var(--text-xl);margin:0 0 4px"></h3>
           <p id="est-price" style="color:var(--color-primary);font-weight:700;font-size:var(--text-lg);margin:0 0 var(--space-2)"></p>
-          <p id="est-note" style="color:var(--color-text-muted);margin:0 0 var(--space-4)"></p>
+          <p id="est-note" style="color:var(--color-text-muted);margin:0 0 var(--space-2)"></p>
+          <p style="font-size:var(--text-sm);color:var(--color-text-muted);margin:0 0 var(--space-4)">實際金額為固定報價，會依你的功能需求在免費諮詢後提供，不採時數計費。</p>
           <a href="/contact.html" class="btn btn--primary">拿這個結果去諮詢 →</a>
         </div>
       </div>
@@ -517,22 +496,22 @@
     // 各類型依規模給方案；預算僅用於補充提示
     var PLANS = {
       ecom: {
-        small: { plan: '入門電商店', price: 'NT$ 60,000 – 90,000', note: '個人賣家、第一間店。商品上架、購物車、結帳、單一金流，快速上線可營運。' },
-        mid:   { plan: '品牌電商（最熱門）', price: 'NT$ 150,000 – 220,000', note: '多金流物流、會員點數、優惠券與行銷工具，可實際營運。' },
+        small: { plan: '入門電商店', price: 'NT$ 60,000 起', note: '個人賣家、第一間店。商品上架、購物車、結帳、單一金流，快速上線可營運。' },
+        mid:   { plan: '品牌電商（最熱門）', price: 'NT$ 150,000 起', note: '多金流物流、會員點數、優惠券與行銷工具，可實際營運。' },
         large: { plan: '進階電商整合', price: 'NT$ 280,000 起', note: '多 SKU 大量商品、需整合 ERP / CRM 或特殊業務邏輯的規模化電商。' }
       },
       booking: {
-        small: { plan: '輕量預約系統', price: 'NT$ 60,000 – 90,000', note: '單點預約 / 訂房、時段或房況管理與基本後台。適合攝影棚、美業、診所、民宿。' },
+        small: { plan: '輕量預約系統', price: 'NT$ 60,000 起', note: '單點預約 / 訂房、時段或房況管理與基本後台。適合攝影棚、美業、診所、民宿。' },
         mid:   { plan: '預約 / 訂房平台', price: 'NT$ 120,000 起', note: '官網＋線上預約、時段 / 房態管理、LINE 提醒、訂單與金流串接，前後台一體。' },
         large: { plan: '多點 / 多館整合', price: 'NT$ 200,000 起', note: '多分店 / 多房型、營收報表與系統整合。' }
       },
       site: {
-        small: { plan: '品牌官網（基本）', price: 'NT$ 35,000 – 50,000', note: '4–6 頁形象網站、SEO 與聯絡表單，快速建立數位門面。' },
-        mid:   { plan: '品牌官網（完整）', price: 'NT$ 60,000 – 90,000', note: '中英雙語、內容管理與進階 SEO，適合成長中的品牌。' },
+        small: { plan: '品牌官網（基本）', price: 'NT$ 35,000 起', note: '4–6 頁形象網站、SEO 與聯絡表單，快速建立數位門面。' },
+        mid:   { plan: '品牌官網（完整）', price: 'NT$ 60,000 起', note: '中英雙語、內容管理與進階 SEO，適合成長中的品牌。' },
         large: { plan: '品牌官網＋系統', price: 'NT$ 120,000 起', note: '官網結合會員、預約或內容後台等客製功能。' }
       },
       backend: {
-        small: { plan: '輕量管理後台', price: 'NT$ 80,000 – 120,000', note: '取代 Excel 的 CRUD 後台、篩選搜尋與基本報表。' },
+        small: { plan: '輕量管理後台', price: 'NT$ 80,000 起', note: '取代 Excel 的 CRUD 後台、篩選搜尋與基本報表。' },
         mid:   { plan: '企業後台系統', price: 'NT$ 150,000 起', note: '權限管理、報表匯出、API 串接，或平板＋桌機 POS 收銀。' },
         large: { plan: '企業系統整合', price: 'NT$ 250,000 起', note: '多模組整合、線上線下庫存或客製工作流。' }
       }
