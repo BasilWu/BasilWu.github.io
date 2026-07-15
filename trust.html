@@ -33,9 +33,9 @@
   <style>
     .trust-hero { padding: var(--space-8) 0 var(--space-6); }
     .trust-intro { max-width: 720px; }
-    .trust-section { padding: var(--space-6) 0; border-top: 1px solid var(--border, rgba(128,128,128,.18)); }
+    .trust-section { padding: var(--space-10) 0; border-top: 1px solid var(--border, rgba(128,128,128,.18)); }
     .trust-section:first-of-type { border-top: none; }
-    .trust-section__num { font-size: .8rem; letter-spacing: .12em; text-transform: uppercase; color: var(--accent, #01696F); font-weight: 600; }
+    .trust-section__num { font-size: .8rem; letter-spacing: .12em; text-transform: uppercase; color: var(--color-accent); font-weight: 600; }
     .trust-section__title { font-size: clamp(1.4rem, 3vw, 1.9rem); margin: var(--space-2) 0 var(--space-3); line-height: 1.25; }
     .trust-section__lead { max-width: 760px; color: var(--text-muted, #555); margin-bottom: var(--space-4); }
     .trust-points { display: grid; gap: var(--space-3); max-width: 820px; }
@@ -48,7 +48,7 @@
     @media (max-width: 560px){ .trust-fact { grid-template-columns: 110px 1fr; } }
     .trust-note { font-size: .88rem; color: var(--text-faint, #888); margin-top: var(--space-3); max-width: 760px; }
     .trust-cta { margin-top: var(--space-4); display: flex; gap: var(--space-3); flex-wrap: wrap; }
-    .trust-badge { display:inline-block; font-size:.78rem; padding:3px 10px; border-radius:999px; background:var(--surface,rgba(1,105,111,.1)); color:var(--accent,#01696F); font-weight:600; margin-bottom: var(--space-2); }
+    .trust-badge { display:inline-block; font-size:.78rem; padding:3px 10px; border-radius:999px; background:color-mix(in oklab, var(--color-accent) 12%, transparent); color:var(--color-accent); font-weight:600; margin-bottom: var(--space-2); }
   </style>
 </head>
 <body>

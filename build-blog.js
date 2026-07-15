@@ -439,6 +439,7 @@ function generateArticleHTML({ title, slug, date, category, description, readTim
   </style>
 </head>
 <body>
+<div class="article-progress" aria-hidden="true"></div>
   <nav class="nav">
     <div class="nav__inner">
       <a href="/" class="nav__logo">MosStack</a>

@@ -131,7 +131,7 @@ body {
   min-height: 100dvh;
   overflow-x: hidden;        /* 雙重防護：手機上門頁不會出現右側空白 */
   max-width: 100%;
-  line-height: 1.6;
+  line-height: 1.7;
   font-family: var(--font-body);
   font-size: var(--text-base);
   color: var(--color-text);
@@ -151,11 +151,16 @@ a { text-decoration: none; color: inherit; }
 }
 
 h1, h2, h3, h4, h5, h6 {
-  line-height: 1.15;
+  line-height: 1.22;
   font-family: var(--font-display);
+  text-wrap: balance; /* 多行中文標題自動配平，不出現孤字 */
 }
 
-p { max-width: 72ch; }
+p { max-width: 40em; text-wrap: pretty; } /* 中文每行約 40 字內最好讀 */
+
+/* 錨點捲動：平滑 + 預留 sticky 導覽列高度 */
+html { scroll-behavior: smooth; }
+[id] { scroll-margin-top: 84px; }
 
 button, a {
   transition:
@@ -1490,6 +1495,7 @@ footer {
   display: flex;
   flex-direction: column;
   border-top: 1px solid var(--color-divider);
+  max-width: 880px; /* 問題列過寬不好掃讀 */
 }
 
 .faq__item {
@@ -2529,4 +2535,89 @@ body.gallery-lightbox-open { overflow: hidden; }
 }
 #ai .gallery {
   margin-top: 0;
+}
+
+
+/* ══ 排版與動態 v3（全站打磨）══════════════ */
+
+/* —— 跨頁轉場：淡出淡入，讓換頁不再硬切 —— */
+@view-transition { navigation: auto; }
+@media (prefers-reduced-motion: no-preference) {
+  ::view-transition-old(root) { animation: vt-fade-out 0.18s cubic-bezier(0.4, 0, 1, 1) both; }
+  ::view-transition-new(root) { animation: vt-fade-in 0.3s cubic-bezier(0.16, 1, 0.3, 1) both; }
+}
+@keyframes vt-fade-out { to { opacity: 0; } }
+@keyframes vt-fade-in { from { opacity: 0; } }
+
+/* —— FAQ 展開動畫：高度平滑展開（支援的瀏覽器才啟用）—— */
+@supports (interpolate-size: allow-keywords) {
+  :root { interpolate-size: allow-keywords; }
+  .faq__item::details-content {
+    opacity: 0;
+    block-size: 0;
+    overflow: clip;
+    transition:
+      block-size 0.35s cubic-bezier(0.22, 1, 0.36, 1),
+      opacity 0.3s cubic-bezier(0.22, 1, 0.36, 1),
+      content-visibility 0.35s allow-discrete;
+  }
+  .faq__item[open]::details-content {
+    opacity: 1;
+    block-size: auto;
+  }
+}
+
+/* —— 區塊標籤的橫線隨捲動展開 —— */
+@media (prefers-reduced-motion: no-preference) {
+  @supports (animation-timeline: view()) {
+    .section-label::before {
+      animation: label-grow linear both;
+      animation-timeline: view();
+      animation-range: entry 20% entry 90%;
+    }
+  }
+}
+@keyframes label-grow { from { width: 0; } }
+
+/* —— 部落格文章：頂部閱讀進度條 —— */
+.article-progress {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  z-index: 200;
+  background: var(--color-accent);
+  transform-origin: 0 50%;
+  scale: 0 1;
+}
+@media (prefers-reduced-motion: no-preference) {
+  @supports (animation-timeline: scroll()) {
+    .article-progress {
+      display: block;
+      animation: article-progress-grow linear both;
+      animation-timeline: scroll(root);
+    }
+  }
+}
+@keyframes article-progress-grow { from { scale: 0 1; } to { scale: 1 1; } }
+
+/* —— 首頁專案卡片：奇數張時最後一張改橫式滿版，不再孤零零 —— */
+@media (min-width: 769px) {
+  .project-grid > .project-card:last-child:nth-child(odd) {
+    grid-column: 1 / -1;
+    display: grid;
+    grid-template-columns: 1.1fr 1fr;
+    align-items: stretch;
+  }
+  .project-grid > .project-card:last-child:nth-child(odd) .project-card__image {
+    order: 2;
+    height: 100%;
+    min-height: 260px;
+  }
+  .project-grid > .project-card:last-child:nth-child(odd) .project-card__info {
+    order: 1;
+    align-self: center;
+  }
 }
