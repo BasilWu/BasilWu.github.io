@@ -28,12 +28,13 @@ Next.js、React、Node.js、TypeScript、PostgreSQL、Prisma、Tailwind CSS、LI
 3. 分階段開發與交付
 4. 上線部署與後續維護支援
 
-## 報價範圍參考
+## 報價範圍參考（固定報價、無隱藏費用）
 
-- 品牌官網：NT$50,000 起
-- 電商平台：NT$150,000 起
-- 預約系統：NT$80,000–300,000
-- B2B 後台：依需求複雜度報價
+- 品牌 & 餐廳官網：NT$35,000 起（約 3–5 週）
+- 電商 & 金流系統：NT$60,000 起，品牌電商方案 NT$150,000 起（約 6–8 週）
+- 預約 & 訂房系統：NT$60,000 起，前後台一體方案 NT$120,000 起（約 6–9 週）
+- 企業後台 & 管理系統：NT$80,000 起
+- 上線後一年免費保固；年度維護約為建置費用的 10%
 
 ## 主要頁面
 
@@ -43,6 +44,7 @@ Next.js、React、Node.js、TypeScript、PostgreSQL、Prisma、Tailwind CSS、LI
 - [品牌電商案例](https://mosstack.studio/ecommerce-case.html)
 - [預約系統案例](https://mosstack.studio/reservation-case.html)
 - [品牌官網案例](https://mosstack.studio/brand-case.html)
+- [技術與資安](https://mosstack.studio/trust.html)
 - [Blog](https://mosstack.studio/blog.html)
 - [聯絡我們](https://mosstack.studio/contact.html)
 
@@ -53,6 +55,7 @@ Next.js、React、Node.js、TypeScript、PostgreSQL、Prisma、Tailwind CSS、LI
 - [自架電商 vs 蝦皮開店：品牌電商該怎麼選？](https://mosstack.studio/blog/self-hosted-ecommerce-vs-shopee-taiwan.html) — 蝦皮真實成本分析與自架電商評估
 - [為什麼你的網站該用 Next.js 而不是 WordPress？](https://mosstack.studio/blog/nextjs-vs-wordpress-website-development.html) — 效能數據與技術選型建議
 - [LINE Bot 串接與客服自動化：中小企業導入指南（2026）](https://mosstack.studio/blog/line-bot-automation-sme-guide-2026.html) — 費用行情與各行業使用情境
+- [形象官網要花多少錢？2026 台中品牌官網製作費用行情](https://mosstack.studio/blog/brand-website-cost-taiwan-2026.html) — 品牌官網報價區間與挑選建議
 
 ## 聯絡資訊
 
