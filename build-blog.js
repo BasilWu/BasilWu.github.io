@@ -117,10 +117,10 @@ function generateArticleHTML({ title, slug, date, category, description, readTim
     "@graph": [
       {
         "@type": "BlogPosting",
-        "@id": `https://mosstack.studio/blog/${slug}.html#post`,
+        "@id": `https://mosstack.studio/blog/${slug}#post`,
         "mainEntityOfPage": {
           "@type": "WebPage",
-          "@id": `https://mosstack.studio/blog/${slug}.html`
+          "@id": `https://mosstack.studio/blog/${slug}`
         },
         "headline": title,
         "description": description,
@@ -142,7 +142,7 @@ function generateArticleHTML({ title, slug, date, category, description, readTim
             "height": 32
           }
         },
-        "url": `https://mosstack.studio/blog/${slug}.html`,
+        "url": `https://mosstack.studio/blog/${slug}`,
         "inLanguage": "zh-TW",
         "articleSection": category || "Web Development",
         "wordCount": wordCount || 2000,
@@ -152,8 +152,8 @@ function generateArticleHTML({ title, slug, date, category, description, readTim
         "@type": "BreadcrumbList",
         "itemListElement": [
           { "@type": "ListItem", "position": 1, "name": "首頁", "item": "https://mosstack.studio/" },
-          { "@type": "ListItem", "position": 2, "name": "Blog", "item": "https://mosstack.studio/blog.html" },
-          { "@type": "ListItem", "position": 3, "name": title, "item": `https://mosstack.studio/blog/${slug}.html` }
+          { "@type": "ListItem", "position": 2, "name": "Blog", "item": "https://mosstack.studio/blog" },
+          { "@type": "ListItem", "position": 3, "name": title, "item": `https://mosstack.studio/blog/${slug}` }
         ]
       }
     ]
@@ -167,7 +167,7 @@ function generateArticleHTML({ title, slug, date, category, description, readTim
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="description" content="${description}" />
   <meta name="robots" content="index, follow" />
-  <link rel="canonical" href="https://mosstack.studio/blog/${slug}.html" />
+  <link rel="canonical" href="https://mosstack.studio/blog/${slug}" />
   <script type="application/ld+json">${schema}</script>
   <title>${title} — MosStack Studio</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -183,7 +183,7 @@ function generateArticleHTML({ title, slug, date, category, description, readTim
   <meta property="og:title" content="${title}" />
   <meta property="og:description" content="${description}" />
   <meta property="og:type" content="article" />
-  <meta property="og:url" content="https://mosstack.studio/blog/${slug}.html" />
+  <meta property="og:url" content="https://mosstack.studio/blog/${slug}" />
   <meta property="og:image" content="https://mosstack.studio/assets/og-image.jpg" />
   <meta property="og:locale" content="zh_TW" />
   <meta property="og:site_name" content="MosStack Studio" />
@@ -444,17 +444,17 @@ function generateArticleHTML({ title, slug, date, category, description, readTim
     <div class="nav__inner">
       <a href="/" class="nav__logo">MosStack</a>
       <ul class="nav__links">
-        <li><a href="/portfolio.html">精選案例</a></li>
-        <li><a href="/services.html">服務項目</a></li>
-        <li><a href="/blog.html" class="nav__link--active">Blog</a></li>
+        <li><a href="/portfolio">精選案例</a></li>
+        <li><a href="/services">服務項目</a></li>
+        <li><a href="/blog" class="nav__link--active">Blog</a></li>
         <li><a href="/#studio">關於工作室</a></li>
-        <li><a href="/contact.html">聯絡我們</a></li>
+        <li><a href="/contact">聯絡我們</a></li>
       </ul>
       <div class="nav__right">
         <button class="theme-toggle" type="button" data-theme-toggle aria-label="切換深色模式">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
         </button>
-        <a href="/contact.html" class="btn btn--primary nav__cta">免費諮詢</a>
+        <a href="/contact" class="btn btn--primary nav__cta">免費諮詢</a>
         <button class="hamburger" id="hamburger" type="button" aria-label="開啟選單" aria-expanded="false">
           <span></span><span></span><span></span>
         </button>
@@ -463,13 +463,13 @@ function generateArticleHTML({ title, slug, date, category, description, readTim
   </nav>
   <div class="mobile-nav" id="mobileNav" aria-hidden="true">
     <ul>
-      <li><a href="/portfolio.html">精選案例</a></li>
-      <li><a href="/services.html">服務項目</a></li>
-      <li><a href="/trust.html">技術與資安</a></li>
-      <li><a href="/blog.html">Blog</a></li>
+      <li><a href="/portfolio">精選案例</a></li>
+      <li><a href="/services">服務項目</a></li>
+      <li><a href="/trust">技術與資安</a></li>
+      <li><a href="/blog">Blog</a></li>
       <li><a href="/#studio">關於工作室</a></li>
-      <li><a href="/contact.html">聯絡我們</a></li>
-      <li><a href="/contact.html" class="btn btn--primary" style="display:inline-flex;margin-top:var(--space-2)">免費諮詢</a></li>
+      <li><a href="/contact">聯絡我們</a></li>
+      <li><a href="/contact" class="btn btn--primary" style="display:inline-flex;margin-top:var(--space-2)">免費諮詢</a></li>
     </ul>
   </div>
 
@@ -478,7 +478,7 @@ function generateArticleHTML({ title, slug, date, category, description, readTim
       <nav class="blog-breadcrumb" aria-label="麵包屑">
         <a href="/">首頁</a>
         <span class="blog-breadcrumb__sep">›</span>
-        <a href="/blog.html">Blog</a>
+        <a href="/blog">Blog</a>
         <span class="blog-breadcrumb__sep">›</span>
         <span>${title}</span>
       </nav>
@@ -509,7 +509,7 @@ function generateArticleHTML({ title, slug, date, category, description, readTim
                 <h3>需要類似的系統或網站？</h3>
                 <p>告訴我們你在建什麼，我們提供免費 30 分鐘需求諮詢，沒有模糊報價。</p>
               </div>
-              <a href="/contact.html" class="btn btn--primary">免費 30 分鐘諮詢 →</a>
+              <a href="/contact" class="btn btn--primary">免費 30 分鐘諮詢 →</a>
             </div>
           </div>
 
@@ -530,10 +530,10 @@ function generateArticleHTML({ title, slug, date, category, description, readTim
       <div class="footer__col">
         <p class="footer__col-title">瀏覽</p>
         <nav class="footer__list">
-          <a href="/portfolio.html">精選案例</a>
-          <a href="/services.html">服務項目</a>
-          <a href="/blog.html">Blog</a>
-          <a href="/contact.html">聯絡我們</a>
+          <a href="/portfolio">精選案例</a>
+          <a href="/services">服務項目</a>
+          <a href="/blog">Blog</a>
+          <a href="/contact">聯絡我們</a>
         </nav>
       </div>
       <div class="footer__col">
@@ -550,7 +550,7 @@ function generateArticleHTML({ title, slug, date, category, description, readTim
         <p>© 2026 MosStack Studio. 版權所有。</p>
         <div class="footer__legal">
           <span>位於台中，服務來自各地的客戶。</span>
-          <a href="/privacy.html">隱私權政策</a>
+          <a href="/privacy">隱私權政策</a>
         </div>
       </div>
     </div>

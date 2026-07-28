@@ -6,10 +6,10 @@ MosStack Studio（摩斯棧工作室，統一編號 60983424）是一個位於�
 
 ## 核心服務
 
-- [品牌官網](https://mosstack.studio/services.html) — 企業、創辦人與品牌的數位形象建立
-- [電商平台](https://mosstack.studio/services.html) — 全客製購物流程、金流串接、會員點數系統
-- [服務業預約系統](https://mosstack.studio/services.html) — 線上選時段、付訂金、後台行事曆、LINE 整合
-- [B2B 後台工具](https://mosstack.studio/services.html) — Dashboard、內部管理介面、帳務報表
+- [品牌官網](https://mosstack.studio/services) — 企業、創辦人與品牌的數位形象建立
+- [電商平台](https://mosstack.studio/services) — 全客製購物流程、金流串接、會員點數系統
+- [服務業預約系統](https://mosstack.studio/services) — 線上選時段、付訂金、後台行事曆、LINE 整合
+- [B2B 後台工具](https://mosstack.studio/services) — Dashboard、內部管理介面、帳務報表
 
 ## 技術棧
 
@@ -17,9 +17,9 @@ Next.js、React、Node.js、TypeScript、PostgreSQL、Prisma、Tailwind CSS、LI
 
 ## 精選案例（可線上試用）
 
-- [品牌電商系統](https://mosstack.studio/ecommerce-case.html) — 購物車、結帳、超商取貨、會員點數、後台訂單管理、AI 文案生成
-- [服務業預約系統](https://mosstack.studio/reservation-case.html) — 自助選時段、付訂金、後台行事曆、器材庫存、帳務報表、LINE 訊息整合
-- [品牌形象官網](https://mosstack.studio/brand-case.html) — 品牌故事、團隊介紹、客戶口碑、內容行銷部落格、多分店資訊、表單導客（Muji.Lab 木境設計示範）
+- [品牌電商系統](https://mosstack.studio/ecommerce-case) — 購物車、結帳、超商取貨、會員點數、後台訂單管理、AI 文案生成
+- [服務業預約系統](https://mosstack.studio/reservation-case) — 自助選時段、付訂金、後台行事曆、器材庫存、帳務報表、LINE 訊息整合
+- [品牌形象官網](https://mosstack.studio/brand-case) — 品牌故事、團隊介紹、客戶口碑、內容行銷部落格、多分店資訊、表單導客（Muji.Lab 木境設計示範）
 
 ## 合作流程
 
@@ -39,27 +39,27 @@ Next.js、React、Node.js、TypeScript、PostgreSQL、Prisma、Tailwind CSS、LI
 ## 主要頁面
 
 - [首頁](https://mosstack.studio/)
-- [作品集](https://mosstack.studio/portfolio.html)
-- [服務項目](https://mosstack.studio/services.html)
-- [品牌電商案例](https://mosstack.studio/ecommerce-case.html)
-- [預約系統案例](https://mosstack.studio/reservation-case.html)
-- [品牌官網案例](https://mosstack.studio/brand-case.html)
-- [技術與資安](https://mosstack.studio/trust.html)
-- [Blog](https://mosstack.studio/blog.html)
-- [聯絡我們](https://mosstack.studio/contact.html)
+- [作品集](https://mosstack.studio/portfolio)
+- [服務項目](https://mosstack.studio/services)
+- [品牌電商案例](https://mosstack.studio/ecommerce-case)
+- [預約系統案例](https://mosstack.studio/reservation-case)
+- [品牌官網案例](https://mosstack.studio/brand-case)
+- [技術與資安](https://mosstack.studio/trust)
+- [Blog](https://mosstack.studio/blog)
+- [聯絡我們](https://mosstack.studio/contact)
 
 ## Blog 文章
 
-- [預約系統開發要多少錢？2026 台灣行情完整解析](https://mosstack.studio/blog/appointment-system-cost-taiwan-2026.html) — SaaS 到全客製的報價比較，附費用試算表
-- [網頁設計費用怎麼算？台中網頁設計報價懶人包（2026）](https://mosstack.studio/blog/web-design-cost-taichung-2026.html) — 一頁式到電商的完整市場行情
-- [自架電商 vs 蝦皮開店：品牌電商該怎麼選？](https://mosstack.studio/blog/self-hosted-ecommerce-vs-shopee-taiwan.html) — 蝦皮真實成本分析與自架電商評估
-- [為什麼你的網站該用 Next.js 而不是 WordPress？](https://mosstack.studio/blog/nextjs-vs-wordpress-website-development.html) — 效能數據與技術選型建議
-- [LINE Bot 串接與客服自動化：中小企業導入指南（2026）](https://mosstack.studio/blog/line-bot-automation-sme-guide-2026.html) — 費用行情與各行業使用情境
-- [形象官網要花多少錢？2026 台中品牌官網製作費用行情](https://mosstack.studio/blog/brand-website-cost-taiwan-2026.html) — 品牌官網報價區間與挑選建議
+- [預約系統開發要多少錢？2026 台灣行情完整解析](https://mosstack.studio/blog/appointment-system-cost-taiwan-2026) — SaaS 到全客製的報價比較，附費用試算表
+- [網頁設計費用怎麼算？台中網頁設計報價懶人包（2026）](https://mosstack.studio/blog/web-design-cost-taichung-2026) — 一頁式到電商的完整市場行情
+- [自架電商 vs 蝦皮開店：品牌電商該怎麼選？](https://mosstack.studio/blog/self-hosted-ecommerce-vs-shopee-taiwan) — 蝦皮真實成本分析與自架電商評估
+- [為什麼你的網站該用 Next.js 而不是 WordPress？](https://mosstack.studio/blog/nextjs-vs-wordpress-website-development) — 效能數據與技術選型建議
+- [LINE Bot 串接與客服自動化：中小企業導入指南（2026）](https://mosstack.studio/blog/line-bot-automation-sme-guide-2026) — 費用行情與各行業使用情境
+- [形象官網要花多少錢？2026 台中品牌官網製作費用行情](https://mosstack.studio/blog/brand-website-cost-taiwan-2026) — 品牌官網報價區間與挑選建議
 
 ## 聯絡資訊
 
 - 地點：台灣台中市西屯區
-- 諮詢方式：[免費 30 分鐘需求諮詢](https://mosstack.studio/contact.html)
+- 諮詢方式：[免費 30 分鐘需求諮詢](https://mosstack.studio/contact)
 - WhatsApp：https://wa.me/886980054850
 - GitHub：https://github.com/BasilWu
