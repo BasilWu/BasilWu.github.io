@@ -1,175 +1,14 @@
-#!/usr/bin/env node
-/**
- * MosStack Studio — Blog Builder
- * Markdown → HTML 靜態文章生成器
- *
- * 使用方式：
- *   node build-blog.js                    → 生成 blog/ 目錄下所有文章
- *   node build-blog.js --watch            → 監聽 blog/posts/ 變動自動重建
- *
- * 文章放在 blog/posts/*.md，front matter 格式：
- * ---
- * title: 文章標題
- * slug: url-slug
- * date: 2026-06-29
- * category: 費用指南
- * description: Meta description
- * readTime: 8
- * ---
- */
-
-const fs = require('fs');
-const path = require('path');
-
-// ── 簡易 Markdown 解析器（不依賴外部套件）──
-function parseMarkdown(md) {
-  // front matter
-  const fmMatch = md.match(/^---\n([\s\S]*?)\n---\n([\s\S]*)$/);
-  let frontMatter = {};
-  let body = md;
-  if (fmMatch) {
-    fmMatch[1].split('\n').forEach(line => {
-      const [key, ...val] = line.split(':');
-      if (key && val.length) frontMatter[key.trim()] = val.join(':').trim();
-    });
-    body = fmMatch[2];
-  }
-
-  // Convert Markdown to HTML
-  let html = body
-    // Code blocks
-    .replace(/```([\w]*)\n([\s\S]*?)```/g, (_, lang, code) =>
-      `<pre class="blog-code"><code class="language-${lang}">${escapeHtml(code.trim())}</code></pre>`)
-    // Tables
-    .replace(/^\|(.+)\|\n\|[-| :]+\|\n((?:\|.+\|\n?)+)/gm, parseTable)
-    // Headings
-    .replace(/^### (.+)$/gm, (_, t) => `<h3 id="${slugify(t)}">${t}</h3>`)
-    .replace(/^## (.+)$/gm, (_, t) => `<h2 id="${slugify(t)}">${t}</h2>`)
-    .replace(/^# (.+)$/gm, (_, t) => `<h1>${t}</h1>`)
-    // Bold + italic
-    .replace(/\*\*\*(.+?)\*\*\*/g, '<strong><em>$1</em></strong>')
-    .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
-    .replace(/\*(.+?)\*/g, '<em>$1</em>')
-    // Inline code
-    .replace(/`([^`]+)`/g, '<code class="blog-inline-code">$1</code>')
-    // Links
-    .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank" rel="noopener noreferrer">$1</a>')
-    // Unordered lists
-    .replace(/((?:^- .+\n?)+)/gm, block => {
-      const items = block.trim().split('\n').map(l => `<li>${l.replace(/^- /, '')}</li>`).join('\n');
-      return `<ul>\n${items}\n</ul>\n`;
-    })
-    // Ordered lists
-    .replace(/((?:^\d+\. .+\n?)+)/gm, block => {
-      const items = block.trim().split('\n').map(l => `<li>${l.replace(/^\d+\. /, '')}</li>`).join('\n');
-      return `<ol>\n${items}\n</ol>\n`;
-    })
-    // Blockquotes
-    .replace(/^> (.+)$/gm, '<blockquote>$1</blockquote>')
-    // Horizontal rules
-    .replace(/^---$/gm, '<hr>')
-    // Paragraphs (wrap non-tag lines)
-    .replace(/^(?!<[a-z]|$)(.+)$/gm, '<p>$1</p>')
-    // Cleanup double newlines
-    .replace(/\n{3,}/g, '\n\n');
-
-  return { frontMatter, html };
-}
-
-function escapeHtml(str) {
-  return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
-}
-
-function slugify(str) {
-  return str.toLowerCase().replace(/[^\w\u4e00-\u9fff]+/g, '-').replace(/^-|-$/g, '');
-}
-
-function parseTable(match) {
-  const lines = match.trim().split('\n');
-  const headers = lines[0].split('|').filter(c => c.trim()).map(c => `<th>${c.trim()}</th>`);
-  const rows = lines.slice(2).map(row => {
-    const cells = row.split('|').filter(c => c.trim()).map(c => `<td>${c.trim()}</td>`);
-    return `<tr>${cells.join('')}</tr>`;
-  });
-  return `<div class="blog-table-wrap"><table class="blog-table"><thead><tr>${headers.join('')}</tr></thead><tbody>${rows.join('')}</tbody></table></div>`;
-}
-
-// ── TOC 生成 ──
-function generateTOC(html) {
-  const headings = [];
-  const re = /<h([23]) id="([^"]+)">([^<]+)<\/h[23]>/g;
-  let m;
-  while ((m = re.exec(html)) !== null) {
-    headings.push({ level: parseInt(m[1]), id: m[2], text: m[3] });
-  }
-  if (headings.length < 2) return '';
-  const items = headings.map(h =>
-    `<li class="toc__item toc__item--h${h.level}"><a class="toc__link" href="#${h.id}">${h.text}</a></li>`
-  ).join('\n');
-  return `<nav class="blog-toc" aria-label="文章目錄"><p class="blog-toc__title">目錄</p><ul class="toc__list">${items}</ul></nav>`;
-}
-
-// ── HTML 模板 ──
-function generateArticleHTML({ title, slug, date, category, description, readTime, wordCount, bodyHtml, toc }) {
-  const dateFormatted = date || '2026-06-29';
-  const schema = JSON.stringify({
-    "@context": "https://schema.org",
-    "@graph": [
-      {
-        "@type": "BlogPosting",
-        "@id": `https://mosstack.studio/blog/${slug}#post`,
-        "mainEntityOfPage": {
-          "@type": "WebPage",
-          "@id": `https://mosstack.studio/blog/${slug}`
-        },
-        "headline": title,
-        "description": description,
-        "datePublished": `${dateFormatted}T08:00:00+08:00`,
-        "dateModified": `${dateFormatted}T08:00:00+08:00`,
-        "author": {
-          "@type": "Organization",
-          "@id": "https://mosstack.studio/#business",
-          "name": "MosStack Studio"
-        },
-        "publisher": {
-          "@type": "Organization",
-          "@id": "https://mosstack.studio/#business",
-          "name": "MosStack Studio",
-          "logo": {
-            "@type": "ImageObject",
-            "url": "https://mosstack.studio/assets/favicon-32.png",
-            "width": 32,
-            "height": 32
-          }
-        },
-        "url": `https://mosstack.studio/blog/${slug}`,
-        "inLanguage": "zh-TW",
-        "articleSection": category || "Web Development",
-        "wordCount": wordCount || 2000,
-        "timeRequired": `PT${readTime || 8}M`
-      },
-      {
-        "@type": "BreadcrumbList",
-        "itemListElement": [
-          { "@type": "ListItem", "position": 1, "name": "首頁", "item": "https://mosstack.studio/" },
-          { "@type": "ListItem", "position": 2, "name": "Blog", "item": "https://mosstack.studio/blog" },
-          { "@type": "ListItem", "position": 3, "name": title, "item": `https://mosstack.studio/blog/${slug}` }
-        ]
-      }
-    ]
-  });
-
-  return `<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="zh-TW" data-theme="light">
 <head>
   <meta charset="UTF-8" />
   <script>document.documentElement.setAttribute("data-theme",localStorage.getItem("theme")||(matchMedia("(prefers-color-scheme:dark)").matches?"dark":"light"));</script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="${description}" />
+  <meta name="description" content="OTA 抽成到底吃掉多少利潤？2026 年 Booking、Agoda、Airbnb 最新費率一次整理，加上自建訂房官網的費用與回本試算，幫民宿與旅宿老闆算清楚這筆帳。" />
   <meta name="robots" content="index, follow" />
-  <link rel="canonical" href="https://mosstack.studio/blog/${slug}" />
-  <script type="application/ld+json">${schema}</script>
-  <title>${title} — MosStack Studio</title>
+  <link rel="canonical" href="https://mosstack.studio/blog/bnb-hotel-booking-website-vs-ota" />
+  <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"BlogPosting","@id":"https://mosstack.studio/blog/bnb-hotel-booking-website-vs-ota#post","mainEntityOfPage":{"@type":"WebPage","@id":"https://mosstack.studio/blog/bnb-hotel-booking-website-vs-ota"},"headline":"民宿官網＋訂房系統：自建 vs OTA，抽成到底怎麼算？（2026）","description":"OTA 抽成到底吃掉多少利潤？2026 年 Booking、Agoda、Airbnb 最新費率一次整理，加上自建訂房官網的費用與回本試算，幫民宿與旅宿老闆算清楚這筆帳。","datePublished":"2026-08-01T08:00:00+08:00","dateModified":"2026-08-01T08:00:00+08:00","author":{"@type":"Organization","@id":"https://mosstack.studio/#business","name":"MosStack Studio"},"publisher":{"@type":"Organization","@id":"https://mosstack.studio/#business","name":"MosStack Studio","logo":{"@type":"ImageObject","url":"https://mosstack.studio/assets/favicon-32.png","width":32,"height":32}},"url":"https://mosstack.studio/blog/bnb-hotel-booking-website-vs-ota","inLanguage":"zh-TW","articleSection":"預約系統","wordCount":1329,"timeRequired":"PT8M"},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"首頁","item":"https://mosstack.studio/"},{"@type":"ListItem","position":2,"name":"Blog","item":"https://mosstack.studio/blog"},{"@type":"ListItem","position":3,"name":"民宿官網＋訂房系統：自建 vs OTA，抽成到底怎麼算？（2026）","item":"https://mosstack.studio/blog/bnb-hotel-booking-website-vs-ota"}]}]}</script>
+  <title>民宿官網＋訂房系統：自建 vs OTA，抽成到底怎麼算？（2026） — MosStack Studio</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -180,19 +19,19 @@ function generateArticleHTML({ title, slug, date, category, description, readTim
   <link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16.png" />
   <link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png" />
   <meta name="theme-color" content="#080c14" />
-  <meta property="og:title" content="${title}" />
-  <meta property="og:description" content="${description}" />
+  <meta property="og:title" content="民宿官網＋訂房系統：自建 vs OTA，抽成到底怎麼算？（2026）" />
+  <meta property="og:description" content="OTA 抽成到底吃掉多少利潤？2026 年 Booking、Agoda、Airbnb 最新費率一次整理，加上自建訂房官網的費用與回本試算，幫民宿與旅宿老闆算清楚這筆帳。" />
   <meta property="og:type" content="article" />
-  <meta property="og:url" content="https://mosstack.studio/blog/${slug}" />
+  <meta property="og:url" content="https://mosstack.studio/blog/bnb-hotel-booking-website-vs-ota" />
   <meta property="og:image" content="https://mosstack.studio/assets/og-image.jpg" />
   <meta property="og:locale" content="zh_TW" />
   <meta property="og:site_name" content="MosStack Studio" />
-  <meta property="article:published_time" content="${dateFormatted}T08:00:00+08:00" />
+  <meta property="article:published_time" content="2026-08-01T08:00:00+08:00" />
   <meta property="article:author" content="https://mosstack.studio/" />
-  <meta property="article:section" content="${category || 'Web Development'}" />
+  <meta property="article:section" content="預約系統" />
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="${title}" />
-  <meta name="twitter:description" content="${description}" />
+  <meta name="twitter:title" content="民宿官網＋訂房系統：自建 vs OTA，抽成到底怎麼算？（2026）" />
+  <meta name="twitter:description" content="OTA 抽成到底吃掉多少利潤？2026 年 Booking、Agoda、Airbnb 最新費率一次整理，加上自建訂房官網的費用與回本試算，幫民宿與旅宿老闆算清楚這筆帳。" />
   <meta name="twitter:image" content="https://mosstack.studio/assets/og-image.jpg" />
   <link rel="stylesheet" href="/style.css" />
   <style>
@@ -480,27 +319,112 @@ function generateArticleHTML({ title, slug, date, category, description, readTim
         <span class="blog-breadcrumb__sep">›</span>
         <a href="/blog">Blog</a>
         <span class="blog-breadcrumb__sep">›</span>
-        <span>${title}</span>
+        <span>民宿官網＋訂房系統：自建 vs OTA，抽成到底怎麼算？（2026）</span>
       </nav>
     </div>
 
     <article class="blog-article">
       <div class="container">
         <header class="blog-article__header">
-          <span class="blog-article__tag">${category || 'Blog'}</span>
-          <h1 class="blog-article__title">${title}</h1>
+          <span class="blog-article__tag">預約系統</span>
+          <h1 class="blog-article__title">民宿官網＋訂房系統：自建 vs OTA，抽成到底怎麼算？（2026）</h1>
           <div class="blog-article__meta">
             <span>MosStack Studio</span>
             <span class="blog-article__meta-dot"></span>
-            <span>${dateFormatted}</span>
+            <span>2026-08-01</span>
             <span class="blog-article__meta-dot"></span>
-            <span>${readTime || 8} min read</span>
+            <span>8 min read</span>
           </div>
         </header>
 
         <div class="blog-article__layout">
           <div class="blog-body">
-            ${bodyHtml}
+            
+<h2 id="民宿官網-訂房系統-自建-vs-ota-抽成到底怎麼算-2026">民宿官網＋訂房系統：自建 vs OTA，抽成到底怎麼算？（2026）</h2>
+
+<p>「訂單明明接不完，月底結算卻發現賺的都是清潔工資。」這是我們和旅宿業者聊天時，最常聽到的一句話。</p>
+
+<p>問題通常不出在生意，而是出在通路：每一筆從訂房平台（OTA）來的訂單，都要先被抽走大約一成五的佣金。這篇文章把 2026 年各大平台的抽成方式算清楚，再告訴你自建訂房官網要花多少錢、多久回本，讓你自己判斷這筆帳划不划算。</p>
+
+<hr>
+
+<h2 id="ota-抽成到底抽多少-2026-年最新費率">OTA 抽成到底抽多少？2026 年最新費率</h2>
+
+<div class="blog-table-wrap"><table class="blog-table"><thead><tr><th>通路</th><th>收費方式</th><th>實際費率</th></tr></thead><tbody><tr><td>Booking.com</td><td>向業者收佣金，按「含稅總價」計算</td><td>約 15%，參加曝光加值方案再加 3–5%</td></tr><tr><td>Agoda</td><td>與 Booking 同集團，佣金制</td><td>約 15–18%</td></tr><tr><td>Airbnb</td><td>2025 年 10 月改制，改由房東全額負擔</td><td>15.5%</td></tr><tr><td>AsiaYo</td><td>主要向旅客收平台服務費</td><td>旅客端 10% 起</td></tr><tr><td>官網直訂</td><td>只有金流手續費</td><td>約 1–3%</td></tr></tbody></table></div>
+<p>三個容易被忽略的細節：</p>
+
+<h3 id="1-booking-的佣金是按-含稅總價-算的">1. Booking 的佣金是按「含稅總價」算的</h3>
+
+<p>不是房費淨額。清潔費、加人費這些你向旅客收的錢，都在抽成範圍內，所以實際付出去的佣金常比想像中多。</p>
+
+<h3 id="2-airbnb-在-2025-年-10-月改制了">2. Airbnb 在 2025 年 10 月改制了</h3>
+
+<p>原本是「房東 3% ＋ 旅客 14–16%」的拆分模式，現在統一改成向房東收 15.5% 的單一服務費。房價沒調整的話，房東每筆實拿直接少一截。</p>
+
+<h3 id="3-想要曝光排名-還要再加錢">3. 想要曝光排名，還要再加錢</h3>
+
+<p>各平台都有「加值曝光」方案：多付 3–5% 佣金換排名。旺季大家搶曝光，實際成本很容易往 18–20% 靠攏。</p>
+
+<hr>
+
+<h2 id="試算-一年到底被抽走多少錢">試算：一年到底被抽走多少錢</h2>
+
+<p>用一間中型民宿的保守數字來算：平均房價 NT$3,000、每月 50 筆訂單、全部來自 OTA、佣金以 15% 計：</p>
+
+<div class="blog-table-wrap"><table class="blog-table"><thead><tr><th>項目</th><th>金額</th></tr></thead><tbody><tr><td>單筆訂單被抽走</td><td>NT$450</td></tr><tr><td>每月佣金支出</td><td>NT$22,500</td></tr><tr><td><strong>一年佣金支出</strong></td><td><strong>NT$270,000</strong></td></tr></tbody></table></div>
+<p>一年 27 萬，這還是用保守費率算的。房價更高、訂單更多的旅宿，這個數字輕鬆突破 40 萬——而且是每年持續發生，生意越好被抽越多。</p>
+
+<hr>
+
+<h2 id="自建訂房官網-要花多少錢">自建訂房官網，要花多少錢？</h2>
+
+<p>自建不是只有一種做法，2026 年台灣市場大致分三條路：</p>
+
+<div class="blog-table-wrap"><table class="blog-table"><thead><tr><th>方案</th><th>建置費用</th><th>適合對象</th></tr></thead><tbody><tr><td>訂房系統 SaaS 年租</td><td>約 NT$6,000–30,000／年</td><td>想先低成本測試直訂的小型民宿</td></tr><tr><td>套版官網＋訂房模組</td><td>約 NT$30,000–65,000</td><td>有基本預算、對品牌質感要求不高</td></tr><tr><td>客製官網＋訂房系統</td><td>約 NT$60,000–200,000</td><td>把官網當長期資產、認真經營直訂</td></tr></tbody></table></div>
+<p>SaaS 年租便宜，但官網長得跟別人一樣、旅客資料綁在別人平台上；客製開發前期投入高，換來的是品牌質感、完整的顧客資料，以及零抽成的訂房通路。想了解預約類系統的詳細行情，可以參考我們寫過的<a href="/blog/appointment-system-cost-taiwan-2026" target="_blank" rel="noopener noreferrer">預約系統開發費用解析</a>。</p>
+
+<hr>
+
+<h2 id="多久回本-拿上面的數字直接算">多久回本？拿上面的數字直接算</h2>
+
+<p>以客製「官網＋訂房系統」一體方案 NT$120,000 來算：如果能把六成訂單從 OTA 移到官網，一年省下的佣金約 NT$162,000——<strong>建置費不到一年就回本</strong>，之後每年省下的都是淨利。</p>
+
+<p>不過務實地說，我們不建議一開始就想「脫離 OTA」。比較健康的做法是<strong>雙軌經營</strong>：</p>
+
+<ul>
+<li><strong>OTA 負責引流</strong>：讓第一次的旅客找到你</li>
+<li><strong>官網負責承接</strong>：住過的旅客、社群來的流量，導到官網直訂</li>
+<li><strong>給旅客直訂的理由</strong>：官網限定價、免費升等、延遲退房——反正省下的佣金就是你的讓利空間</li>
+<li><strong>目標把直訂比例拉到三到四成</strong>：不求全拿，先把最肥的那塊利潤留下來</li>
+<p></ul></p>
+
+<hr>
+
+<h2 id="mosstack-studio-的做法">MosStack Studio 的做法</h2>
+
+<p>我們是台中的網站開發工作室，訂房與預約系統是主力產品線之一，用 Next.js 客製開發，不套現成模板：</p>
+
+<ul>
+<li><strong>預約與訂房系統 NT$60,000 起</strong>，官網＋訂房一體方案 NT$120,000 起</li>
+<li><strong>固定報價</strong>，簽約前就知道總價，不玩時數計費</li>
+<li><strong>原始碼完整交付</strong>，系統所有權百分之百是你的，不被平台綁架</li>
+<li><strong>基礎 SEO 是標配</strong>，讓官網自己會帶客人進來</li>
+<p></ul></p>
+
+<p>實際的系統長什麼樣子，可以直接看我們的<a href="/reservation-case" target="_blank" rel="noopener noreferrer">預約系統開發案例</a>，或到<a href="/services" target="_blank" rel="noopener noreferrer">服務項目頁</a>看完整方案。</p>
+
+<hr>
+
+<h2 id="先算帳-再決定要不要做">先算帳，再決定要不要做</h2>
+
+<p>每家旅宿的房價、訂單量、客群結構都不一樣，回本速度也不同。告訴我們你的房間數和大概的訂單量，我們幫你算一版專屬的回本試算，給出清楚的固定報價——就算最後沒有合作，你也會清楚知道自己每年付給平台多少錢。</p>
+
+<p>台中在地工作室，旅宿官網＋訂房系統開發，目前接受新專案洽詢。</p>
+
+<hr>
+
+<em>© MosStack Studio — 台中全端網頁開發工作室 | <a href="https://mosstack.studio" target="_blank" rel="noopener noreferrer">mosstack.studio</a></em>
+
 
             <!-- CTA -->
             <div class="blog-cta">
@@ -514,7 +438,16 @@ function generateArticleHTML({ title, slug, date, category, description, readTim
           </div>
 
           <aside>
-            ${toc}
+            <nav class="blog-toc" aria-label="文章目錄"><p class="blog-toc__title">目錄</p><ul class="toc__list"><li class="toc__item toc__item--h2"><a class="toc__link" href="#民宿官網-訂房系統-自建-vs-ota-抽成到底怎麼算-2026">民宿官網＋訂房系統：自建 vs OTA，抽成到底怎麼算？（2026）</a></li>
+<li class="toc__item toc__item--h2"><a class="toc__link" href="#ota-抽成到底抽多少-2026-年最新費率">OTA 抽成到底抽多少？2026 年最新費率</a></li>
+<li class="toc__item toc__item--h3"><a class="toc__link" href="#1-booking-的佣金是按-含稅總價-算的">1. Booking 的佣金是按「含稅總價」算的</a></li>
+<li class="toc__item toc__item--h3"><a class="toc__link" href="#2-airbnb-在-2025-年-10-月改制了">2. Airbnb 在 2025 年 10 月改制了</a></li>
+<li class="toc__item toc__item--h3"><a class="toc__link" href="#3-想要曝光排名-還要再加錢">3. 想要曝光排名，還要再加錢</a></li>
+<li class="toc__item toc__item--h2"><a class="toc__link" href="#試算-一年到底被抽走多少錢">試算：一年到底被抽走多少錢</a></li>
+<li class="toc__item toc__item--h2"><a class="toc__link" href="#自建訂房官網-要花多少錢">自建訂房官網，要花多少錢？</a></li>
+<li class="toc__item toc__item--h2"><a class="toc__link" href="#多久回本-拿上面的數字直接算">多久回本？拿上面的數字直接算</a></li>
+<li class="toc__item toc__item--h2"><a class="toc__link" href="#mosstack-studio-的做法">MosStack Studio 的做法</a></li>
+<li class="toc__item toc__item--h2"><a class="toc__link" href="#先算帳-再決定要不要做">先算帳，再決定要不要做</a></li></ul></nav>
           </aside>
         </div>
       </div>
@@ -608,125 +541,4 @@ function generateArticleHTML({ title, slug, date, category, description, readTim
     })();
   </script>
 </body>
-</html>`;
-}
-
-// ── 文章定義（從 docs/ 草稿轉換）──
-const ARTICLES = [
-  {
-    title: '預約系統開發要多少錢？2026 台灣行情完整解析',
-    slug: 'appointment-system-cost-taiwan-2026',
-    date: '2026-06-29',
-    category: '費用指南',
-    description: '預約系統開發要多少錢？2026 年台灣行情從 SaaS 月租到客製開發一次整理。附實際報價範圍、功能比較與選購建議，幫服務業老闆找到最划算的方案。',
-    readTime: 8,
-    mdFile: null, // null = use inline content below
-    inlineContent: null // will be set from parsed articles
-  },
-  {
-    title: '網頁設計費用怎麼算？台中網頁設計報價懶人包（2026）',
-    slug: 'web-design-cost-taichung-2026',
-    date: '2026-06-29',
-    category: '費用指南',
-    description: '台中網頁設計費用一次看懂！2026 年一頁式、形象站、電商、客製系統完整報價範圍，加上選廠商避坑指南，讓你不再被模糊報價搞混。',
-    readTime: 7,
-  },
-  {
-    title: '自架電商 vs 蝦皮開店：品牌電商該怎麼選？',
-    slug: 'self-hosted-ecommerce-vs-shopee-taiwan',
-    date: '2026-06-29',
-    category: '電商',
-    description: '蝦皮開店抽成吃掉你的利潤？2026 年自架電商 vs 蝦皮完整比較，從費用、品牌控制、顧客資料到長期經營，幫品牌電商老闆做出最划算的選擇。',
-    readTime: 8,
-  },
-  {
-    title: '為什麼你的網站該用 Next.js 而不是 WordPress？',
-    slug: 'nextjs-vs-wordpress-website-development',
-    date: '2026-06-29',
-    category: '技術',
-    description: 'WordPress 慢、外掛地雷、維護成本高？2026 年用 Next.js 開發網站的 6 大優勢完整解析，附實際效能數據與適用場景比較。',
-    readTime: 9,
-  },
-  {
-    title: 'LINE Bot 串接與客服自動化：中小企業導入指南（2026）',
-    slug: 'line-bot-automation-sme-guide-2026',
-    date: '2026-06-29',
-    category: 'LINE',
-    description: 'LINE 訊息接不完？2026 年中小企業 LINE Bot 導入完整指南，涵蓋費用、功能規劃、常見使用情境與選廠商建議，讓你的 LINE 客服從人工變自動。',
-    readTime: 10,
-  },
-  {
-    title: '形象官網要花多少錢？2026 台中品牌官網製作費用行情',
-    slug: 'brand-website-cost-taiwan-2026',
-    date: '2026-07-15',
-    category: '費用指南',
-    description: '形象官網要花多少錢？2026 年台中品牌官網行情一次整理：套版、半客製、全客製報價區間、台中與台北價差、報價單避坑重點，讓你在詢價前心裡先有底。',
-    readTime: 7,
-  },
-  {
-    title: '民宿官網＋訂房系統：自建 vs OTA，抽成到底怎麼算？（2026）',
-    slug: 'bnb-hotel-booking-website-vs-ota',
-    date: '2026-08-01',
-    category: '預約系統',
-    description: 'OTA 抽成到底吃掉多少利潤？2026 年 Booking、Agoda、Airbnb 最新費率一次整理，加上自建訂房官網的費用與回本試算，幫民宿與旅宿老闆算清楚這筆帳。',
-    readTime: 8,
-  }
-];
-
-// ── 主程式：從草稿 MD 生成文章 HTML ──
-function buildFromSourceMd(sourceMdPath, outputDir) {
-  const raw = fs.readFileSync(sourceMdPath, 'utf8');
-
-  // 分割每篇文章（以 # 文章 開頭）
-  const articleChunks = raw.split(/\n---\n\n---\n\n# /).map((chunk, i) => i === 0 ? chunk : '# ' + chunk);
-
-  if (!fs.existsSync(outputDir)) fs.mkdirSync(outputDir, { recursive: true });
-
-  ARTICLES.forEach((meta, idx) => {
-    // 找到對應的 chunk（chunk 0 是文件前言，文章從 chunk 1 開始）
-    let chunk = articleChunks[idx + 1] || '';
-
-    // 移除 front matter 部分（目標關鍵字、建議 Meta 等說明）
-    // 保留從第一個 ## 開始的正文
-    const bodyStart = chunk.indexOf('\n## ');
-    const bodyMd = bodyStart >= 0 ? chunk.slice(bodyStart) : chunk;
-
-    // 移除 CTA 連結行（會用統一的 HTML CTA 取代）
-    const cleanMd = bodyMd
-      .replace(/\*\*\[立即填表.+?\]\(.+?\)\*\*/g, '')
-      .replace(/\*\*\[想脫離.+?\]\(.+?\)\*\*/g, '')
-      .replace(/\*\*\[立即預約.+?\]\(.+?\)\*\*/g, '')
-      .replace(/\*\*\[如果你正在.+?\]\(.+?\)\*\*/g, '');
-
-    const { html } = parseMarkdown(cleanMd);
-    const toc = generateTOC(html);
-    const plain = cleanMd.replace(/<[^>]+>/g, '');
-    const cjkCount = (plain.match(/[\u4e00-\u9fff]/g) || []).length;
-    const latinCount = (plain.match(/[A-Za-z0-9]+/g) || []).length;
-    const wordCount = cjkCount + latinCount;
-
-    const articleHtml = generateArticleHTML({
-      ...meta,
-      bodyHtml: html,
-      toc,
-      wordCount
-    });
-
-    const outPath = path.join(outputDir, `${meta.slug}.html`);
-    fs.writeFileSync(outPath, articleHtml, 'utf8');
-    console.log(`✅ Generated: ${outPath}`);
-  });
-
-  console.log(`\n🎉 Built ${ARTICLES.length} articles to ${outputDir}/`);
-}
-
-// ── Entry point ──
-const sourceMd = path.resolve(__dirname, 'docs/mosstack_seo_articles.md');
-const outputDir = path.resolve(__dirname, 'blog');
-
-if (!fs.existsSync(sourceMd)) {
-  console.error('❌ Source file not found:', sourceMd);
-  process.exit(1);
-}
-
-buildFromSourceMd(sourceMd, outputDir);
+</html>
