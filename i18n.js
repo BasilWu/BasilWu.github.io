@@ -119,6 +119,7 @@ const I18N = {
 
     "footer.copy": "© 2026 MosStack Studio. All rights reserved.",
     "footer.location": "Based in Taichung, working with clients worldwide.",
+    "footer.taxid": "MosStack Studio (摩斯棧工作室) · Tax ID 60983424",
     "footer.tagline": "A Taichung-based full-stack studio building e-commerce, brand sites, booking systems and B2B back offices.",
     "footer.col.explore": "Explore",
     "footer.col.contact": "Contact",
@@ -550,6 +551,7 @@ const I18N = {
 
     "footer.copy": "© 2026 MosStack Studio. 版權所有。",
     "footer.location": "位於台中，服務來自各地的客戶。",
+    "footer.taxid": "摩斯棧工作室（MosStack Studio）｜統一編號 60983424",
     "footer.tagline": "位於台中的全端接案工作室，專注於電商、品牌官網、預約系統與 B2B 後台開發。",
     "footer.col.explore": "瀏覽",
     "footer.col.contact": "聯絡",
