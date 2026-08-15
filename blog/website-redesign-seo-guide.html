@@ -1,175 +1,14 @@
-#!/usr/bin/env node
-/**
- * MosStack Studio — Blog Builder
- * Markdown → HTML 靜態文章生成器
- *
- * 使用方式：
- *   node build-blog.js                    → 生成 blog/ 目錄下所有文章
- *   node build-blog.js --watch            → 監聽 blog/posts/ 變動自動重建
- *
- * 文章放在 blog/posts/*.md，front matter 格式：
- * ---
- * title: 文章標題
- * slug: url-slug
- * date: 2026-06-29
- * category: 費用指南
- * description: Meta description
- * readTime: 8
- * ---
- */
-
-const fs = require('fs');
-const path = require('path');
-
-// ── 簡易 Markdown 解析器（不依賴外部套件）──
-function parseMarkdown(md) {
-  // front matter
-  const fmMatch = md.match(/^---\n([\s\S]*?)\n---\n([\s\S]*)$/);
-  let frontMatter = {};
-  let body = md;
-  if (fmMatch) {
-    fmMatch[1].split('\n').forEach(line => {
-      const [key, ...val] = line.split(':');
-      if (key && val.length) frontMatter[key.trim()] = val.join(':').trim();
-    });
-    body = fmMatch[2];
-  }
-
-  // Convert Markdown to HTML
-  let html = body
-    // Code blocks
-    .replace(/```([\w]*)\n([\s\S]*?)```/g, (_, lang, code) =>
-      `<pre class="blog-code"><code class="language-${lang}">${escapeHtml(code.trim())}</code></pre>`)
-    // Tables
-    .replace(/^\|(.+)\|\n\|[-| :]+\|\n((?:\|.+\|\n?)+)/gm, parseTable)
-    // Headings
-    .replace(/^### (.+)$/gm, (_, t) => `<h3 id="${slugify(t)}">${t}</h3>`)
-    .replace(/^## (.+)$/gm, (_, t) => `<h2 id="${slugify(t)}">${t}</h2>`)
-    .replace(/^# (.+)$/gm, (_, t) => `<h1>${t}</h1>`)
-    // Bold + italic
-    .replace(/\*\*\*(.+?)\*\*\*/g, '<strong><em>$1</em></strong>')
-    .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
-    .replace(/\*(.+?)\*/g, '<em>$1</em>')
-    // Inline code
-    .replace(/`([^`]+)`/g, '<code class="blog-inline-code">$1</code>')
-    // Links
-    .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank" rel="noopener noreferrer">$1</a>')
-    // Unordered lists
-    .replace(/((?:^- .+\n?)+)/gm, block => {
-      const items = block.trim().split('\n').map(l => `<li>${l.replace(/^- /, '')}</li>`).join('\n');
-      return `<ul>\n${items}\n</ul>\n`;
-    })
-    // Ordered lists
-    .replace(/((?:^\d+\. .+\n?)+)/gm, block => {
-      const items = block.trim().split('\n').map(l => `<li>${l.replace(/^\d+\. /, '')}</li>`).join('\n');
-      return `<ol>\n${items}\n</ol>\n`;
-    })
-    // Blockquotes
-    .replace(/^> (.+)$/gm, '<blockquote>$1</blockquote>')
-    // Horizontal rules
-    .replace(/^---$/gm, '<hr>')
-    // Paragraphs (wrap non-tag lines)
-    .replace(/^(?!<[a-z]|$)(.+)$/gm, '<p>$1</p>')
-    // Cleanup double newlines
-    .replace(/\n{3,}/g, '\n\n');
-
-  return { frontMatter, html };
-}
-
-function escapeHtml(str) {
-  return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
-}
-
-function slugify(str) {
-  return str.toLowerCase().replace(/[^\w\u4e00-\u9fff]+/g, '-').replace(/^-|-$/g, '');
-}
-
-function parseTable(match) {
-  const lines = match.trim().split('\n');
-  const headers = lines[0].split('|').filter(c => c.trim()).map(c => `<th>${c.trim()}</th>`);
-  const rows = lines.slice(2).map(row => {
-    const cells = row.split('|').filter(c => c.trim()).map(c => `<td>${c.trim()}</td>`);
-    return `<tr>${cells.join('')}</tr>`;
-  });
-  return `<div class="blog-table-wrap"><table class="blog-table"><thead><tr>${headers.join('')}</tr></thead><tbody>${rows.join('')}</tbody></table></div>`;
-}
-
-// ── TOC 生成 ──
-function generateTOC(html) {
-  const headings = [];
-  const re = /<h([23]) id="([^"]+)">([^<]+)<\/h[23]>/g;
-  let m;
-  while ((m = re.exec(html)) !== null) {
-    headings.push({ level: parseInt(m[1]), id: m[2], text: m[3] });
-  }
-  if (headings.length < 2) return '';
-  const items = headings.map(h =>
-    `<li class="toc__item toc__item--h${h.level}"><a class="toc__link" href="#${h.id}">${h.text}</a></li>`
-  ).join('\n');
-  return `<nav class="blog-toc" aria-label="文章目錄"><p class="blog-toc__title">目錄</p><ul class="toc__list">${items}</ul></nav>`;
-}
-
-// ── HTML 模板 ──
-function generateArticleHTML({ title, slug, date, category, description, readTime, wordCount, bodyHtml, toc }) {
-  const dateFormatted = date || '2026-06-29';
-  const schema = JSON.stringify({
-    "@context": "https://schema.org",
-    "@graph": [
-      {
-        "@type": "BlogPosting",
-        "@id": `https://mosstack.studio/blog/${slug}#post`,
-        "mainEntityOfPage": {
-          "@type": "WebPage",
-          "@id": `https://mosstack.studio/blog/${slug}`
-        },
-        "headline": title,
-        "description": description,
-        "datePublished": `${dateFormatted}T08:00:00+08:00`,
-        "dateModified": `${dateFormatted}T08:00:00+08:00`,
-        "author": {
-          "@type": "Organization",
-          "@id": "https://mosstack.studio/#business",
-          "name": "MosStack Studio"
-        },
-        "publisher": {
-          "@type": "Organization",
-          "@id": "https://mosstack.studio/#business",
-          "name": "MosStack Studio",
-          "logo": {
-            "@type": "ImageObject",
-            "url": "https://mosstack.studio/assets/favicon-32.png",
-            "width": 32,
-            "height": 32
-          }
-        },
-        "url": `https://mosstack.studio/blog/${slug}`,
-        "inLanguage": "zh-TW",
-        "articleSection": category || "Web Development",
-        "wordCount": wordCount || 2000,
-        "timeRequired": `PT${readTime || 8}M`
-      },
-      {
-        "@type": "BreadcrumbList",
-        "itemListElement": [
-          { "@type": "ListItem", "position": 1, "name": "首頁", "item": "https://mosstack.studio/" },
-          { "@type": "ListItem", "position": 2, "name": "Blog", "item": "https://mosstack.studio/blog" },
-          { "@type": "ListItem", "position": 3, "name": title, "item": `https://mosstack.studio/blog/${slug}` }
-        ]
-      }
-    ]
-  });
-
-  return `<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="zh-TW" data-theme="light">
 <head>
   <meta charset="UTF-8" />
   <script>document.documentElement.setAttribute("data-theme",localStorage.getItem("theme")||(matchMedia("(prefers-color-scheme:dark)").matches?"dark":"light"));</script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="${description}" />
+  <meta name="description" content="網站改版最怕排名歸零。這篇整理改版的五大時機訊號、最常掉流量的五個原因，以及上線前中後的 SEO 遷移 SOP，讓你改得安心不掉排名。" />
   <meta name="robots" content="index, follow" />
-  <link rel="canonical" href="https://mosstack.studio/blog/${slug}" />
-  <script type="application/ld+json">${schema}</script>
-  <title>${title} — MosStack Studio</title>
+  <link rel="canonical" href="https://mosstack.studio/blog/website-redesign-seo-guide" />
+  <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"BlogPosting","@id":"https://mosstack.studio/blog/website-redesign-seo-guide#post","mainEntityOfPage":{"@type":"WebPage","@id":"https://mosstack.studio/blog/website-redesign-seo-guide"},"headline":"網站改版指南：什麼時候該改、怎麼改才不掉排名？（2026）","description":"網站改版最怕排名歸零。這篇整理改版的五大時機訊號、最常掉流量的五個原因，以及上線前中後的 SEO 遷移 SOP，讓你改得安心不掉排名。","datePublished":"2026-08-15T08:00:00+08:00","dateModified":"2026-08-15T08:00:00+08:00","author":{"@type":"Organization","@id":"https://mosstack.studio/#business","name":"MosStack Studio"},"publisher":{"@type":"Organization","@id":"https://mosstack.studio/#business","name":"MosStack Studio","logo":{"@type":"ImageObject","url":"https://mosstack.studio/assets/favicon-32.png","width":32,"height":32}},"url":"https://mosstack.studio/blog/website-redesign-seo-guide","inLanguage":"zh-TW","articleSection":"技術","wordCount":1283,"timeRequired":"PT8M"},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"首頁","item":"https://mosstack.studio/"},{"@type":"ListItem","position":2,"name":"Blog","item":"https://mosstack.studio/blog"},{"@type":"ListItem","position":3,"name":"網站改版指南：什麼時候該改、怎麼改才不掉排名？（2026）","item":"https://mosstack.studio/blog/website-redesign-seo-guide"}]}]}</script>
+  <title>網站改版指南：什麼時候該改、怎麼改才不掉排名？（2026） — MosStack Studio</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -180,19 +19,19 @@ function generateArticleHTML({ title, slug, date, category, description, readTim
   <link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16.png" />
   <link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png" />
   <meta name="theme-color" content="#080c14" />
-  <meta property="og:title" content="${title}" />
-  <meta property="og:description" content="${description}" />
+  <meta property="og:title" content="網站改版指南：什麼時候該改、怎麼改才不掉排名？（2026）" />
+  <meta property="og:description" content="網站改版最怕排名歸零。這篇整理改版的五大時機訊號、最常掉流量的五個原因，以及上線前中後的 SEO 遷移 SOP，讓你改得安心不掉排名。" />
   <meta property="og:type" content="article" />
-  <meta property="og:url" content="https://mosstack.studio/blog/${slug}" />
+  <meta property="og:url" content="https://mosstack.studio/blog/website-redesign-seo-guide" />
   <meta property="og:image" content="https://mosstack.studio/assets/og-image.jpg" />
   <meta property="og:locale" content="zh_TW" />
   <meta property="og:site_name" content="MosStack Studio" />
-  <meta property="article:published_time" content="${dateFormatted}T08:00:00+08:00" />
+  <meta property="article:published_time" content="2026-08-15T08:00:00+08:00" />
   <meta property="article:author" content="https://mosstack.studio/" />
-  <meta property="article:section" content="${category || 'Web Development'}" />
+  <meta property="article:section" content="技術" />
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="${title}" />
-  <meta name="twitter:description" content="${description}" />
+  <meta name="twitter:title" content="網站改版指南：什麼時候該改、怎麼改才不掉排名？（2026）" />
+  <meta name="twitter:description" content="網站改版最怕排名歸零。這篇整理改版的五大時機訊號、最常掉流量的五個原因，以及上線前中後的 SEO 遷移 SOP，讓你改得安心不掉排名。" />
   <meta name="twitter:image" content="https://mosstack.studio/assets/og-image.jpg" />
   <link rel="stylesheet" href="/style.css" />
   <style>
@@ -480,27 +319,130 @@ function generateArticleHTML({ title, slug, date, category, description, readTim
         <span class="blog-breadcrumb__sep">›</span>
         <a href="/blog">Blog</a>
         <span class="blog-breadcrumb__sep">›</span>
-        <span>${title}</span>
+        <span>網站改版指南：什麼時候該改、怎麼改才不掉排名？（2026）</span>
       </nav>
     </div>
 
     <article class="blog-article">
       <div class="container">
         <header class="blog-article__header">
-          <span class="blog-article__tag">${category || 'Blog'}</span>
-          <h1 class="blog-article__title">${title}</h1>
+          <span class="blog-article__tag">技術</span>
+          <h1 class="blog-article__title">網站改版指南：什麼時候該改、怎麼改才不掉排名？（2026）</h1>
           <div class="blog-article__meta">
             <span>MosStack Studio</span>
             <span class="blog-article__meta-dot"></span>
-            <span>${dateFormatted}</span>
+            <span>2026-08-15</span>
             <span class="blog-article__meta-dot"></span>
-            <span>${readTime || 8} min read</span>
+            <span>8 min read</span>
           </div>
         </header>
 
         <div class="blog-article__layout">
           <div class="blog-body">
-            ${bodyHtml}
+            
+<h2 id="網站改版指南-什麼時候該改-怎麼改才不掉排名-2026">網站改版指南：什麼時候該改、怎麼改才不掉排名？（2026）</h2>
+
+<p>我們遇過不少客戶是這樣開場的：「上個月官網改版，結果排名全掉了，流量剩不到一半。」</p>
+
+<p>網站改版是好事，但它本質上是一次「搬家」——Google 花了幾年認識你的舊家，搬家過程只要地址沒交接好，累積的搜尋權重就可能一夕清空。這篇把改版的時機判斷、最常掉排名的原因、以及不掉排名的完整 SOP 一次講清楚。</p>
+
+<hr>
+
+<h2 id="什麼時候該改版-五個訊號">什麼時候該改版？五個訊號</h2>
+
+<div class="blog-table-wrap"><table class="blog-table"><thead><tr><th>訊號</th><th>具體情況</th></tr></thead><tbody><tr><td>手機體驗差</td><td>手機開起來要縮放、按鈕點不到，跳出率高</td></tr><tr><td>速度太慢</td><td>首頁載入超過 3 秒，圖片沒壓縮、外掛堆疊</td></tr><tr><td>內容改不動</td><td>想改個價格都要找廠商排隊，一改就壞版</td></tr><tr><td>視覺過時</td><td>設計停在五年前，客戶看了對品牌打折扣</td></tr><tr><td>業務轉型</td><td>新增線上預約、電商功能，舊架構撐不住</td></tr></tbody></table></div>
+<p>符合兩項以上，改版通常比硬撐划算。但改版「怎麼改」比「要不要改」更關鍵。</p>
+
+<hr>
+
+<h2 id="改版後排名下降-最常見的五個原因">改版後排名下降？最常見的五個原因</h2>
+
+<h3 id="1-沒設定-301-轉址-最大宗">1. 沒設定 301 轉址（最大宗）</h3>
+
+<p>網址結構改了，卻沒把舊網址一對一導向新網址。結果：舊頁面累積的權重歸零、外部連結全變 404、使用者點進舊連結看到錯誤頁。多數改版流量下滑，主因就是這個。</p>
+
+<h3 id="2-網站架構重整過度">2. 網站架構重整過度</h3>
+
+<p>選單、分類、層級一次全打掉重練，Google 對你的網站「失去方向感」，需要重新學習整個結構。</p>
+
+<h3 id="3-內容被改壞了">3. 內容被改壞了</h3>
+
+<p>原本排名很好的頁面，文案整段重寫、關鍵字被拿掉。對 Google 來說每個頁面都有熟悉的主題脈絡，改太多等於變成陌生頁面。</p>
+
+<h3 id="4-meta-標題與描述清空">4. Meta 標題與描述清空</h3>
+
+<p>新版套件上線，每頁的 title 和 description 忘了搬過來，Google 找不到重點。</p>
+
+<h3 id="5-ga4-search-console-沒重新設定">5. GA4／Search Console 沒重新設定</h3>
+
+<p>追蹤碼沒裝回去、資產沒重新驗證——有時候不是流量掉了，是你「看不到」流量了。</p>
+
+<p>另外還有一個不算錯誤的情況：<strong>重新索引期</strong>。就算全部做對，Google 也需要二到八週重新認識新站，短期波動是正常的。</p>
+
+<hr>
+
+<h2 id="不掉排名的改版-sop">不掉排名的改版 SOP</h2>
+
+<h3 id="改版前-先盤點-再動工">改版前：先盤點，再動工</h3>
+
+<ul>
+<li>匯出舊站<strong>所有網址清單</strong>（用 sitemap 或 GSC 匯出）</li>
+<li>建立「舊網址 → 新網址」<strong>一對一對應表</strong></li>
+<li>從 GSC 匯出目前帶流量的關鍵字與頁面，標記<strong>絕對不能改壞的頁面</strong></li>
+<p></ul></p>
+
+<h3 id="上線時-一次做對三件事">上線時：一次做對三件事</h3>
+
+<ul>
+<li>按對應表設好 <strong>301 轉址</strong>，逐條驗證</li>
+<li>確認每頁的 <strong>title、description、canonical</strong> 都正確搬移</li>
+<li>提交新版 <strong>sitemap.xml</strong>，確認 robots.txt 沒擋到主要頁面</li>
+<p></ul></p>
+
+<h3 id="上線後-盯-30-天">上線後：盯 30 天</h3>
+
+<ul>
+<li>GSC 涵蓋範圍報表：看索引數量有沒有異常下降</li>
+<li>成效報表：比對改版前後 30 天的曝光與點擊</li>
+<li>用 <code class="blog-inline-code">site:你的網域</code> 抽查重要頁面是否還在索引中</li>
+<p></ul></p>
+
+<hr>
+
+<h2 id="改版要花多少錢">改版要花多少錢？</h2>
+
+<p>改版費用結構和新做官網接近，差別在多了「遷移工程」：</p>
+
+<div class="blog-table-wrap"><table class="blog-table"><thead><tr><th>方案</th><th>行情區間</th><th>適合情況</th></tr></thead><tbody><tr><td>視覺翻新（架構不動）</td><td>約 NT$20,000–50,000</td><td>架構健康，只是設計過時</td></tr><tr><td>改版重構（含 SEO 遷移）</td><td>約 NT$50,000–150,000</td><td>換技術架構、調整網址結構</td></tr><tr><td>改版＋新增系統功能</td><td>約 NT$100,000 起</td><td>加上預約、電商、會員等功能</td></tr></tbody></table></div>
+<p>詳細的行情拆解可以參考<a href="/blog/web-design-cost-taichung-2026" target="_blank" rel="noopener noreferrer">台中網站設計費用行情</a>與<a href="/blog/brand-website-cost-taiwan-2026" target="_blank" rel="noopener noreferrer">品牌官網製作費用</a>兩篇。要提醒的是：報價單裡有沒有含「301 對應表」和「SEO 元素搬移」，是判斷廠商懂不懂改版的最快方法——很多掉排名的案子，就是敗在報價便宜但沒含遷移工程。</p>
+
+<hr>
+
+<h2 id="mosstack-studio-怎麼做改版">MosStack Studio 怎麼做改版</h2>
+
+<p>我們是台中的網站開發工作室，改版案的標準交付包含：</p>
+
+<ul>
+<li><strong>301 對應表是標配</strong>，上線前逐條驗證，不讓任何舊網址變 404</li>
+<li><strong>預覽站先驗收</strong>，確認內容、SEO 元素都搬對了才切換正式站</li>
+<li><strong>上線後 30 天 GSC 陪跑</strong>，index 異常第一時間處理</li>
+<li><strong>固定報價、原始碼交付</strong>，改完的網站完全屬於你</li>
+<p></ul></p>
+
+<p>改版後的實際成果可以看<a href="/brand-case" target="_blank" rel="noopener noreferrer">品牌官網改版案例</a>，或到<a href="/services" target="_blank" rel="noopener noreferrer">服務項目頁</a>看完整方案。</p>
+
+<hr>
+
+<h2 id="改版前-先做一次免費健檢">改版前，先做一次免費健檢</h2>
+
+<p>如果你正在評估改版，先別急著找設計。把網址給我們，我們免費幫你看三件事：現有架構還能不能留、哪些頁面帶著流量絕不能動、改版預算大概落在哪一級——看完你再決定要不要動工。</p>
+
+<p>台中在地工作室，網站改版與 SEO 遷移，目前接受新專案洽詢。</p>
+
+<hr>
+
+<em>© MosStack Studio — 台中全端網頁開發工作室 | <a href="https://mosstack.studio" target="_blank" rel="noopener noreferrer">mosstack.studio</a></em>
+
 
             <!-- CTA -->
             <div class="blog-cta">
@@ -514,7 +456,21 @@ function generateArticleHTML({ title, slug, date, category, description, readTim
           </div>
 
           <aside>
-            ${toc}
+            <nav class="blog-toc" aria-label="文章目錄"><p class="blog-toc__title">目錄</p><ul class="toc__list"><li class="toc__item toc__item--h2"><a class="toc__link" href="#網站改版指南-什麼時候該改-怎麼改才不掉排名-2026">網站改版指南：什麼時候該改、怎麼改才不掉排名？（2026）</a></li>
+<li class="toc__item toc__item--h2"><a class="toc__link" href="#什麼時候該改版-五個訊號">什麼時候該改版？五個訊號</a></li>
+<li class="toc__item toc__item--h2"><a class="toc__link" href="#改版後排名下降-最常見的五個原因">改版後排名下降？最常見的五個原因</a></li>
+<li class="toc__item toc__item--h3"><a class="toc__link" href="#1-沒設定-301-轉址-最大宗">1. 沒設定 301 轉址（最大宗）</a></li>
+<li class="toc__item toc__item--h3"><a class="toc__link" href="#2-網站架構重整過度">2. 網站架構重整過度</a></li>
+<li class="toc__item toc__item--h3"><a class="toc__link" href="#3-內容被改壞了">3. 內容被改壞了</a></li>
+<li class="toc__item toc__item--h3"><a class="toc__link" href="#4-meta-標題與描述清空">4. Meta 標題與描述清空</a></li>
+<li class="toc__item toc__item--h3"><a class="toc__link" href="#5-ga4-search-console-沒重新設定">5. GA4／Search Console 沒重新設定</a></li>
+<li class="toc__item toc__item--h2"><a class="toc__link" href="#不掉排名的改版-sop">不掉排名的改版 SOP</a></li>
+<li class="toc__item toc__item--h3"><a class="toc__link" href="#改版前-先盤點-再動工">改版前：先盤點，再動工</a></li>
+<li class="toc__item toc__item--h3"><a class="toc__link" href="#上線時-一次做對三件事">上線時：一次做對三件事</a></li>
+<li class="toc__item toc__item--h3"><a class="toc__link" href="#上線後-盯-30-天">上線後：盯 30 天</a></li>
+<li class="toc__item toc__item--h2"><a class="toc__link" href="#改版要花多少錢">改版要花多少錢？</a></li>
+<li class="toc__item toc__item--h2"><a class="toc__link" href="#mosstack-studio-怎麼做改版">MosStack Studio 怎麼做改版</a></li>
+<li class="toc__item toc__item--h2"><a class="toc__link" href="#改版前-先做一次免費健檢">改版前，先做一次免費健檢</a></li></ul></nav>
           </aside>
         </div>
       </div>
@@ -609,133 +565,4 @@ function generateArticleHTML({ title, slug, date, category, description, readTim
     })();
   </script>
 </body>
-</html>`;
-}
-
-// ── 文章定義（從 docs/ 草稿轉換）──
-const ARTICLES = [
-  {
-    title: '預約系統開發要多少錢？2026 台灣行情完整解析',
-    slug: 'appointment-system-cost-taiwan-2026',
-    date: '2026-06-29',
-    category: '費用指南',
-    description: '預約系統開發要多少錢？2026 年台灣行情從 SaaS 月租到客製開發一次整理。附實際報價範圍、功能比較與選購建議，幫服務業老闆找到最划算的方案。',
-    readTime: 8,
-    mdFile: null, // null = use inline content below
-    inlineContent: null // will be set from parsed articles
-  },
-  {
-    title: '網頁設計費用怎麼算？台中網頁設計報價懶人包（2026）',
-    slug: 'web-design-cost-taichung-2026',
-    date: '2026-06-29',
-    category: '費用指南',
-    description: '台中網頁設計費用一次看懂！2026 年一頁式、形象站、電商、客製系統完整報價範圍，加上選廠商避坑指南，讓你不再被模糊報價搞混。',
-    readTime: 7,
-  },
-  {
-    title: '自架電商 vs 蝦皮開店：品牌電商該怎麼選？',
-    slug: 'self-hosted-ecommerce-vs-shopee-taiwan',
-    date: '2026-06-29',
-    category: '電商',
-    description: '蝦皮開店抽成吃掉你的利潤？2026 年自架電商 vs 蝦皮完整比較，從費用、品牌控制、顧客資料到長期經營，幫品牌電商老闆做出最划算的選擇。',
-    readTime: 8,
-  },
-  {
-    title: '為什麼你的網站該用 Next.js 而不是 WordPress？',
-    slug: 'nextjs-vs-wordpress-website-development',
-    date: '2026-06-29',
-    category: '技術',
-    description: 'WordPress 慢、外掛地雷、維護成本高？2026 年用 Next.js 開發網站的 6 大優勢完整解析，附實際效能數據與適用場景比較。',
-    readTime: 9,
-  },
-  {
-    title: 'LINE Bot 串接與客服自動化：中小企業導入指南（2026）',
-    slug: 'line-bot-automation-sme-guide-2026',
-    date: '2026-06-29',
-    category: 'LINE',
-    description: 'LINE 訊息接不完？2026 年中小企業 LINE Bot 導入完整指南，涵蓋費用、功能規劃、常見使用情境與選廠商建議，讓你的 LINE 客服從人工變自動。',
-    readTime: 10,
-  },
-  {
-    title: '形象官網要花多少錢？2026 台中品牌官網製作費用行情',
-    slug: 'brand-website-cost-taiwan-2026',
-    date: '2026-07-15',
-    category: '費用指南',
-    description: '形象官網要花多少錢？2026 年台中品牌官網行情一次整理：套版、半客製、全客製報價區間、台中與台北價差、報價單避坑重點，讓你在詢價前心裡先有底。',
-    readTime: 7,
-  },
-  {
-    title: '民宿官網＋訂房系統：自建 vs OTA，抽成到底怎麼算？（2026）',
-    slug: 'bnb-hotel-booking-website-vs-ota',
-    date: '2026-08-01',
-    category: '預約系統',
-    description: 'OTA 抽成到底吃掉多少利潤？2026 年 Booking、Agoda、Airbnb 最新費率一次整理，加上自建訂房官網的費用與回本試算，幫民宿與旅宿老闆算清楚這筆帳。',
-    readTime: 8,
-  },
-  {
-    title: '網站改版指南：什麼時候該改、怎麼改才不掉排名？（2026）',
-    slug: 'website-redesign-seo-guide',
-    date: '2026-08-15',
-    category: '技術',
-    description: '網站改版最怕排名歸零。這篇整理改版的五大時機訊號、最常掉流量的五個原因，以及上線前中後的 SEO 遷移 SOP，讓你改得安心不掉排名。',
-    readTime: 8,
-  }
-];
-
-// ── 主程式：從草稿 MD 生成文章 HTML ──
-function buildFromSourceMd(sourceMdPath, outputDir) {
-  const raw = fs.readFileSync(sourceMdPath, 'utf8');
-
-  // 分割每篇文章（以 # 文章 開頭）
-  const articleChunks = raw.split(/\n---\n\n---\n\n# /).map((chunk, i) => i === 0 ? chunk : '# ' + chunk);
-
-  if (!fs.existsSync(outputDir)) fs.mkdirSync(outputDir, { recursive: true });
-
-  ARTICLES.forEach((meta, idx) => {
-    // 找到對應的 chunk（chunk 0 是文件前言，文章從 chunk 1 開始）
-    let chunk = articleChunks[idx + 1] || '';
-
-    // 移除 front matter 部分（目標關鍵字、建議 Meta 等說明）
-    // 保留從第一個 ## 開始的正文
-    const bodyStart = chunk.indexOf('\n## ');
-    const bodyMd = bodyStart >= 0 ? chunk.slice(bodyStart) : chunk;
-
-    // 移除 CTA 連結行（會用統一的 HTML CTA 取代）
-    const cleanMd = bodyMd
-      .replace(/\*\*\[立即填表.+?\]\(.+?\)\*\*/g, '')
-      .replace(/\*\*\[想脫離.+?\]\(.+?\)\*\*/g, '')
-      .replace(/\*\*\[立即預約.+?\]\(.+?\)\*\*/g, '')
-      .replace(/\*\*\[如果你正在.+?\]\(.+?\)\*\*/g, '');
-
-    const { html } = parseMarkdown(cleanMd);
-    const toc = generateTOC(html);
-    const plain = cleanMd.replace(/<[^>]+>/g, '');
-    const cjkCount = (plain.match(/[\u4e00-\u9fff]/g) || []).length;
-    const latinCount = (plain.match(/[A-Za-z0-9]+/g) || []).length;
-    const wordCount = cjkCount + latinCount;
-
-    const articleHtml = generateArticleHTML({
-      ...meta,
-      bodyHtml: html,
-      toc,
-      wordCount
-    });
-
-    const outPath = path.join(outputDir, `${meta.slug}.html`);
-    fs.writeFileSync(outPath, articleHtml, 'utf8');
-    console.log(`✅ Generated: ${outPath}`);
-  });
-
-  console.log(`\n🎉 Built ${ARTICLES.length} articles to ${outputDir}/`);
-}
-
-// ── Entry point ──
-const sourceMd = path.resolve(__dirname, 'docs/mosstack_seo_articles.md');
-const outputDir = path.resolve(__dirname, 'blog');
-
-if (!fs.existsSync(sourceMd)) {
-  console.error('❌ Source file not found:', sourceMd);
-  process.exit(1);
-}
-
-buildFromSourceMd(sourceMd, outputDir);
+</html>
