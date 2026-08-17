@@ -437,6 +437,14 @@ function generateArticleHTML({ title, slug, date, category, description, readTim
       margin-bottom: var(--space-3);
     }
   </style>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-GYTGRMGCSH"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-GYTGRMGCSH');
+    </script>
 </head>
 <body>
 <div class="article-progress" aria-hidden="true"></div>
