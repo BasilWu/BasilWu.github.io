@@ -4,8 +4,10 @@
   <meta charset="UTF-8" />
   <script>document.documentElement.setAttribute("data-theme",localStorage.getItem("theme")||(matchMedia("(prefers-color-scheme:dark)").matches?"dark":"light"));</script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="聯絡 MosStack Studio 開始你的專案。免費 30 分鐘需求諮詢，台中全端接案工作室。" />
-  <title>聯絡我們 — MosStack Studio</title>
+  <meta name="description" content="MosStack Studio 退款政策 — 各階段取消與退款處理方式、退款作業流程與時間。" />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://mosstack.studio/refund" />
+  <title>退款政策 — MosStack Studio</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -16,23 +18,12 @@
   <link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16.png" />
   <link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png" />
   <meta name="theme-color" content="#080c14" />
-  <meta property="og:title" content="聯絡我們 — MosStack Studio" />
-  <meta property="og:description" content="聯絡 MosStack Studio 開始你的專案。免費 30 分鐘需求諮詢，台中全端接案工作室。" />
+  <meta property="og:title" content="退款政策 — MosStack Studio" />
   <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://mosstack.studio/contact" />
-  <link rel="canonical" href="https://mosstack.studio/contact" />
+  <meta property="og:url" content="https://mosstack.studio/refund" />
   <meta property="og:image" content="https://mosstack.studio/assets/og-image.jpg" />
-  <meta property="og:image:width" content="1200" />
-  <meta property="og:image:height" content="630" />
   <meta property="og:locale" content="zh_TW" />
-  <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="聯絡我們 — MosStack Studio" />
-  <meta name="twitter:description" content="聯絡 MosStack Studio 開始你的專案。免費 30 分鐘需求諮詢，台中全端接案工作室。" />
-  <meta name="twitter:image" content="https://mosstack.studio/assets/og-image.jpg" />
   <link rel="stylesheet" href="style.css" />
-  <script type="application/ld+json">
-  {"@context": "https://schema.org", "@type": "ContactPage", "@id": "https://mosstack.studio/contact", "name": "聯絡 MosStack Studio — 免費 30 分鐘需求諮詢", "about": {"@id": "https://mosstack.studio/#business"}}
-  </script>
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-GYTGRMGCSH"></script>
     <script>
@@ -50,11 +41,10 @@
         <li><a href="/portfolio" data-i18n="nav.work">精選案例</a></li>
         <li><a href="/services" data-i18n="nav.services">服務項目</a></li>
         <li><a href="/trust" data-i18n="nav.trust">技術與資安</a></li>
-        <li><a href="/blog">Blog</a></li>
         <li><a href="/#studio" data-i18n="nav.studio">關於工作室</a></li>
-        <li><a href="/contact" class="nav__link--active" data-i18n="nav.contact">聯絡我們</a></li>
+        <li><a href="/contact" data-i18n="nav.contact">聯絡我們</a></li>
       </ul>
-            <div class="nav__right">
+      <div class="nav__right">
         <div class="lang-switch" aria-label="Language switcher">
           <button class="lang-switch__btn" type="button" data-lang-switch="en">EN</button>
           <button class="lang-switch__btn is-active" type="button" data-lang-switch="zh">中</button>
@@ -67,7 +57,6 @@
         <button class="theme-toggle" type="button" data-theme-toggle aria-label="切換深色模式">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
         </button>
-        <a href="/contact" class="btn btn--primary nav__cta" data-i18n="nav.cta">免費諮詢</a>
         <button class="hamburger" id="hamburger" type="button" aria-label="開啟選單" aria-expanded="false">
           <span></span><span></span><span></span>
         </button>
@@ -76,7 +65,7 @@
   </nav>
 
   <!-- Mobile Nav -->
-    <div class="mobile-nav" id="mobileNav" aria-hidden="true">
+  <div class="mobile-nav" id="mobileNav" aria-hidden="true">
     <ul>
       <li><a href="/portfolio" data-i18n="nav.work">精選案例</a></li>
       <li><a href="/services" data-i18n="nav.services">服務項目</a></li>
@@ -89,169 +78,47 @@
   </div>
 
   <main>
-
-    <!-- ── HERO ── -->
-    <section class="hero">
+    <section class="legal">
       <div class="container">
-        <p class="hero__eyebrow" data-i18n="contact.hero.eyebrow">聯絡我們</p>
-        <h1 class="hero__title" data-i18n="contact.hero.title">告訴我們你<br><span>在建什麼。</span></h1>
-        <p class="hero__subtitle" data-i18n="contact.hero.sub">不需要想清楚所有細節。給我們一個方向，我們很樂意在初期就一起釐清。</p>
+        <p class="section-label" data-i18n="refund.label">退款政策</p>
+        <h1 class="legal__title" data-i18n="refund.title">退款政策</h1>
+        <p class="legal__updated" data-i18n="refund.updated">最後更新：2026 年 8 月</p>
+
+        <p class="legal__intro" data-i18n="refund.intro">摩斯棧工作室（MosStack Studio，統一編號 60983424）提供之服務為客製化網站與系統開發，屬依客戶個別需求所設計之勞務服務，非實體商品，亦不適用郵購買賣七日無條件解約之規定。為保障雙方權益，本工作室訂立本退款政策，明確說明各階段之取消與退款處理方式。</p>
+
+        <h2 class="legal__h2" data-i18n="refund.s1.title">一、付款架構</h2>
+        <p class="legal__p" data-i18n="refund.s1.body">本工作室採兩階段收款：簽約時支付專案總額 50% 作為訂金，驗收通過後支付剩餘 50% 尾款。訂金之作用在於保留開發檔期並啟動前期作業，尾款則於交付驗收後結清。</p>
+
+        <h2 class="legal__h2" data-i18n="refund.s2.title">二、開工前取消</h2>
+        <p class="legal__p" data-i18n="refund.s2.body">客戶於支付訂金後、本工作室尚未啟動任何實際作業（含需求訪談、視覺提案）前提出取消者，本工作室全額退還已收訂金，不收取任何費用。</p>
+
+        <h2 class="legal__h2" data-i18n="refund.s3.title">三、設計階段取消</h2>
+        <p class="legal__p" data-i18n="refund.s3.body1">本工作室已完成需求訪談並提出視覺設計稿後，客戶提出取消者，因前期設計工時已實際投入，退還已收訂金之 50%，其餘作為設計作業費用。</p>
+        <p class="legal__p" data-i18n="refund.s3.body2">客戶得取得該階段已完成之設計稿檔案。</p>
+
+        <h2 class="legal__h2" data-i18n="refund.s4.title">四、開發階段中止</h2>
+        <p class="legal__p" data-i18n="refund.s4.body1">進入前後端開發階段後客戶提出中止者，訂金不予退還。本工作室將依已完成之階段與工作項目結算實際費用，並提供該階段已完成之程式碼與設計檔案。</p>
+        <p class="legal__p" data-i18n="refund.s4.body2">結算金額如低於已收訂金，差額退還客戶；如高於已收訂金，客戶應補足差額。結算明細將以書面提供客戶確認。</p>
+
+        <h2 class="legal__h2" data-i18n="refund.s5.title">五、驗收後</h2>
+        <p class="legal__p" data-i18n="refund.s5.body">專案完成驗收並正式上線後，不受理退款。此階段之服務品質保障改由交機日起算一年之免費保固承擔，範圍包含程式錯誤修復與小幅內容調整。</p>
+
+        <h2 class="legal__h2" data-i18n="refund.s6.title">六、本工作室無法交付之情形</h2>
+        <p class="legal__p" data-i18n="refund.s6.body">如因本工作室之事由致無法依約完成交付，本工作室全額退還客戶已支付之全部款項，並協助客戶取得已完成之設計稿與程式碼。</p>
+
+        <h2 class="legal__h2" data-i18n="refund.s7.title">七、退款作業流程</h2>
+        <p class="legal__p" data-i18n="refund.s7.body1">客戶請以書面（Email 或 LINE）提出退款申請，並註明專案名稱與退款原因。本工作室於收到申請後 3 個工作日內回覆確認結算方式，並於雙方確認金額後 7 個工作日內完成退款。</p>
+        <p class="legal__p" data-i18n="refund.s7.body2">退款一律退回原付款管道。以銀行轉帳付款者退回原匯款帳戶；以信用卡付款者，透過金流服務業者退回原刷卡卡片，實際入帳時間依發卡銀行作業時程而定，一般為 3 至 7 個工作日。</p>
+        <p class="legal__p" data-i18n="refund.s7.body3">已開立之統一發票將依規定辦理折讓或作廢，客戶如已取得發票請配合寄回或簽署折讓證明單。</p>
+
+        <h2 class="legal__h2" data-i18n="refund.s8.title">八、不予退款之情形</h2>
+        <p class="legal__p" data-i18n="refund.s8.body">下列情形不在退款範圍內：客戶提供之素材有第三方權利瑕疵所致之中止；客戶自行修改程式碼或後台設定所生之異常；因客戶逾 30 日未回覆確認而致專案終止；網域註冊費、第三方 API 服務費等已代為支付且無法取回之實際支出。</p>
+
+        <h2 class="legal__h2" data-i18n="refund.s9.title">九、爭議處理與聯絡方式</h2>
+        <p class="legal__p" data-i18n="refund.s9.body1">如對退款處理有任何疑義，請直接與本工作室聯繫，我們將優先以協商方式處理。</p>
+        <p class="legal__p" data-i18n="refund.s9.body2">摩斯棧工作室（MosStack Studio）｜統一編號 60983424<br>客服信箱：<a href="mailto:mosstackstudio@gmail.com">mosstackstudio@gmail.com</a><br>客服電話：<a href="tel:+886980054850">0980-054-850</a>（週一至週五 10:00–18:00）<br>亦可透過<a href="/contact">聯絡頁面</a>、LINE 或 WhatsApp 與我們聯繫。</p>
       </div>
     </section>
-
-    <!-- ── PROCESS ── -->
-    <section class="process contact-process">
-      <div class="container--wide">
-        <p class="section-label" data-i18n="index.process.label">合作流程</p>
-        <div class="process__grid">
-          <div class="process__step">
-            <span class="process__num">01</span>
-            <h3 class="process__title" data-i18n="index.process.s1.title">需求討論</h3>
-            <p class="process__desc" data-i18n="index.process.s1.desc">透過一次免費的初步會議，了解你的目標、預算與時程。不需要準備完整規格，我們一起整理。</p>
-          </div>
-          <div class="process__step">
-            <span class="process__num">02</span>
-            <h3 class="process__title" data-i18n="index.process.s2.title">提案與報價</h3>
-            <p class="process__desc" data-i18n="index.process.s2.desc">提供清楚的技術方案與固定報價，確認後簽約。沒有隱藏費用，沒有模糊地帶。</p>
-          </div>
-          <div class="process__step">
-            <span class="process__num">03</span>
-            <h3 class="process__title" data-i18n="index.process.s3.title">設計與開發</h3>
-            <p class="process__desc" data-i18n="index.process.s3.desc">分階段交付，每個里程碑都有可測試的版本。保持溝通，你隨時知道進度在哪裡。</p>
-          </div>
-          <div class="process__step">
-            <span class="process__num">04</span>
-            <h3 class="process__title" data-i18n="index.process.s4.title">上線與維護</h3>
-            <p class="process__desc" data-i18n="index.process.s4.desc">協助部署上線、測試驗收，並提供後續維護支援。系統交給你之後，我們還在。</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ── CONTACT FORM ── -->
-    <section class="contact-page" id="form">
-      <div class="container--wide">
-        <div class="contact-page__inner">
-
-          <!-- 左側資訊 -->
-          <div class="contact-page__info">
-            <p class="section-label" data-i18n="index.contact.label">聯絡我們</p>
-            <h2 class="contact-page__heading" data-i18n="index.contact.title">有想法了嗎？</h2>
-            <p class="contact-page__sub" data-i18n="index.contact.sub">告訴我們你在建什麼。不需要想清楚所有細節，我們很樂意在初期就展開對話。</p>
-
-            <div class="contact-page__details">
-              <div class="contact-detail">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
-                <a href="mailto:mosstackstudio@gmail.com">mosstackstudio@gmail.com</a>
-              </div>
-              <div class="contact-detail">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
-                <span data-i18n="contact.location">台中市，台灣</span>
-              </div>
-              <div class="contact-detail">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-                <span data-i18n="contact.response">通常在 1 個工作日內回覆</span>
-              </div>
-            </div>
-
-            <div class="contact-page__availability">
-              <span class="availability-dot"></span>
-              <span data-i18n="contact.available">目前接受新專案</span>
-            </div>
-
-            <div class="contact-instant">
-              <p class="contact-instant__label" data-i18n="contact.instant.label">或直接聯絡：</p>
-              <div class="contact-instant__btns">
-                <a href="https://wa.me/886980054850?text=%E4%BD%A0%E5%A5%BD%EF%BC%8C%E6%88%91%E6%83%B3%E8%AB%AE%E8%A9%A2%E7%B6%B2%E7%AB%99%E9%96%8B%E7%99%BC%E5%B0%88%E6%A1%88" target="_blank" rel="noopener noreferrer" class="btn btn--primary btn--instant">
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-                  WhatsApp
-                </a>
-                <a href="https://lin.ee/5LmZxWcP" target="_blank" rel="noopener noreferrer" class="btn btn--ghost btn--instant">
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M19.365 9.863c.349 0 .63.285.63.631 0 .345-.281.63-.63.63H17.61v1.125h1.755c.349 0 .63.283.63.63 0 .344-.281.629-.63.629h-2.386c-.345 0-.627-.285-.627-.629V8.108c0-.345.282-.63.63-.63h2.386c.349 0 .63.285.63.63 0 .349-.281.63-.63.63H17.61v1.125h1.755zm-3.855 3.016c0 .27-.174.51-.432.596-.064.021-.133.031-.199.031-.211 0-.391-.09-.51-.25l-2.443-3.317v2.94c0 .344-.279.629-.631.629-.346 0-.626-.285-.626-.629V8.108c0-.27.173-.51.43-.595.06-.023.136-.033.194-.033.195 0 .375.104.495.254l2.462 3.33V8.108c0-.345.282-.63.63-.63.345 0 .63.285.63.63v4.771zm-5.741 0c0 .344-.282.629-.631.629-.345 0-.627-.285-.627-.629V8.108c0-.345.282-.63.627-.63.349 0 .631.285.631.63v4.771zm-2.466.629H4.917c-.345 0-.63-.285-.63-.629V8.108c0-.345.285-.63.63-.63.348 0 .63.285.63.63v4.141h1.756c.348 0 .629.283.629.63 0 .344-.281.629-.629.629M24 10.314C24 4.943 18.615.572 12 .572S0 4.943 0 10.314c0 4.811 4.27 8.842 10.035 9.608.391.082.923.258 1.058.59.12.301.079.766.038 1.08l-.164 1.02c-.045.301-.24 1.186 1.049.645 1.291-.539 6.916-4.078 9.436-6.975C23.176 14.393 24 12.458 24 10.314"/></svg>
-                  Line
-                </a>
-              </div>
-            </div>
-          </div>
-
-          <!-- 右側表單 -->
-          <form class="contact-form contact-form--page" id="contactForm" action="https://formspree.io/f/xlgznalo" method="POST">
-            <div class="form-row">
-              <div class="form-group">
-                <label for="cf-name" data-i18n="form.name.label">你的姓名</label>
-                <input type="text" id="cf-name" name="name" autocomplete="name" placeholder="王小明" data-i18n-placeholder="form.name.placeholder" required />
-              </div>
-              <div class="form-group">
-                <label for="cf-email" data-i18n="form.email.label">Email</label>
-                <input type="email" id="cf-email" name="email" autocomplete="email" placeholder="hello@example.com" data-i18n-placeholder="form.email.placeholder" required />
-              </div>
-            </div>
-            <div class="form-row">
-              <div class="form-group">
-                <label for="cf-type" data-i18n="form.type.label">專案類型</label>
-                <select id="cf-type" name="type">
-                  <option value="" data-i18n="form.type.placeholder">請選擇...</option>
-                  <option value="brand" data-i18n="form.type.brand">品牌官網</option>
-                  <option value="ecom" data-i18n="form.type.ecom">電商體驗</option>
-                  <option value="hospitality" data-i18n="form.type.hospitality">旅宿平台</option>
-                  <option value="b2b" data-i18n="form.type.b2b">B2B 後台工具</option>
-                  <option value="other" data-i18n="form.type.other">其他</option>
-                </select>
-              </div>
-              <div class="form-group">
-                <label for="cf-budget" data-i18n="form.budget.label">預算範圍</label>
-                <select id="cf-budget" name="budget">
-                  <option value="" data-i18n="form.budget.placeholder">請選擇...</option>
-                  <option value="under30" data-i18n="form.budget.under30">3 萬以下</option>
-                  <option value="30-80" data-i18n="form.budget.mid">3 – 8 萬</option>
-                  <option value="80-200" data-i18n="form.budget.high">8 – 20 萬</option>
-                  <option value="over200" data-i18n="form.budget.over">20 萬以上</option>
-                </select>
-              </div>
-            </div>
-            <div class="form-group">
-              <label for="cf-message" data-i18n="form.message.label">簡述你的需求</label>
-              <textarea id="cf-message" name="message" rows="6" placeholder="想做什麼、希望解決什麼問題、有沒有參考網站..." data-i18n-placeholder="form.message.placeholder" required></textarea>
-            </div>
-            <div class="form-actions">
-              <button type="submit" class="btn btn--primary btn--submit" data-i18n="form.submit">送出訊息</button>
-              <p class="form-note" data-i18n="form.note">通常在 1 個工作日內回覆。</p>
-            </div>
-            <div class="form-success" id="formSuccess">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="9 12 11.5 14.5 15 10"/></svg>
-              <p data-i18n="form.success">訊息已送出，我們會盡快與你聯絡。</p>
-            </div>
-          </form>
-
-        </div>
-      </div>
-    </section>
-
-    <!-- ── FAQ ── -->
-    <section class="faq">
-      <div class="container">
-        <p class="section-label" data-i18n="contact.faq.label">常見問題</p>
-        <div class="faq__list">
-          <details class="faq__item">
-            <summary class="faq__q" data-i18n="contact.faq.q1">專案的最低預算是多少？</summary>
-            <p class="faq__a" data-i18n="contact.faq.a1">視專案規模而定。品牌官網 NT$ 35,000 起、預約系統與電商 NT$ 60,000 起、企業後台 NT$ 80,000 起。初步討論後我們會給出明確的固定報價，不採時數計費。</p>
-          </details>
-          <details class="faq__item">
-            <summary class="faq__q" data-i18n="contact.faq.q2">開發週期大概多長？</summary>
-            <p class="faq__a" data-i18n="contact.faq.a2">品牌官網約 3–5 週，電商或 SaaS 系統通常 6–12 週，視功能複雜度而定。確認規格後會給出詳細時程。</p>
-          </details>
-          <details class="faq__item">
-            <summary class="faq__q" data-i18n="contact.faq.q3">你們只接台灣的案子嗎？</summary>
-            <p class="faq__a" data-i18n="contact.faq.a3">不是，我們也接海外遠端專案。溝通方式彈性，可以用 Email、視訊或通訊軟體配合你的時區。</p>
-          </details>
-          <details class="faq__item">
-            <summary class="faq__q" data-i18n="contact.faq.q4">上線後有維護服務嗎？</summary>
-            <p class="faq__a" data-i18n="contact.faq.a4">有。上線後提供一年免費保固，修正功能性瑕疵。後續可採年度維護約（約為建置費用的 10%）或單次計費，包含定期更新、Bug 修復與小幅調整。</p>
-          </details>
-        </div>
-      </div>
-    </section>
-
   </main>
 
   <footer>

@@ -913,6 +913,10 @@ button, a {
   max-width: 68ch;
 }
 
+.legal__p + .legal__p {
+  margin-top: var(--space-4);
+}
+
 .legal__p a {
   color: var(--color-text);
   text-decoration: underline;
@@ -1032,6 +1036,13 @@ footer {
   display: flex;
   gap: var(--space-5);
   flex-wrap: wrap;
+  align-items: center;
+}
+
+.footer__bottom-inner .footer__support {
+  color: var(--color-text-muted);
+  letter-spacing: 0.01em;
+  flex-basis: 100%;
 }
 
 @media (max-width: 768px) {
