@@ -1,175 +1,14 @@
-#!/usr/bin/env node
-/**
- * MosStack Studio — Blog Builder
- * Markdown → HTML 靜態文章生成器
- *
- * 使用方式：
- *   node build-blog.js                    → 生成 blog/ 目錄下所有文章
- *   node build-blog.js --watch            → 監聽 blog/posts/ 變動自動重建
- *
- * 文章放在 blog/posts/*.md，front matter 格式：
- * ---
- * title: 文章標題
- * slug: url-slug
- * date: 2026-06-29
- * category: 費用指南
- * description: Meta description
- * readTime: 8
- * ---
- */
-
-const fs = require('fs');
-const path = require('path');
-
-// ── 簡易 Markdown 解析器（不依賴外部套件）──
-function parseMarkdown(md) {
-  // front matter
-  const fmMatch = md.match(/^---\n([\s\S]*?)\n---\n([\s\S]*)$/);
-  let frontMatter = {};
-  let body = md;
-  if (fmMatch) {
-    fmMatch[1].split('\n').forEach(line => {
-      const [key, ...val] = line.split(':');
-      if (key && val.length) frontMatter[key.trim()] = val.join(':').trim();
-    });
-    body = fmMatch[2];
-  }
-
-  // Convert Markdown to HTML
-  let html = body
-    // Code blocks
-    .replace(/```([\w]*)\n([\s\S]*?)```/g, (_, lang, code) =>
-      `<pre class="blog-code"><code class="language-${lang}">${escapeHtml(code.trim())}</code></pre>`)
-    // Tables
-    .replace(/^\|(.+)\|\n\|[-| :]+\|\n((?:\|.+\|\n?)+)/gm, parseTable)
-    // Headings
-    .replace(/^### (.+)$/gm, (_, t) => `<h3 id="${slugify(t)}">${t}</h3>`)
-    .replace(/^## (.+)$/gm, (_, t) => `<h2 id="${slugify(t)}">${t}</h2>`)
-    .replace(/^# (.+)$/gm, (_, t) => `<h1>${t}</h1>`)
-    // Bold + italic
-    .replace(/\*\*\*(.+?)\*\*\*/g, '<strong><em>$1</em></strong>')
-    .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
-    .replace(/\*(.+?)\*/g, '<em>$1</em>')
-    // Inline code
-    .replace(/`([^`]+)`/g, '<code class="blog-inline-code">$1</code>')
-    // Links
-    .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank" rel="noopener noreferrer">$1</a>')
-    // Unordered lists
-    .replace(/((?:^- .+\n?)+)/gm, block => {
-      const items = block.trim().split('\n').map(l => `<li>${l.replace(/^- /, '')}</li>`).join('\n');
-      return `<ul>\n${items}\n</ul>\n`;
-    })
-    // Ordered lists
-    .replace(/((?:^\d+\. .+\n?)+)/gm, block => {
-      const items = block.trim().split('\n').map(l => `<li>${l.replace(/^\d+\. /, '')}</li>`).join('\n');
-      return `<ol>\n${items}\n</ol>\n`;
-    })
-    // Blockquotes
-    .replace(/^> (.+)$/gm, '<blockquote>$1</blockquote>')
-    // Horizontal rules
-    .replace(/^---$/gm, '<hr>')
-    // Paragraphs (wrap non-tag lines)
-    .replace(/^(?!<[a-z]|$)(.+)$/gm, '<p>$1</p>')
-    // Cleanup double newlines
-    .replace(/\n{3,}/g, '\n\n');
-
-  return { frontMatter, html };
-}
-
-function escapeHtml(str) {
-  return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
-}
-
-function slugify(str) {
-  return str.toLowerCase().replace(/[^\w\u4e00-\u9fff]+/g, '-').replace(/^-|-$/g, '');
-}
-
-function parseTable(match) {
-  const lines = match.trim().split('\n');
-  const headers = lines[0].split('|').filter(c => c.trim()).map(c => `<th>${c.trim()}</th>`);
-  const rows = lines.slice(2).map(row => {
-    const cells = row.split('|').filter(c => c.trim()).map(c => `<td>${c.trim()}</td>`);
-    return `<tr>${cells.join('')}</tr>`;
-  });
-  return `<div class="blog-table-wrap"><table class="blog-table"><thead><tr>${headers.join('')}</tr></thead><tbody>${rows.join('')}</tbody></table></div>`;
-}
-
-// ── TOC 生成 ──
-function generateTOC(html) {
-  const headings = [];
-  const re = /<h([23]) id="([^"]+)">([^<]+)<\/h[23]>/g;
-  let m;
-  while ((m = re.exec(html)) !== null) {
-    headings.push({ level: parseInt(m[1]), id: m[2], text: m[3] });
-  }
-  if (headings.length < 2) return '';
-  const items = headings.map(h =>
-    `<li class="toc__item toc__item--h${h.level}"><a class="toc__link" href="#${h.id}">${h.text}</a></li>`
-  ).join('\n');
-  return `<nav class="blog-toc" aria-label="文章目錄"><p class="blog-toc__title">目錄</p><ul class="toc__list">${items}</ul></nav>`;
-}
-
-// ── HTML 模板 ──
-function generateArticleHTML({ title, slug, date, category, description, readTime, wordCount, bodyHtml, toc }) {
-  const dateFormatted = date || '2026-06-29';
-  const schema = JSON.stringify({
-    "@context": "https://schema.org",
-    "@graph": [
-      {
-        "@type": "BlogPosting",
-        "@id": `https://mosstack.studio/blog/${slug}#post`,
-        "mainEntityOfPage": {
-          "@type": "WebPage",
-          "@id": `https://mosstack.studio/blog/${slug}`
-        },
-        "headline": title,
-        "description": description,
-        "datePublished": `${dateFormatted}T08:00:00+08:00`,
-        "dateModified": `${dateFormatted}T08:00:00+08:00`,
-        "author": {
-          "@type": "Organization",
-          "@id": "https://mosstack.studio/#business",
-          "name": "MosStack Studio"
-        },
-        "publisher": {
-          "@type": "Organization",
-          "@id": "https://mosstack.studio/#business",
-          "name": "MosStack Studio",
-          "logo": {
-            "@type": "ImageObject",
-            "url": "https://mosstack.studio/assets/favicon-32.png",
-            "width": 32,
-            "height": 32
-          }
-        },
-        "url": `https://mosstack.studio/blog/${slug}`,
-        "inLanguage": "zh-TW",
-        "articleSection": category || "Web Development",
-        "wordCount": wordCount || 2000,
-        "timeRequired": `PT${readTime || 8}M`
-      },
-      {
-        "@type": "BreadcrumbList",
-        "itemListElement": [
-          { "@type": "ListItem", "position": 1, "name": "首頁", "item": "https://mosstack.studio/" },
-          { "@type": "ListItem", "position": 2, "name": "Blog", "item": "https://mosstack.studio/blog" },
-          { "@type": "ListItem", "position": 3, "name": title, "item": `https://mosstack.studio/blog/${slug}` }
-        ]
-      }
-    ]
-  });
-
-  return `<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="zh-TW" data-theme="light">
 <head>
   <meta charset="UTF-8" />
   <script>document.documentElement.setAttribute("data-theme",localStorage.getItem("theme")||(matchMedia("(prefers-color-scheme:dark)").matches?"dark":"light"));</script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="${description}" />
+  <meta name="description" content="綠界、藍新、LINE Pay 到底該選哪個？這篇整理 2026 年最新費率、撥款天數與串接開發費用，附實際比較表，幫電商老闆一次選對金流，不再多花冤枉手續費。" />
   <meta name="robots" content="index, follow" />
-  <link rel="canonical" href="https://mosstack.studio/blog/${slug}" />
-  <script type="application/ld+json">${schema}</script>
-  <title>${title} — MosStack Studio</title>
+  <link rel="canonical" href="https://mosstack.studio/blog/payment-gateway-comparison-taiwan" />
+  <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"BlogPosting","@id":"https://mosstack.studio/blog/payment-gateway-comparison-taiwan#post","mainEntityOfPage":{"@type":"WebPage","@id":"https://mosstack.studio/blog/payment-gateway-comparison-taiwan"},"headline":"金流串接怎麼選：綠界 vs 藍新 vs LINE Pay（含串接費用）","description":"綠界、藍新、LINE Pay 到底該選哪個？這篇整理 2026 年最新費率、撥款天數與串接開發費用，附實際比較表，幫電商老闆一次選對金流，不再多花冤枉手續費。","datePublished":"2026-09-01T08:00:00+08:00","dateModified":"2026-09-01T08:00:00+08:00","author":{"@type":"Organization","@id":"https://mosstack.studio/#business","name":"MosStack Studio"},"publisher":{"@type":"Organization","@id":"https://mosstack.studio/#business","name":"MosStack Studio","logo":{"@type":"ImageObject","url":"https://mosstack.studio/assets/favicon-32.png","width":32,"height":32}},"url":"https://mosstack.studio/blog/payment-gateway-comparison-taiwan","inLanguage":"zh-TW","articleSection":"電商","wordCount":1887,"timeRequired":"PT8M"},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"首頁","item":"https://mosstack.studio/"},{"@type":"ListItem","position":2,"name":"Blog","item":"https://mosstack.studio/blog"},{"@type":"ListItem","position":3,"name":"金流串接怎麼選：綠界 vs 藍新 vs LINE Pay（含串接費用）","item":"https://mosstack.studio/blog/payment-gateway-comparison-taiwan"}]}]}</script>
+  <title>金流串接怎麼選：綠界 vs 藍新 vs LINE Pay（含串接費用） — MosStack Studio</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -180,19 +19,19 @@ function generateArticleHTML({ title, slug, date, category, description, readTim
   <link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16.png" />
   <link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png" />
   <meta name="theme-color" content="#080c14" />
-  <meta property="og:title" content="${title}" />
-  <meta property="og:description" content="${description}" />
+  <meta property="og:title" content="金流串接怎麼選：綠界 vs 藍新 vs LINE Pay（含串接費用）" />
+  <meta property="og:description" content="綠界、藍新、LINE Pay 到底該選哪個？這篇整理 2026 年最新費率、撥款天數與串接開發費用，附實際比較表，幫電商老闆一次選對金流，不再多花冤枉手續費。" />
   <meta property="og:type" content="article" />
-  <meta property="og:url" content="https://mosstack.studio/blog/${slug}" />
+  <meta property="og:url" content="https://mosstack.studio/blog/payment-gateway-comparison-taiwan" />
   <meta property="og:image" content="https://mosstack.studio/assets/og-image.jpg" />
   <meta property="og:locale" content="zh_TW" />
   <meta property="og:site_name" content="MosStack Studio" />
-  <meta property="article:published_time" content="${dateFormatted}T08:00:00+08:00" />
+  <meta property="article:published_time" content="2026-09-01T08:00:00+08:00" />
   <meta property="article:author" content="https://mosstack.studio/" />
-  <meta property="article:section" content="${category || 'Web Development'}" />
+  <meta property="article:section" content="電商" />
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="${title}" />
-  <meta name="twitter:description" content="${description}" />
+  <meta name="twitter:title" content="金流串接怎麼選：綠界 vs 藍新 vs LINE Pay（含串接費用）" />
+  <meta name="twitter:description" content="綠界、藍新、LINE Pay 到底該選哪個？這篇整理 2026 年最新費率、撥款天數與串接開發費用，附實際比較表，幫電商老闆一次選對金流，不再多花冤枉手續費。" />
   <meta name="twitter:image" content="https://mosstack.studio/assets/og-image.jpg" />
   <link rel="stylesheet" href="/style.css" />
   <style>
@@ -488,27 +327,102 @@ function generateArticleHTML({ title, slug, date, category, description, readTim
         <span class="blog-breadcrumb__sep">›</span>
         <a href="/blog">Blog</a>
         <span class="blog-breadcrumb__sep">›</span>
-        <span>${title}</span>
+        <span>金流串接怎麼選：綠界 vs 藍新 vs LINE Pay（含串接費用）</span>
       </nav>
     </div>
 
     <article class="blog-article">
       <div class="container">
         <header class="blog-article__header">
-          <span class="blog-article__tag">${category || 'Blog'}</span>
-          <h1 class="blog-article__title">${title}</h1>
+          <span class="blog-article__tag">電商</span>
+          <h1 class="blog-article__title">金流串接怎麼選：綠界 vs 藍新 vs LINE Pay（含串接費用）</h1>
           <div class="blog-article__meta">
             <span>MosStack Studio</span>
             <span class="blog-article__meta-dot"></span>
-            <span>${dateFormatted}</span>
+            <span>2026-09-01</span>
             <span class="blog-article__meta-dot"></span>
-            <span>${readTime || 8} min read</span>
+            <span>8 min read</span>
           </div>
         </header>
 
         <div class="blog-article__layout">
           <div class="blog-body">
-            ${bodyHtml}
+            
+<h2 id="金流串接怎麼選-綠界-vs-藍新-vs-line-pay-含串接費用">金流串接怎麼選：綠界 vs 藍新 vs LINE Pay（含串接費用）</h2>
+
+<p>客戶問我們最多次的電商問題，不是「網站要多少錢」，而是「金流到底要選哪一家」。</p>
+
+<p>答案其實很無聊：三家的信用卡手續費差不到 0.1%，真正該花時間比較的是撥款天數、超商代碼支援度，以及最容易被忽略的<strong>串接開發費</strong>。這篇把 2026 年綠界、藍新、LINE Pay 的最新行情整理清楚，讓你詢價前先有底，不會被模糊報價牽著走。</p>
+
+<hr>
+
+<h2 id="三大金流費率比較-2026-最新">三大金流費率比較（2026 最新）</h2>
+
+<div class="blog-table-wrap"><table class="blog-table"><thead><tr><th>項目</th><th>綠界 ECPay</th><th>藍新 NewebPay</th><th>LINE Pay</th></tr></thead><tbody><tr><td>信用卡手續費</td><td>1.85%–2.75%（新戶前期優惠低至 1.68%）</td><td>2.8%（規模大可議價）</td><td>約 2.75%–3.0%</td></tr><tr><td>ATM 虛擬帳號</td><td>1%，最低 15 元</td><td>1%，最低 10 元</td><td>不支援</td></tr><tr><td>超商代碼</td><td>約 28–30 元／筆</td><td>約 28 元／筆</td><td>不支援</td></tr><tr><td>撥款天數</td><td>約 7 天</td><td>約 7–14 天（部分方案 T+15）</td><td>約 14 天，較慢</td></tr><tr><td>月租／年費</td><td>免月租，特約合約年費 1–2.7 萬</td><td>免月租，規模議價</td><td>免月租，另有 QR 收款月繳方案</td></tr><tr><td>提領手續費</td><td>依約定銀行，部分免手續費</td><td>10 元／筆（每月前 5 次免費）</td><td>依方案</td></tr></tbody></table></div>
+<p>（費率會依商家規模、產業類別與合約條件浮動，實際數字請以官方公告與簽約條件為準：<a href="https://www.ecpay.com.tw/Business/payment_fees" target="_blank" rel="noopener noreferrer">綠界服務費率表</a>、<a href="https://www.newebpay.com/website/Page/content/service_fare" target="_blank" rel="noopener noreferrer">藍新費率一覽表</a>。）</p>
+
+<strong>看費率表容易誤判的三個地方：</strong>
+
+<ol>
+<li><strong>信用卡費率差距其實很小。</strong> 三家都在 2%–3% 區間打轉，別為了 0.05% 的差異糾結太久，把力氣放在下面兩點更划算。</li>
+<li><strong>撥款天數才是現金流的關鍵。</strong> LINE Pay 撥款約 14 天，對現金流吃緊的小型賣家壓力不小；綠界普遍最快，約 7 天入帳。</li>
+<li><strong>超商代碼、ATM 誰都能做，但 LINE Pay 目前不支援。</strong> 如果你的客群習慣超商繳費（尤其是團媽、小額訂單），LINE Pay 單獨用不夠，通常要搭配綠界或藍新一起上。</li>
+<p></ol></p>
+
+<hr>
+
+<h2 id="三家怎麼選-依商業模式對照">三家怎麼選？依商業模式對照</h2>
+
+<strong>主打小額、超商代碼、需要多元支付 → 綠界</strong>
+<p>綠界的功能最齊全，超商代碼、超商條碼、ATM、信用卡、Apple Pay 都有，串接文件與社群討論也最多，工程師好上手。新戶還有短期信用卡費率優惠（活動期間可低至 1.68%），適合中小型電商起步。</p>
+
+<strong>已有實體 POS、要串電商與門市對帳 → 藍新</strong>
+<p>藍新的後台報表與對帳功能評價較好，特別是有實體店面又要做線上訂購的商家（例如餐飲、美業預約訂金），線上線下對帳可以少很多人工核對的麻煩。</p>
+
+<strong>主力客群是 LINE 生態圈、想做導流變現 → LINE Pay</strong>
+<p>LINE Pay 費率略高於信用卡，本質上是「導流費」——換來的是 LINE 用戶一鍵付款不用輸入卡號的轉換率優勢。適合搭配 LINE 官方帳號經營、常態發券導購的品牌，但通常建議搭配綠界或藍新做主力金流，LINE Pay 作為付款選項之一，而不是唯一管道。</p>
+
+<strong>多數電商的實務作法：</strong> 綠界或藍新作為主金流，涵蓋信用卡＋ATM＋超商代碼，再加開 LINE Pay 作為 LINE 生態圈的補充選項——三選一不如三選二，讓客人自己挑他習慣的付款方式，成交率通常會比只開一種高。
+
+<hr>
+
+<h2 id="容易被低估的成本-串接開發費">容易被低估的成本：串接開發費</h2>
+
+<p>金流本身「申請」通常免費，但把 API 串進你的網站、串進你的訂單系統、處理退款與 Webhook 通知，這塊才是真正吃工時的地方。2026 年市場行情大致如下：</p>
+
+<div class="blog-table-wrap"><table class="blog-table"><thead><tr><th>串接情境</th><th>開發時程</th><th>費用區間（NTD）</th></tr></thead><tbody><tr><td>單一金流、單純一次性付款</td><td>3–5 工作日</td><td>3–8 萬</td></tr><tr><td>單一金流＋訂閱定期扣款</td><td>8–12 工作日</td><td>8–18 萬</td></tr><tr><td>雙金流（信用卡＋超商）＋自動對帳</td><td>3–4 週</td><td>18–35 萬</td></tr><tr><td>多金流路由＋跨境＋會計系統整合</td><td>6–10 週</td><td>35–90 萬</td></tr></tbody></table></div>
+<p>（行情區間參考業界公開報價，實際費用依你現有系統的複雜度、是否要串發票與 ERP 而有差異：<a href="https://foreverwebs.com/blog/payment-gateway-ecpay-newebpay-tappay-stripe-selection-guide" target="_blank" rel="noopener noreferrer">金流選型指南</a>。）</p>
+
+<p>單純只是「裝個外掛填 API 金鑰」——像 WooCommerce、Shopify 這類現成購物車系統——確實可能幾千塊就搞定。但只要你是<strong>客製化訂單流程</strong>（例如訂金與尾款分開收、預約訂金要串進後台行程表、退款要連動庫存），開發成本就會明顯往上跳，因為每一個付款狀態的變化都要寫程式邏輯去處理，不是插上金鑰就結束了。</p>
+
+<p>我們自己在幫客戶做電商與訂房系統時，金流串接向來抓在報價裡一起算，不會事後才加價——這也是我們建議你在詢價時，一定要問清楚「金流串接是否已包含在報價內」的原因之一。</p>
+
+<hr>
+
+<h2 id="串接前該問清楚的五件事">串接前該問清楚的五件事</h2>
+
+<ul>
+<li><strong>是否需要商業登記／公司行號？</strong> 三家都需要合法登記的營業主體才能申請特約會員，個人賣家通常只能走比較貴的個人費率。</li>
+<li><strong>退款怎麼處理？</strong> 部分平台退款會收手續費，且退款到帳時間可能長達 3–7 個工作天，這會影響你的客服應對時間點。</li>
+<li><strong>對帳怎麼串？</strong> 如果你有記帳或 ERP 系統，問清楚金流平台是否提供對帳 API 或每日結算報表，不然月底手動核帳會是長期痛點。</li>
+<li><strong>測試環境好不好用？</strong> 上線前一定要在測試環境（Sandbox）跑過完整流程，包含付款成功、付款失敗、逾時未付三種情境，這是最容易漏測的地方。</li>
+<li><strong>Webhook 通知穩不穩？</strong> 金流平台會透過背景通知（Notify URL）告訴你的系統「這筆付款成功了」，這條線路如果沒做好重試機制，可能出現「客人已經付錢，但系統顯示未付款」的糟糕情況。</li>
+<p></ul></p>
+
+<hr>
+
+<h2 id="我們的建議">我們的建議</h2>
+
+<p>如果你是剛起步的小型電商或服務業，<strong>綠界＋LINE Pay</strong> 的組合覆蓋率最高、串接資源最多，是最保險的起手式。如果你已經有實體門市要做線上線下整合，<strong>藍新</strong>的對帳體驗會讓你少走很多冤枉路。真正決定你長期成本的不是手續費那 0.1%，而是「串接有沒有一次做對」——退款邏輯漏了一角、Webhook 沒做重試，後續要修正的成本往往比多付一點串接費更高。</p>
+
+<p>我們在做電商與預約訂房系統時，金流串接是內建在專案報價裡的標準模組，不會是簽約後才追加的隱藏成本。如果你正在評估要不要自己串，或想請人代勞，歡迎把你的需求告訴我們，我們可以先幫你估算實際落在哪個區間。</p>
+
+<p>台中在地工作室，電商與金流串接開發，目前接受新專案洽詢。</p>
+
+<hr>
+
+<em>© MosStack Studio — 台中全端網頁開發工作室 | <a href="https://mosstack.studio" target="_blank" rel="noopener noreferrer">mosstack.studio</a></em>
+
 
             <!-- CTA -->
             <div class="blog-cta">
@@ -522,7 +436,12 @@ function generateArticleHTML({ title, slug, date, category, description, readTim
           </div>
 
           <aside>
-            ${toc}
+            <nav class="blog-toc" aria-label="文章目錄"><p class="blog-toc__title">目錄</p><ul class="toc__list"><li class="toc__item toc__item--h2"><a class="toc__link" href="#金流串接怎麼選-綠界-vs-藍新-vs-line-pay-含串接費用">金流串接怎麼選：綠界 vs 藍新 vs LINE Pay（含串接費用）</a></li>
+<li class="toc__item toc__item--h2"><a class="toc__link" href="#三大金流費率比較-2026-最新">三大金流費率比較（2026 最新）</a></li>
+<li class="toc__item toc__item--h2"><a class="toc__link" href="#三家怎麼選-依商業模式對照">三家怎麼選？依商業模式對照</a></li>
+<li class="toc__item toc__item--h2"><a class="toc__link" href="#容易被低估的成本-串接開發費">容易被低估的成本：串接開發費</a></li>
+<li class="toc__item toc__item--h2"><a class="toc__link" href="#串接前該問清楚的五件事">串接前該問清楚的五件事</a></li>
+<li class="toc__item toc__item--h2"><a class="toc__link" href="#我們的建議">我們的建議</a></li></ul></nav>
           </aside>
         </div>
       </div>
@@ -622,141 +541,4 @@ function generateArticleHTML({ title, slug, date, category, description, readTim
     })();
   </script>
 </body>
-</html>`;
-}
-
-// ── 文章定義（從 docs/ 草稿轉換）──
-const ARTICLES = [
-  {
-    title: '預約系統開發要多少錢？2026 台灣行情完整解析',
-    slug: 'appointment-system-cost-taiwan-2026',
-    date: '2026-06-29',
-    category: '費用指南',
-    description: '預約系統開發要多少錢？2026 年台灣行情從 SaaS 月租到客製開發一次整理。附實際報價範圍、功能比較與選購建議，幫服務業老闆找到最划算的方案。',
-    readTime: 8,
-    mdFile: null, // null = use inline content below
-    inlineContent: null // will be set from parsed articles
-  },
-  {
-    title: '網頁設計費用怎麼算？台中網頁設計報價懶人包（2026）',
-    slug: 'web-design-cost-taichung-2026',
-    date: '2026-06-29',
-    category: '費用指南',
-    description: '台中網頁設計費用一次看懂！2026 年一頁式、形象站、電商、客製系統完整報價範圍，加上選廠商避坑指南，讓你不再被模糊報價搞混。',
-    readTime: 7,
-  },
-  {
-    title: '自架電商 vs 蝦皮開店：品牌電商該怎麼選？',
-    slug: 'self-hosted-ecommerce-vs-shopee-taiwan',
-    date: '2026-06-29',
-    category: '電商',
-    description: '蝦皮開店抽成吃掉你的利潤？2026 年自架電商 vs 蝦皮完整比較，從費用、品牌控制、顧客資料到長期經營，幫品牌電商老闆做出最划算的選擇。',
-    readTime: 8,
-  },
-  {
-    title: '為什麼你的網站該用 Next.js 而不是 WordPress？',
-    slug: 'nextjs-vs-wordpress-website-development',
-    date: '2026-06-29',
-    category: '技術',
-    description: 'WordPress 慢、外掛地雷、維護成本高？2026 年用 Next.js 開發網站的 6 大優勢完整解析，附實際效能數據與適用場景比較。',
-    readTime: 9,
-  },
-  {
-    title: 'LINE Bot 串接與客服自動化：中小企業導入指南（2026）',
-    slug: 'line-bot-automation-sme-guide-2026',
-    date: '2026-06-29',
-    category: 'LINE',
-    description: 'LINE 訊息接不完？2026 年中小企業 LINE Bot 導入完整指南，涵蓋費用、功能規劃、常見使用情境與選廠商建議，讓你的 LINE 客服從人工變自動。',
-    readTime: 10,
-  },
-  {
-    title: '形象官網要花多少錢？2026 台中品牌官網製作費用行情',
-    slug: 'brand-website-cost-taiwan-2026',
-    date: '2026-07-15',
-    category: '費用指南',
-    description: '形象官網要花多少錢？2026 年台中品牌官網行情一次整理：套版、半客製、全客製報價區間、台中與台北價差、報價單避坑重點，讓你在詢價前心裡先有底。',
-    readTime: 7,
-  },
-  {
-    title: '民宿官網＋訂房系統：自建 vs OTA，抽成到底怎麼算？（2026）',
-    slug: 'bnb-hotel-booking-website-vs-ota',
-    date: '2026-08-01',
-    category: '預約系統',
-    description: 'OTA 抽成到底吃掉多少利潤？2026 年 Booking、Agoda、Airbnb 最新費率一次整理，加上自建訂房官網的費用與回本試算，幫民宿與旅宿老闆算清楚這筆帳。',
-    readTime: 8,
-  },
-  {
-    title: '網站改版指南：什麼時候該改、怎麼改才不掉排名？（2026）',
-    slug: 'website-redesign-seo-guide',
-    date: '2026-08-15',
-    category: '技術',
-    description: '網站改版最怕排名歸零。這篇整理改版的五大時機訊號、最常掉流量的五個原因，以及上線前中後的 SEO 遷移 SOP，讓你改得安心不掉排名。',
-    readTime: 8,
-  },
-  {
-    title: '金流串接怎麼選：綠界 vs 藍新 vs LINE Pay（含串接費用）',
-    slug: 'payment-gateway-comparison-taiwan',
-    date: '2026-09-01',
-    category: '電商',
-    description: '綠界、藍新、LINE Pay 到底該選哪個？這篇整理 2026 年最新費率、撥款天數與串接開發費用，附實際比較表，幫電商老闆一次選對金流，不再多花冤枉手續費。',
-    readTime: 8,
-  }
-];
-
-// ── 主程式：從草稿 MD 生成文章 HTML ──
-function buildFromSourceMd(sourceMdPath, outputDir) {
-  const raw = fs.readFileSync(sourceMdPath, 'utf8');
-
-  // 分割每篇文章（以 # 文章 開頭）
-  const articleChunks = raw.split(/\n---\n\n---\n\n# /).map((chunk, i) => i === 0 ? chunk : '# ' + chunk);
-
-  if (!fs.existsSync(outputDir)) fs.mkdirSync(outputDir, { recursive: true });
-
-  ARTICLES.forEach((meta, idx) => {
-    // 找到對應的 chunk（chunk 0 是文件前言，文章從 chunk 1 開始）
-    let chunk = articleChunks[idx + 1] || '';
-
-    // 移除 front matter 部分（目標關鍵字、建議 Meta 等說明）
-    // 保留從第一個 ## 開始的正文
-    const bodyStart = chunk.indexOf('\n## ');
-    const bodyMd = bodyStart >= 0 ? chunk.slice(bodyStart) : chunk;
-
-    // 移除 CTA 連結行（會用統一的 HTML CTA 取代）
-    const cleanMd = bodyMd
-      .replace(/\*\*\[立即填表.+?\]\(.+?\)\*\*/g, '')
-      .replace(/\*\*\[想脫離.+?\]\(.+?\)\*\*/g, '')
-      .replace(/\*\*\[立即預約.+?\]\(.+?\)\*\*/g, '')
-      .replace(/\*\*\[如果你正在.+?\]\(.+?\)\*\*/g, '');
-
-    const { html } = parseMarkdown(cleanMd);
-    const toc = generateTOC(html);
-    const plain = cleanMd.replace(/<[^>]+>/g, '');
-    const cjkCount = (plain.match(/[\u4e00-\u9fff]/g) || []).length;
-    const latinCount = (plain.match(/[A-Za-z0-9]+/g) || []).length;
-    const wordCount = cjkCount + latinCount;
-
-    const articleHtml = generateArticleHTML({
-      ...meta,
-      bodyHtml: html,
-      toc,
-      wordCount
-    });
-
-    const outPath = path.join(outputDir, `${meta.slug}.html`);
-    fs.writeFileSync(outPath, articleHtml, 'utf8');
-    console.log(`✅ Generated: ${outPath}`);
-  });
-
-  console.log(`\n🎉 Built ${ARTICLES.length} articles to ${outputDir}/`);
-}
-
-// ── Entry point ──
-const sourceMd = path.resolve(__dirname, 'docs/mosstack_seo_articles.md');
-const outputDir = path.resolve(__dirname, 'blog');
-
-if (!fs.existsSync(sourceMd)) {
-  console.error('❌ Source file not found:', sourceMd);
-  process.exit(1);
-}
-
-buildFromSourceMd(sourceMd, outputDir);
+</html>
