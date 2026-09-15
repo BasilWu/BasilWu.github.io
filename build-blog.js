@@ -68,8 +68,8 @@ function parseMarkdown(md) {
     .replace(/^> (.+)$/gm, '<blockquote>$1</blockquote>')
     // Horizontal rules
     .replace(/^---$/gm, '<hr>')
-    // Paragraphs (wrap non-tag lines)
-    .replace(/^(?!<[a-z]|$)(.+)$/gm, '<p>$1</p>')
+    // Paragraphs (wrap lines that don't already start with a block-level tag)
+    .replace(/^(?!<\/?(?:h[1-6]|p|ul|ol|li|div|table|thead|tbody|tfoot|tr|td|th|blockquote|hr|pre|figure|figcaption|section)\b|$)(.+)$/gm, '<p>$1</p>')
     // Cleanup double newlines
     .replace(/\n{3,}/g, '\n\n');
 
@@ -307,14 +307,15 @@ function generateArticleHTML({ title, slug, date, category, description, readTim
       border-top: 1px solid var(--color-divider);
       margin: var(--space-10) 0;
     }
-    .blog-body a {
+    .blog-body a:not(.btn) {
       color: var(--color-text);
       text-decoration: underline;
       text-decoration-color: var(--color-border);
       text-underline-offset: 3px;
       transition: text-decoration-color var(--transition-interactive);
     }
-    .blog-body a:hover { text-decoration-color: var(--color-text); }
+    .blog-body a:not(.btn):hover { text-decoration-color: var(--color-text); }
+    .blog-body a.btn { text-decoration: none; }
 
     /* Tables */
     .blog-table-wrap { overflow-x: auto; margin: var(--space-6) 0; }
@@ -699,6 +700,14 @@ const ARTICLES = [
     date: '2026-09-01',
     category: '電商',
     description: '綠界、藍新、LINE Pay 到底該選哪個？這篇整理 2026 年最新費率、撥款天數與串接開發費用，附實際比較表，幫電商老闆一次選對金流，不再多花冤枉手續費。',
+    readTime: 8,
+  },
+  {
+    title: 'AI 搜尋時代的網站優化（GEO）：讓 ChatGPT 推薦你的店',
+    slug: 'geo-ai-search-optimization-guide',
+    date: '2026-09-15',
+    category: '技術',
+    description: 'GEO 到底要不要做？這篇用實際數據講清楚 AI 導流現在佔多少、AI 是怎麼挑出要推薦哪家店，以及哪些 GEO 做法有效、哪些連 Google 官方都說沒用。',
     readTime: 8,
   }
 ];
