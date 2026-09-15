@@ -146,14 +146,15 @@
       border-top: 1px solid var(--color-divider);
       margin: var(--space-10) 0;
     }
-    .blog-body a {
+    .blog-body a:not(.btn) {
       color: var(--color-text);
       text-decoration: underline;
       text-decoration-color: var(--color-border);
       text-underline-offset: 3px;
       transition: text-decoration-color var(--transition-interactive);
     }
-    .blog-body a:hover { text-decoration-color: var(--color-text); }
+    .blog-body a:not(.btn):hover { text-decoration-color: var(--color-text); }
+    .blog-body a.btn { text-decoration: none; }
 
     /* Tables */
     .blog-table-wrap { overflow-x: auto; margin: var(--space-6) 0; }
@@ -364,22 +365,22 @@
 
 <p>市面上有 Booking.com 旗下工具、REZIO、BookerBank 等，月費通常落在 <strong>NT$500–3,000／月</strong>，適合預算極有限、需求標準化的小型業者。</p>
 
-<strong>優點：</strong> 快速上線、維護由廠商負責。  
-<strong>缺點：</strong> 功能固定，無法客製；每月持續付費；品牌感弱，介面風格由平台決定；資料存放在第三方，未來搬移困難。
+<p><strong>優點：</strong> 快速上線、維護由廠商負責。  </p>
+<p><strong>缺點：</strong> 功能固定，無法客製；每月持續付費；品牌感弱，介面風格由平台決定；資料存放在第三方，未來搬移困難。</p>
 
 <h3 id="2-半客製化-wordpress-外掛">2. 半客製化（WordPress + 外掛）</h3>
 
 <p>用 WordPress 搭配 Amelia、WooCommerce Bookings 等外掛，前期建置費大約 <strong>NT$30,000–80,000</strong>，另加每年 NT$5,000–15,000 的外掛授權費。</p>
 
-<strong>優點：</strong> 成本相對低，有一定彈性。  
-<strong>缺點：</strong> 外掛相容性地雷多；WordPress 更新後預約流程常出錯；需要懂技術才能維護；效能與安全性較弱。
+<p><strong>優點：</strong> 成本相對低，有一定彈性。  </p>
+<p><strong>缺點：</strong> 外掛相容性地雷多；WordPress 更新後預約流程常出錯；需要懂技術才能維護；效能與安全性較弱。</p>
 
 <h3 id="3-全客製開發">3. 全客製開發</h3>
 
 <p>從零到一打造，依需求複雜度報價，台灣市場行情約 <strong>NT$200,000 起</strong>，中型複雜系統通常落在 NT$300,000–600,000。</p>
 
-<strong>優點：</strong> 完全符合你的業務流程；品牌一致性高；資料完全自有；長期擴充靈活。  
-<strong>缺點：</strong> 前期投入較高，選擇開發商需要謹慎。
+<p><strong>優點：</strong> 完全符合你的業務流程；品牌一致性高；資料完全自有；長期擴充靈活。  </p>
+<p><strong>缺點：</strong> 前期投入較高，選擇開發商需要謹慎。</p>
 
 <hr>
 
@@ -397,7 +398,7 @@
 <li>LINE 訊息自動通知與提醒</li>
 <li>帳務報表與收入統計</li>
 <li>器材 / 庫存管理整合</li>
-<p></ul></p>
+</ul>
 
 <p>每增加一個模組，開發工時就會增加。一套「客人自助預約＋後台管理＋自動通知」的基本組合，全客製開發約需 <strong>4–8 週</strong>；若再加上金流、LINE 整合與報表，通常需要 <strong>3–5 個月</strong>。</p>
 
@@ -419,7 +420,7 @@
 <li><strong>健身、瑜珈、舞蹈教室</strong>：課程系統、會員點數、取消補位規則</li>
 <li><strong>攝影棚、場地租借</strong>：多場地同時段衝突處理、器材借出管理</li>
 <li><strong>醫療、診所</strong>：診間排班、病患提醒</li>
-<p></ul></p>
+</ul>
 
 <p>如果你的業務每週處理超過 50 筆預約，或是有多位員工需要共用行事曆，就已經值得考慮客製開發——長期省下的人力成本遠超過開發費用。</p>
 
@@ -440,7 +441,7 @@
 <li><strong>前台</strong>：客人自助選時段、線上付訂金、自動確認通知</li>
 <li><strong>後台</strong>：行事曆管理、預約清單、器材庫存、帳務報表</li>
 <li><strong>LINE 整合</strong>：預約成功自動推播、提前提醒、後台可直接傳訊息給客人</li>
-<p></ul></p>
+</ul>
 
 <p>你可以直接試用 Live Demo，看看完整預約流程與後台操作——不需要簽合約，也不需要先準備規格書。</p>
 
@@ -450,13 +451,13 @@
 
 <h2 id="常見問題">常見問題</h2>
 
-<strong>Q：預約系統開發完成後，我自己能修改內容嗎？</strong>  
+<p><strong>Q：預約系統開發完成後，我自己能修改內容嗎？</strong>  </p>
 <p>可以。後台介面設計給非技術人員使用，可自行新增時段、修改服務項目、查看預約紀錄。</p>
 
-<strong>Q：如果之後想增加功能，費用怎麼算？</strong>  
+<p><strong>Q：如果之後想增加功能，費用怎麼算？</strong>  </p>
 <p>建議在初次規劃時把「未來可能需要的功能」一起討論，避免後期大改架構。合理的後續功能擴充通常以工時計費。</p>
 
-<strong>Q：系統上線後，誰負責維護？</strong>  
+<p><strong>Q：系統上線後，誰負責維護？</strong>  </p>
 <p>選擇有提供後續維護服務的開發商很重要。MosStack 在系統交付後仍提供維護支援，不是交件就消失。</p>
 
 <hr>

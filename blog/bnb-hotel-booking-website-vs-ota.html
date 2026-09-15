@@ -146,14 +146,15 @@
       border-top: 1px solid var(--color-divider);
       margin: var(--space-10) 0;
     }
-    .blog-body a {
+    .blog-body a:not(.btn) {
       color: var(--color-text);
       text-decoration: underline;
       text-decoration-color: var(--color-border);
       text-underline-offset: 3px;
       transition: text-decoration-color var(--transition-interactive);
     }
-    .blog-body a:hover { text-decoration-color: var(--color-text); }
+    .blog-body a:not(.btn):hover { text-decoration-color: var(--color-text); }
+    .blog-body a.btn { text-decoration: none; }
 
     /* Tables */
     .blog-table-wrap { overflow-x: auto; margin: var(--space-6) 0; }
@@ -404,7 +405,7 @@
 <li><strong>官網負責承接</strong>：住過的旅客、社群來的流量，導到官網直訂</li>
 <li><strong>給旅客直訂的理由</strong>：官網限定價、免費升等、延遲退房——反正省下的佣金就是你的讓利空間</li>
 <li><strong>目標把直訂比例拉到三到四成</strong>：不求全拿，先把最肥的那塊利潤留下來</li>
-<p></ul></p>
+</ul>
 
 <hr>
 
@@ -417,7 +418,7 @@
 <li><strong>固定報價</strong>，簽約前就知道總價，不玩時數計費</li>
 <li><strong>原始碼完整交付</strong>，系統所有權百分之百是你的，不被平台綁架</li>
 <li><strong>基礎 SEO 是標配</strong>，讓官網自己會帶客人進來</li>
-<p></ul></p>
+</ul>
 
 <p>實際的系統長什麼樣子，可以直接看我們的<a href="/reservation-case" target="_blank" rel="noopener noreferrer">預約系統開發案例</a>，或到<a href="/services" target="_blank" rel="noopener noreferrer">服務項目頁</a>看完整方案。</p>
 
@@ -431,7 +432,7 @@
 
 <hr>
 
-<em>© MosStack Studio — 台中全端網頁開發工作室 | <a href="https://mosstack.studio" target="_blank" rel="noopener noreferrer">mosstack.studio</a></em>
+<p><em>© MosStack Studio — 台中全端網頁開發工作室 | <a href="https://mosstack.studio" target="_blank" rel="noopener noreferrer">mosstack.studio</a></em></p>
 
 
             <!-- CTA -->

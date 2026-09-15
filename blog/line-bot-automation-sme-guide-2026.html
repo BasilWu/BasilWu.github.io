@@ -146,14 +146,15 @@
       border-top: 1px solid var(--color-divider);
       margin: var(--space-10) 0;
     }
-    .blog-body a {
+    .blog-body a:not(.btn) {
       color: var(--color-text);
       text-decoration: underline;
       text-decoration-color: var(--color-border);
       text-underline-offset: 3px;
       transition: text-decoration-color var(--transition-interactive);
     }
-    .blog-body a:hover { text-decoration-color: var(--color-text); }
+    .blog-body a:not(.btn):hover { text-decoration-color: var(--color-text); }
+    .blog-body a.btn { text-decoration: none; }
 
     /* Tables */
     .blog-table-wrap { overflow-x: auto; margin: var(--space-6) 0; }
@@ -364,7 +365,7 @@
 <li>預約都靠人工 LINE 來 LINE 去，容易出錯</li>
 <li>促銷活動要一個個手動推播，效率極低</li>
 <li>不知道哪些顧客最常互動、消費力最高</li>
-<p></ul></p>
+</ul>
 
 <p>如果有 2 個以上符合，你已經準備好導入 LINE Bot 自動化了。</p>
 
@@ -379,7 +380,7 @@
 <li><strong>自動回覆常見問題</strong>：營業時間、地址、服務項目、價格——設定一次，永遠不用再打。</li>
 <li><strong>關鍵字觸發回應</strong>：客人傳「預約」，自動回傳預約連結；傳「菜單」，自動推送圖文選單。</li>
 <li><strong>歡迎訊息</strong>：新加好友自動推送品牌介紹和優惠。</li>
-<p></ul></p>
+</ul>
 
 <h3 id="進階功能">進階功能</h3>
 <ul>
@@ -388,7 +389,7 @@
 <li><strong>會員綁定與點數查詢</strong>：LINE ID 綁定會員帳號，自動回覆點數餘額和兌換紀錄。</li>
 <li><strong>主動推播通知</strong>：預約提醒、訂單出貨、到期優惠——自動在對的時間發給對的人。</li>
 <li><strong>客服升級轉接</strong>：Bot 無法回答的問題，自動轉給真人客服，並附上對話紀錄。</li>
-<p></ul></p>
+</ul>
 
 <h3 id="ai-強化功能">AI 強化功能</h3>
 <p>2026 年，結合 AI 的 LINE Bot 可以：</p>
@@ -397,7 +398,7 @@
 <li>根據顧客歷史紀錄提供個人化推薦</li>
 <li>分析顧客意圖，自動分類服務請求</li>
 <li>多輪對話理解複雜需求</li>
-<p></ul></p>
+</ul>
 
 <hr>
 
@@ -421,23 +422,23 @@
 
 <h3 id="美容-美髮-spa">美容／美髮／SPA</h3>
 
-<strong>痛點：</strong> 預約訊息排山倒海，手動排班容易衝突。  
-<strong>解法：</strong> LINE Bot 串接預約系統，客人在 LINE 上選時段、選服務師傅、付訂金，系統自動確認並發提醒。預約滿了自動關閉，不用再回覆「那個時間已經被預約了」。
+<p><strong>痛點：</strong> 預約訊息排山倒海，手動排班容易衝突。  </p>
+<p><strong>解法：</strong> LINE Bot 串接預約系統，客人在 LINE 上選時段、選服務師傅、付訂金，系統自動確認並發提醒。預約滿了自動關閉，不用再回覆「那個時間已經被預約了」。</p>
 
 <h3 id="餐廳-咖啡廳">餐廳／咖啡廳</h3>
 
-<strong>痛點：</strong> 外帶詢問、訂位確認、菜單查詢大量重複。  
-<strong>解法：</strong> 關鍵字觸發菜單推播；訂位自動確認；外帶訂單狀態自動通知。
+<p><strong>痛點：</strong> 外帶詢問、訂位確認、菜單查詢大量重複。  </p>
+<p><strong>解法：</strong> 關鍵字觸發菜單推播；訂位自動確認；外帶訂單狀態自動通知。</p>
 
 <h3 id="旅宿-民宿">旅宿／民宿</h3>
 
-<strong>痛點：</strong> 入住資訊問題、訂房確認、促銷活動推播。  
-<strong>解法：</strong> 自動回覆訂房資訊；整合訂房系統；到期前自動推播早鳥優惠。
+<p><strong>痛點：</strong> 入住資訊問題、訂房確認、促銷活動推播。  </p>
+<p><strong>解法：</strong> 自動回覆訂房資訊；整合訂房系統；到期前自動推播早鳥優惠。</p>
 
 <h3 id="零售-電商">零售／電商</h3>
 
-<strong>痛點：</strong> 訂單查詢、庫存詢問、促銷活動通知。  
-<strong>解法：</strong> 訂單狀態自動查詢；新品到貨主動推播；會員點數自動回覆。
+<p><strong>痛點：</strong> 訂單查詢、庫存詢問、促銷活動通知。  </p>
+<p><strong>解法：</strong> 訂單狀態自動查詢；新品到貨主動推播；會員點數自動回覆。</p>
 
 <hr>
 
@@ -477,7 +478,7 @@
 
 <hr>
 
-<em>© MosStack Studio — 台中全端網頁開發工作室 | <a href="https://mosstack.studio" target="_blank" rel="noopener noreferrer">mosstack.studio</a></em>
+<p><em>© MosStack Studio — 台中全端網頁開發工作室 | <a href="https://mosstack.studio" target="_blank" rel="noopener noreferrer">mosstack.studio</a></em></p>
 
 
             <!-- CTA -->

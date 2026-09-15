@@ -146,14 +146,15 @@
       border-top: 1px solid var(--color-divider);
       margin: var(--space-10) 0;
     }
-    .blog-body a {
+    .blog-body a:not(.btn) {
       color: var(--color-text);
       text-decoration: underline;
       text-decoration-color: var(--color-border);
       text-underline-offset: 3px;
       transition: text-decoration-color var(--transition-interactive);
     }
-    .blog-body a:hover { text-decoration-color: var(--color-text); }
+    .blog-body a:not(.btn):hover { text-decoration-color: var(--color-text); }
+    .blog-body a.btn { text-decoration: none; }
 
     /* Tables */
     .blog-table-wrap { overflow-x: auto; margin: var(--space-6) 0; }
@@ -372,7 +373,7 @@
 <h3 id="顧客資料不屬於你">顧客資料不屬於你</h3>
 <p>在蝦皮上賣了三年，累積了 10,000 個客人——但那些顧客資料蝦皮不會給你。你沒辦法自行發 EDM、做會員再行銷、建立私域流量。</p>
 
-<strong>加總起來，蝦皮的真實成本往往是表面抽成的 2–3 倍。</strong>
+<p><strong>加總起來，蝦皮的真實成本往往是表面抽成的 2–3 倍。</strong></p>
 
 <hr>
 
@@ -421,7 +422,7 @@
 <li>你有實體通路，需要線上線下庫存同步</li>
 <li>你的商品有會員制、訂閱制或特殊購買流程</li>
 <li>你計畫長期經營，而不是短期測試</li>
-<p></ol></p>
+</ol>
 
 <hr>
 
@@ -429,7 +430,7 @@
 
 <p>可以。很多品牌的最佳策略是：</p>
 
-<strong>蝦皮負責引流和曝光，自架電商負責品牌經營和會員留存。</strong>
+<p><strong>蝦皮負責引流和曝光，自架電商負責品牌經營和會員留存。</strong></p>
 
 <p>讓新客戶在蝦皮發現你，購買後引導加入你的官網會員體系，再透過點數、優惠、EDM 讓他們回流到自架電商。長期下來，自架電商的佔比會越來越高，平台抽成負擔越來越低。</p>
 
@@ -444,7 +445,7 @@
 <li>顧客會員系統與點數集點</li>
 <li>後台商品 / 訂單管理</li>
 <li>RWD 手機優化體驗</li>
-<p></ul></p>
+</ul>
 
 <p>你可以直接試用 Live Demo，從選商品到結帳走一遍完整流程，不用看截圖猜品質。技術棧為 Next.js + TypeScript + PostgreSQL，採固定報價制。</p>
 

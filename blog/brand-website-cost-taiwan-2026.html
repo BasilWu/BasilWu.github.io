@@ -146,14 +146,15 @@
       border-top: 1px solid var(--color-divider);
       margin: var(--space-10) 0;
     }
-    .blog-body a {
+    .blog-body a:not(.btn) {
       color: var(--color-text);
       text-decoration: underline;
       text-decoration-color: var(--color-border);
       text-underline-offset: 3px;
       transition: text-decoration-color var(--transition-interactive);
     }
-    .blog-body a:hover { text-decoration-color: var(--color-text); }
+    .blog-body a:not(.btn):hover { text-decoration-color: var(--color-text); }
+    .blog-body a.btn { text-decoration: none; }
 
     /* Tables */
     .blog-table-wrap { overflow-x: auto; margin: var(--space-6) 0; }
@@ -423,7 +424,7 @@
 <li>官網是主要獲客管道，需要長期靠 SEO 和內容帶詢問</li>
 <li>品牌定位明確，需要獨特的視覺語言，不能跟同業「撞版型」</li>
 <li>未來計畫擴充功能：線上預約、會員系統、多語系</li>
-<p></ul></p>
+</ul>
 
 <p>以我們近期完成的<a href="/brand-case" target="_blank" rel="noopener noreferrer">品牌形象官網案例</a>為例，一個室內設計工作室的官網，從品牌色彩、字體系統到作品集的呈現動線都是量身設計，搭配完整的 SEO 與結構化資料建設——因為對設計業來說，官網本身就是作品集的第一件作品。</p>
 
@@ -440,7 +441,7 @@
 <li><strong>原始碼完整交付</strong>，網站所有權百分之百是你的</li>
 <li><strong>基礎 SEO 是標配</strong>，包含結構化資料與 sitemap，不另外收費</li>
 <li><strong>交件後持續提供維護支援</strong>，不會人間蒸發</li>
-<p></ul></p>
+</ul>
 
 <p>詳細的<a href="/services" target="_blank" rel="noopener noreferrer">服務項目與方案說明在這裡</a>。</p>
 
@@ -454,7 +455,7 @@
 
 <hr>
 
-<em>© MosStack Studio — 台中全端網頁開發工作室 | <a href="https://mosstack.studio" target="_blank" rel="noopener noreferrer">mosstack.studio</a></em>
+<p><em>© MosStack Studio — 台中全端網頁開發工作室 | <a href="https://mosstack.studio" target="_blank" rel="noopener noreferrer">mosstack.studio</a></em></p>
 
 
             <!-- CTA -->

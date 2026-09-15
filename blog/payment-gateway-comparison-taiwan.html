@@ -146,14 +146,15 @@
       border-top: 1px solid var(--color-divider);
       margin: var(--space-10) 0;
     }
-    .blog-body a {
+    .blog-body a:not(.btn) {
       color: var(--color-text);
       text-decoration: underline;
       text-decoration-color: var(--color-border);
       text-underline-offset: 3px;
       transition: text-decoration-color var(--transition-interactive);
     }
-    .blog-body a:hover { text-decoration-color: var(--color-text); }
+    .blog-body a:not(.btn):hover { text-decoration-color: var(--color-text); }
+    .blog-body a.btn { text-decoration: none; }
 
     /* Tables */
     .blog-table-wrap { overflow-x: auto; margin: var(--space-6) 0; }
@@ -361,28 +362,28 @@
 <div class="blog-table-wrap"><table class="blog-table"><thead><tr><th>項目</th><th>綠界 ECPay</th><th>藍新 NewebPay</th><th>LINE Pay</th></tr></thead><tbody><tr><td>信用卡手續費</td><td>1.85%–2.75%（新戶前期優惠低至 1.68%）</td><td>2.8%（規模大可議價）</td><td>約 2.75%–3.0%</td></tr><tr><td>ATM 虛擬帳號</td><td>1%，最低 15 元</td><td>1%，最低 10 元</td><td>不支援</td></tr><tr><td>超商代碼</td><td>約 28–30 元／筆</td><td>約 28 元／筆</td><td>不支援</td></tr><tr><td>撥款天數</td><td>約 7 天</td><td>約 7–14 天（部分方案 T+15）</td><td>約 14 天，較慢</td></tr><tr><td>月租／年費</td><td>免月租，特約合約年費 1–2.7 萬</td><td>免月租，規模議價</td><td>免月租，另有 QR 收款月繳方案</td></tr><tr><td>提領手續費</td><td>依約定銀行，部分免手續費</td><td>10 元／筆（每月前 5 次免費）</td><td>依方案</td></tr></tbody></table></div>
 <p>（費率會依商家規模、產業類別與合約條件浮動，實際數字請以官方公告與簽約條件為準：<a href="https://www.ecpay.com.tw/Business/payment_fees" target="_blank" rel="noopener noreferrer">綠界服務費率表</a>、<a href="https://www.newebpay.com/website/Page/content/service_fare" target="_blank" rel="noopener noreferrer">藍新費率一覽表</a>。）</p>
 
-<strong>看費率表容易誤判的三個地方：</strong>
+<p><strong>看費率表容易誤判的三個地方：</strong></p>
 
 <ol>
 <li><strong>信用卡費率差距其實很小。</strong> 三家都在 2%–3% 區間打轉，別為了 0.05% 的差異糾結太久，把力氣放在下面兩點更划算。</li>
 <li><strong>撥款天數才是現金流的關鍵。</strong> LINE Pay 撥款約 14 天，對現金流吃緊的小型賣家壓力不小；綠界普遍最快，約 7 天入帳。</li>
 <li><strong>超商代碼、ATM 誰都能做，但 LINE Pay 目前不支援。</strong> 如果你的客群習慣超商繳費（尤其是團媽、小額訂單），LINE Pay 單獨用不夠，通常要搭配綠界或藍新一起上。</li>
-<p></ol></p>
+</ol>
 
 <hr>
 
 <h2 id="三家怎麼選-依商業模式對照">三家怎麼選？依商業模式對照</h2>
 
-<strong>主打小額、超商代碼、需要多元支付 → 綠界</strong>
+<p><strong>主打小額、超商代碼、需要多元支付 → 綠界</strong></p>
 <p>綠界的功能最齊全，超商代碼、超商條碼、ATM、信用卡、Apple Pay 都有，串接文件與社群討論也最多，工程師好上手。新戶還有短期信用卡費率優惠（活動期間可低至 1.68%），適合中小型電商起步。</p>
 
-<strong>已有實體 POS、要串電商與門市對帳 → 藍新</strong>
+<p><strong>已有實體 POS、要串電商與門市對帳 → 藍新</strong></p>
 <p>藍新的後台報表與對帳功能評價較好，特別是有實體店面又要做線上訂購的商家（例如餐飲、美業預約訂金），線上線下對帳可以少很多人工核對的麻煩。</p>
 
-<strong>主力客群是 LINE 生態圈、想做導流變現 → LINE Pay</strong>
+<p><strong>主力客群是 LINE 生態圈、想做導流變現 → LINE Pay</strong></p>
 <p>LINE Pay 費率略高於信用卡，本質上是「導流費」——換來的是 LINE 用戶一鍵付款不用輸入卡號的轉換率優勢。適合搭配 LINE 官方帳號經營、常態發券導購的品牌，但通常建議搭配綠界或藍新做主力金流，LINE Pay 作為付款選項之一，而不是唯一管道。</p>
 
-<strong>多數電商的實務作法：</strong> 綠界或藍新作為主金流，涵蓋信用卡＋ATM＋超商代碼，再加開 LINE Pay 作為 LINE 生態圈的補充選項——三選一不如三選二，讓客人自己挑他習慣的付款方式，成交率通常會比只開一種高。
+<p><strong>多數電商的實務作法：</strong> 綠界或藍新作為主金流，涵蓋信用卡＋ATM＋超商代碼，再加開 LINE Pay 作為 LINE 生態圈的補充選項——三選一不如三選二，讓客人自己挑他習慣的付款方式，成交率通常會比只開一種高。</p>
 
 <hr>
 
@@ -407,7 +408,7 @@
 <li><strong>對帳怎麼串？</strong> 如果你有記帳或 ERP 系統，問清楚金流平台是否提供對帳 API 或每日結算報表，不然月底手動核帳會是長期痛點。</li>
 <li><strong>測試環境好不好用？</strong> 上線前一定要在測試環境（Sandbox）跑過完整流程，包含付款成功、付款失敗、逾時未付三種情境，這是最容易漏測的地方。</li>
 <li><strong>Webhook 通知穩不穩？</strong> 金流平台會透過背景通知（Notify URL）告訴你的系統「這筆付款成功了」，這條線路如果沒做好重試機制，可能出現「客人已經付錢，但系統顯示未付款」的糟糕情況。</li>
-<p></ul></p>
+</ul>
 
 <hr>
 
@@ -421,7 +422,7 @@
 
 <hr>
 
-<em>© MosStack Studio — 台中全端網頁開發工作室 | <a href="https://mosstack.studio" target="_blank" rel="noopener noreferrer">mosstack.studio</a></em>
+<p><em>© MosStack Studio — 台中全端網頁開發工作室 | <a href="https://mosstack.studio" target="_blank" rel="noopener noreferrer">mosstack.studio</a></em></p>
 
 
             <!-- CTA -->

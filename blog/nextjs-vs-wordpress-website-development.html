@@ -146,14 +146,15 @@
       border-top: 1px solid var(--color-divider);
       margin: var(--space-10) 0;
     }
-    .blog-body a {
+    .blog-body a:not(.btn) {
       color: var(--color-text);
       text-decoration: underline;
       text-decoration-color: var(--color-border);
       text-underline-offset: 3px;
       transition: text-decoration-color var(--transition-interactive);
     }
-    .blog-body a:hover { text-decoration-color: var(--color-text); }
+    .blog-body a:not(.btn):hover { text-decoration-color: var(--color-text); }
+    .blog-body a.btn { text-decoration: none; }
 
     /* Tables */
     .blog-table-wrap { overflow-x: auto; margin: var(--space-6) 0; }
@@ -415,7 +416,7 @@
 <h2 id="實際效能比較">實際效能比較</h2>
 
 <div class="blog-table-wrap"><table class="blog-table"><thead><tr><th>指標</th><th>WordPress（未優化）</th><th>WordPress（優化後）</th><th>Next.js</th></tr></thead><tbody><tr><td>首屏載入時間（LCP）</td><td>3–6 秒</td><td>1.5–3 秒</td><td>0.8–1.5 秒</td></tr><tr><td>Lighthouse 效能分數</td><td>40–60</td><td>60–80</td><td>85–100</td></tr><tr><td>Core Web Vitals 通過率</td><td>低</td><td>中</td><td>高</td></tr><tr><td>SEO 技術層面評分</td><td>需要 Yoast 等外掛</td><td>中等</td><td>優異</td></tr></tbody></table></div>
-<em>以上為一般典型情況，實際數值依主機、優化程度及網站內容而有差異。</em>
+<p><em>以上為一般典型情況，實際數值依主機、優化程度及網站內容而有差異。</em></p>
 
 <hr>
 
@@ -428,7 +429,7 @@
 <li>內容很簡單，短期用途</li>
 <li>業主本身熟悉 WordPress，希望自己維護</li>
 <li>只是需要一個部落格，沒有品牌形象需求</li>
-<p></ul></p>
+</ul>
 
 <p>如果以上都不符合你的情況，Next.js 幾乎在所有面向都是更好的選擇。</p>
 
@@ -449,7 +450,7 @@
 <li>更清楚的程式碼結構，長期維護成本低</li>
 <li>更強的擴充彈性，業務長大後不用重寫</li>
 <li>AI 整合能力，為未來的功能需求預做準備</li>
-<p></ul></p>
+</ul>
 
 <hr>
 

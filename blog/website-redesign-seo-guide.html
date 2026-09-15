@@ -146,14 +146,15 @@
       border-top: 1px solid var(--color-divider);
       margin: var(--space-10) 0;
     }
-    .blog-body a {
+    .blog-body a:not(.btn) {
       color: var(--color-text);
       text-decoration: underline;
       text-decoration-color: var(--color-border);
       text-underline-offset: 3px;
       transition: text-decoration-color var(--transition-interactive);
     }
-    .blog-body a:hover { text-decoration-color: var(--color-text); }
+    .blog-body a:not(.btn):hover { text-decoration-color: var(--color-text); }
+    .blog-body a.btn { text-decoration: none; }
 
     /* Tables */
     .blog-table-wrap { overflow-x: auto; margin: var(--space-6) 0; }
@@ -397,7 +398,7 @@
 <li>匯出舊站<strong>所有網址清單</strong>（用 sitemap 或 GSC 匯出）</li>
 <li>建立「舊網址 → 新網址」<strong>一對一對應表</strong></li>
 <li>從 GSC 匯出目前帶流量的關鍵字與頁面，標記<strong>絕對不能改壞的頁面</strong></li>
-<p></ul></p>
+</ul>
 
 <h3 id="上線時-一次做對三件事">上線時：一次做對三件事</h3>
 
@@ -405,7 +406,7 @@
 <li>按對應表設好 <strong>301 轉址</strong>，逐條驗證</li>
 <li>確認每頁的 <strong>title、description、canonical</strong> 都正確搬移</li>
 <li>提交新版 <strong>sitemap.xml</strong>，確認 robots.txt 沒擋到主要頁面</li>
-<p></ul></p>
+</ul>
 
 <h3 id="上線後-盯-30-天">上線後：盯 30 天</h3>
 
@@ -413,7 +414,7 @@
 <li>GSC 涵蓋範圍報表：看索引數量有沒有異常下降</li>
 <li>成效報表：比對改版前後 30 天的曝光與點擊</li>
 <li>用 <code class="blog-inline-code">site:你的網域</code> 抽查重要頁面是否還在索引中</li>
-<p></ul></p>
+</ul>
 
 <hr>
 
@@ -435,7 +436,7 @@
 <li><strong>預覽站先驗收</strong>，確認內容、SEO 元素都搬對了才切換正式站</li>
 <li><strong>上線後 30 天 GSC 陪跑</strong>，index 異常第一時間處理</li>
 <li><strong>固定報價、原始碼交付</strong>，改完的網站完全屬於你</li>
-<p></ul></p>
+</ul>
 
 <p>改版後的實際成果可以看<a href="/brand-case" target="_blank" rel="noopener noreferrer">品牌官網改版案例</a>，或到<a href="/services" target="_blank" rel="noopener noreferrer">服務項目頁</a>看完整方案。</p>
 
@@ -449,7 +450,7 @@
 
 <hr>
 
-<em>© MosStack Studio — 台中全端網頁開發工作室 | <a href="https://mosstack.studio" target="_blank" rel="noopener noreferrer">mosstack.studio</a></em>
+<p><em>© MosStack Studio — 台中全端網頁開發工作室 | <a href="https://mosstack.studio" target="_blank" rel="noopener noreferrer">mosstack.studio</a></em></p>
 
 
             <!-- CTA -->
