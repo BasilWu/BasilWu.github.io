@@ -210,9 +210,9 @@ const I18N = {
     "refund.s9.body2": "MosStack Studio (摩斯棧工作室) · Tax ID 60983424<br>Email: <a href=\"mailto:mosstackstudio@gmail.com\">mosstackstudio@gmail.com</a><br>Phone: <a href=\"tel:+886980054850\">+886 980-054-850</a> (Mon–Fri 10:00–18:00)<br>You may also reach us via our <a href=\"/contact\">contact page</a>, LINE or WhatsApp.",
 
 
-    "index.hero.title": "We don\u2019t just ship sites<br><span>we make them actually work.</span>",
-    "index.hero.sub": "A web development studio focused on product thinking, system design, and real business needs.",
-    "index.hero.primary": "Free 30-Minute Consultation",
+    "index.hero.title": "Booking systems and brand commerce<br><span>built in Taichung, owned by you.</span>",
+    "index.hero.sub": "Online booking, payments, memberships and back-office reporting \u2014 built end to end by one engineer. Fixed price, no hidden fees, and every case is live to try.",
+    "index.hero.primary": "Free 30-Min Consultation on LINE",
     "index.hero.secondary": "View Selected Work",
     "index.hero.m1.num": "Full-stack",
     "index.hero.m1.label": "Frontend, backend & database — handled end to end",
@@ -710,9 +710,9 @@ const I18N = {
     "refund.s9.body2": "摩斯棧工作室（MosStack Studio）｜統一編號 60983424<br>客服信箱：<a href=\"mailto:mosstackstudio@gmail.com\">mosstackstudio@gmail.com</a><br>客服電話：<a href=\"tel:+886980054850\">0980-054-850</a>（週一至週五 10:00–18:00）<br>亦可透過<a href=\"/contact\">聯絡頁面</a>、LINE 或 WhatsApp 與我們聯繫。",
 
 
-    "index.hero.title": "不只是把網站做出來<br><span>是把它做到真的能用</span>",
-    "index.hero.sub": "MosStack 是一間位於台中的 Web 開發工作室，專注在客製化系統、網站與產品開發。",
-    "index.hero.primary": "免費 30 分鐘諮詢",
+    "index.hero.title": "台中預約系統與品牌電商開發<br><span>交付後，程式碼歸你。</span>",
+    "index.hero.sub": "從線上預約、金流、會員到後台報表，一個人負責到底。固定報價、無隱藏費用，每個案例都能直接點開操作。",
+    "index.hero.primary": "用 LINE 免費諮詢 30 分鐘",
     "index.hero.secondary": "查看精選案例",
     "index.hero.m1.num": "全端",
     "index.hero.m1.label": "前後端與資料庫一手包辦",
