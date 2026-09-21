@@ -15,7 +15,11 @@ MosStack Studio（摩斯棧工作室，統一編號 60983424）是一個位於�
 
 Next.js、React、Node.js、TypeScript、PostgreSQL、Prisma、Tailwind CSS、LINE Bot、Stripe、綠界金流
 
-## 精選案例（可線上試用）
+## 客戶實際案例
+
+- [黑犬設計 HEYGO Design](https://mosstack.studio/heygo-case)：已上線的室內設計品牌官網，包含作品分類、單案介紹、內容管理與諮詢入口。空間作品由黑犬設計提供，網站由 MosStack 建置。
+
+## 功能展示案例（可線上試用）
 
 - [品牌電商系統](https://mosstack.studio/ecommerce-case) — 購物車、結帳、超商取貨、會員點數、後台訂單管理、AI 文案生成
 - [服務業預約系統](https://mosstack.studio/reservation-case) — 自助選時段、付訂金、後台行事曆、器材庫存、帳務報表、LINE 訊息整合

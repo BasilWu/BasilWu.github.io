@@ -1,0 +1,71 @@
+/* HEYGO client case: scoped additions to the existing MosStack design system. */
+.heygo-feature {display:grid;grid-template-columns:1fr 1.35fr;gap:48px;align-items:center;padding:36px 0 52px;border-bottom:1px solid var(--color-divider);margin-bottom:44px;color:var(--color-text);text-decoration:none}
+.heygo-feature__visual {background:#f4f3ee;overflow:hidden;border:1px solid var(--color-divider)}
+.heygo-feature__visual img {display:block;width:100%;height:auto;transition:transform .5s ease}
+.heygo-feature:hover .heygo-feature__visual img {transform:scale(1.025)}
+.heygo-feature h2 {font:700 clamp(28px,3.2vw,43px)/1.35 var(--font-display);margin:18px 0;color:var(--color-text)}
+.heygo-feature p {font-size:16px;line-height:1.9;color:var(--color-text-secondary);max-width:35em}
+.heygo-feature__name {font-size:13px!important;letter-spacing:.12em;color:var(--color-accent)!important}
+.heygo-status {display:inline-flex;align-items:center;gap:8px;font-size:12px;font-weight:600;letter-spacing:.08em;color:var(--color-accent)}
+.heygo-status::before {content:"";width:6px;height:6px;background:currentColor;border-radius:50%}
+.heygo-feature__link {display:inline-block;margin-top:24px;border-bottom:1px solid var(--color-accent);padding-bottom:6px;font-size:14px;color:var(--color-accent)}
+.heygo-demo-label {margin:36px 0 24px;color:var(--color-text-muted);font-size:13px;letter-spacing:.1em}
+.heygo-service-link {display:inline-block;margin-top:18px;color:var(--color-accent);border-bottom:1px solid currentColor;padding:8px 0;font-size:15px}
+.heygo-page {padding-top:48px}
+.heygo-breadcrumb {display:flex;gap:12px;align-items:center;font-size:12px;color:var(--color-text-muted);margin-bottom:54px}
+.heygo-breadcrumb a {color:inherit}
+.heygo-intro {display:grid;grid-template-columns:1.5fr 1fr;gap:64px;align-items:end;padding-bottom:48px}
+.heygo-intro h1 {font:700 clamp(32px,4vw,54px)/1.4 var(--font-display);letter-spacing:-.03em;margin:20px 0 14px;color:var(--color-accent)}
+.heygo-intro__sub {font-size:18px;color:var(--color-text-secondary)}
+.heygo-intro__copy p {font-size:16px;line-height:1.9;color:var(--color-text-secondary);margin-bottom:24px}
+.heygo-actions {display:flex;gap:14px;align-items:center;flex-wrap:wrap}
+.heygo-external {font-size:14px;line-height:1.5;padding:12px 0;color:var(--color-text-secondary);border-bottom:1px solid var(--color-border)}
+.heygo-hero-visual {margin:0;background:#f4f3ee;border:1px solid var(--color-divider)}
+.heygo-hero-visual img {display:block;width:100%;height:auto}
+.heygo-caption {font-size:12px;line-height:1.7;color:var(--color-text-muted);margin-top:12px}
+.heygo-facts {display:grid;grid-template-columns:1fr 1fr 1.5fr;gap:32px;margin:44px 0 0;padding:30px 0;border-top:1px solid var(--color-divider);border-bottom:1px solid var(--color-divider)}
+.heygo-facts dt {font-size:12px;color:var(--color-text-muted);margin-bottom:10px}
+.heygo-facts dd {margin:0;font-size:15px;line-height:1.8}
+.heygo-story {padding:100px 0;border-bottom:1px solid var(--color-divider)}
+.heygo-story__intro {display:grid;grid-template-columns:1fr 1.15fr;gap:80px;align-items:start}
+.heygo-kicker {font-size:12px;letter-spacing:.12em;color:var(--color-accent);margin:0 0 18px}
+.heygo-page h2 {font:700 clamp(28px,3vw,40px)/1.5 var(--font-display);margin:0 0 24px;text-wrap:balance}
+.heygo-story p:not(.heygo-kicker):not(.heygo-caption) {font-size:16px;line-height:1.95;color:var(--color-text-secondary)}
+.heygo-browser {margin:40px 0 0;border:1px solid var(--color-border);background:var(--color-surface);overflow:hidden}
+.heygo-browser__bar {padding:12px 20px;background:var(--color-surface-offset);font-size:12px;color:var(--color-text-muted);border-bottom:1px solid var(--color-border)}
+.heygo-browser img {display:block;width:100%;height:auto}
+.heygo-visual-grid {display:grid;grid-template-columns:1.65fr .55fr;gap:36px;align-items:start;margin-top:40px}
+.heygo-visual-grid .heygo-browser {margin:0}
+.heygo-phone {margin:0;padding:7px;border:1px solid var(--color-border);background:var(--color-surface-offset);border-radius:24px;overflow:hidden;max-width:300px}
+.heygo-phone img {display:block;width:100%;height:auto;border-radius:17px}
+.heygo-mobile-section {display:grid;grid-template-columns:1fr 1.2fr;gap:80px;align-items:center}
+.heygo-phones {display:grid;grid-template-columns:1fr 1fr;gap:24px;padding:32px;background:var(--color-surface-offset)}
+.heygo-list {padding:0;list-style:none;margin:28px 0 0}
+.heygo-list li {padding:16px 0;border-top:1px solid var(--color-divider);font-size:15px;line-height:1.8}
+.heygo-list strong {display:block;color:var(--color-text);font-weight:600}
+.heygo-list span {color:var(--color-text-secondary)}
+.heygo-delivery {display:grid;grid-template-columns:repeat(3,1fr);gap:32px;margin-top:36px}
+.heygo-delivery h3 {font:600 19px/1.5 var(--font-display);margin-bottom:12px}
+.heygo-closing {padding:100px 0;text-align:center;max-width:760px;margin:auto}
+.heygo-closing p {font-size:16px;line-height:1.9;color:var(--color-text-secondary);margin:0 auto 28px}
+.heygo-closing .heygo-actions {justify-content:center}
+.heygo-note {font-size:12px!important;margin-top:24px!important;color:var(--color-text-muted)!important}
+.heygo-feature:focus-visible,.heygo-service-link:focus-visible {outline:2px solid var(--color-accent);outline-offset:6px}
+@media(max-width:800px) {
+ .heygo-feature {grid-template-columns:1fr;gap:24px;padding-top:16px}
+ .heygo-feature__visual {order:-1}
+ .heygo-feature h2 {margin:12px 0}
+ .heygo-intro,.heygo-story__intro,.heygo-mobile-section {grid-template-columns:1fr;gap:28px}
+ .heygo-page {padding-top:28px}
+ .heygo-breadcrumb {margin-bottom:32px}
+ .heygo-intro {padding-bottom:32px}
+ .heygo-story {padding:64px 0}
+ .heygo-facts {grid-template-columns:1fr 1fr;gap:24px;margin-top:30px}
+ .heygo-facts>div:last-child {grid-column:1/-1}
+ .heygo-visual-grid {grid-template-columns:1fr .5fr;gap:16px}
+ .heygo-phones {padding:18px;gap:16px}
+ .heygo-delivery {grid-template-columns:1fr;gap:24px}
+ .heygo-closing {padding:64px 0}
+ .heygo-closing .btn {width:100%}
+}
+@media(prefers-reduced-motion:reduce) {.heygo-feature__visual img{transition:none}.heygo-feature:hover .heygo-feature__visual img{transform:none}}
