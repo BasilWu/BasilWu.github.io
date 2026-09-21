@@ -311,6 +311,20 @@ button, a {
 
 .nav__links a:hover { color: var(--color-text); }
 
+/* 導覽連結不得在詞中間斷行（原本 769–1150px 會出現「精選案／例」這種斷行），
+   改成隨寬度逐步收窄間距與字級，保持單行。 */
+.nav__links a { white-space: nowrap; }
+
+@media (max-width: 1150px) {
+  .nav__inner { padding-inline: var(--space-4); }
+  .nav__links { gap: var(--space-5); }
+}
+
+@media (max-width: 1040px) {
+  .nav__links { gap: var(--space-4); }
+  .nav__links a { font-size: var(--text-xs); }
+}
+
 .nav__right {
   display: flex;
   align-items: center;
