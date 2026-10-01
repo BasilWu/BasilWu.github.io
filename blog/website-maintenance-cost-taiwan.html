@@ -1,175 +1,14 @@
-#!/usr/bin/env node
-/**
- * MosStack Studio — Blog Builder
- * Markdown → HTML 靜態文章生成器
- *
- * 使用方式：
- *   node build-blog.js                    → 生成 blog/ 目錄下所有文章
- *   node build-blog.js --watch            → 監聽 blog/posts/ 變動自動重建
- *
- * 文章放在 blog/posts/*.md，front matter 格式：
- * ---
- * title: 文章標題
- * slug: url-slug
- * date: 2026-06-29
- * category: 費用指南
- * description: Meta description
- * readTime: 8
- * ---
- */
-
-const fs = require('fs');
-const path = require('path');
-
-// ── 簡易 Markdown 解析器（不依賴外部套件）──
-function parseMarkdown(md) {
-  // front matter
-  const fmMatch = md.match(/^---\n([\s\S]*?)\n---\n([\s\S]*)$/);
-  let frontMatter = {};
-  let body = md;
-  if (fmMatch) {
-    fmMatch[1].split('\n').forEach(line => {
-      const [key, ...val] = line.split(':');
-      if (key && val.length) frontMatter[key.trim()] = val.join(':').trim();
-    });
-    body = fmMatch[2];
-  }
-
-  // Convert Markdown to HTML
-  let html = body
-    // Code blocks
-    .replace(/```([\w]*)\n([\s\S]*?)```/g, (_, lang, code) =>
-      `<pre class="blog-code"><code class="language-${lang}">${escapeHtml(code.trim())}</code></pre>`)
-    // Tables
-    .replace(/^\|(.+)\|\n\|[-| :]+\|\n((?:\|.+\|\n?)+)/gm, parseTable)
-    // Headings
-    .replace(/^### (.+)$/gm, (_, t) => `<h3 id="${slugify(t)}">${t}</h3>`)
-    .replace(/^## (.+)$/gm, (_, t) => `<h2 id="${slugify(t)}">${t}</h2>`)
-    .replace(/^# (.+)$/gm, (_, t) => `<h1>${t}</h1>`)
-    // Bold + italic
-    .replace(/\*\*\*(.+?)\*\*\*/g, '<strong><em>$1</em></strong>')
-    .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
-    .replace(/\*(.+?)\*/g, '<em>$1</em>')
-    // Inline code
-    .replace(/`([^`]+)`/g, '<code class="blog-inline-code">$1</code>')
-    // Links
-    .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank" rel="noopener noreferrer">$1</a>')
-    // Unordered lists
-    .replace(/((?:^- .+\n?)+)/gm, block => {
-      const items = block.trim().split('\n').map(l => `<li>${l.replace(/^- /, '')}</li>`).join('\n');
-      return `<ul>\n${items}\n</ul>\n`;
-    })
-    // Ordered lists
-    .replace(/((?:^\d+\. .+\n?)+)/gm, block => {
-      const items = block.trim().split('\n').map(l => `<li>${l.replace(/^\d+\. /, '')}</li>`).join('\n');
-      return `<ol>\n${items}\n</ol>\n`;
-    })
-    // Blockquotes
-    .replace(/^> (.+)$/gm, '<blockquote>$1</blockquote>')
-    // Horizontal rules
-    .replace(/^---$/gm, '<hr>')
-    // Paragraphs (wrap lines that don't already start with a block-level tag)
-    .replace(/^(?!<\/?(?:h[1-6]|p|ul|ol|li|div|table|thead|tbody|tfoot|tr|td|th|blockquote|hr|pre|figure|figcaption|section)\b|$)(.+)$/gm, '<p>$1</p>')
-    // Cleanup double newlines
-    .replace(/\n{3,}/g, '\n\n');
-
-  return { frontMatter, html };
-}
-
-function escapeHtml(str) {
-  return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
-}
-
-function slugify(str) {
-  return str.toLowerCase().replace(/[^\w\u4e00-\u9fff]+/g, '-').replace(/^-|-$/g, '');
-}
-
-function parseTable(match) {
-  const lines = match.trim().split('\n');
-  const headers = lines[0].split('|').filter(c => c.trim()).map(c => `<th>${c.trim()}</th>`);
-  const rows = lines.slice(2).map(row => {
-    const cells = row.split('|').filter(c => c.trim()).map(c => `<td>${c.trim()}</td>`);
-    return `<tr>${cells.join('')}</tr>`;
-  });
-  return `<div class="blog-table-wrap"><table class="blog-table"><thead><tr>${headers.join('')}</tr></thead><tbody>${rows.join('')}</tbody></table></div>`;
-}
-
-// ── TOC 生成 ──
-function generateTOC(html) {
-  const headings = [];
-  const re = /<h([23]) id="([^"]+)">([^<]+)<\/h[23]>/g;
-  let m;
-  while ((m = re.exec(html)) !== null) {
-    headings.push({ level: parseInt(m[1]), id: m[2], text: m[3] });
-  }
-  if (headings.length < 2) return '';
-  const items = headings.map(h =>
-    `<li class="toc__item toc__item--h${h.level}"><a class="toc__link" href="#${h.id}">${h.text}</a></li>`
-  ).join('\n');
-  return `<nav class="blog-toc" aria-label="文章目錄"><p class="blog-toc__title">目錄</p><ul class="toc__list">${items}</ul></nav>`;
-}
-
-// ── HTML 模板 ──
-function generateArticleHTML({ title, slug, date, category, description, readTime, wordCount, bodyHtml, toc }) {
-  const dateFormatted = date || '2026-06-29';
-  const schema = JSON.stringify({
-    "@context": "https://schema.org",
-    "@graph": [
-      {
-        "@type": "BlogPosting",
-        "@id": `https://mosstack.studio/blog/${slug}#post`,
-        "mainEntityOfPage": {
-          "@type": "WebPage",
-          "@id": `https://mosstack.studio/blog/${slug}`
-        },
-        "headline": title,
-        "description": description,
-        "datePublished": `${dateFormatted}T08:00:00+08:00`,
-        "dateModified": `${dateFormatted}T08:00:00+08:00`,
-        "author": {
-          "@type": "Organization",
-          "@id": "https://mosstack.studio/#business",
-          "name": "MosStack Studio"
-        },
-        "publisher": {
-          "@type": "Organization",
-          "@id": "https://mosstack.studio/#business",
-          "name": "MosStack Studio",
-          "logo": {
-            "@type": "ImageObject",
-            "url": "https://mosstack.studio/assets/favicon-32.png",
-            "width": 32,
-            "height": 32
-          }
-        },
-        "url": `https://mosstack.studio/blog/${slug}`,
-        "inLanguage": "zh-TW",
-        "articleSection": category || "Web Development",
-        "wordCount": wordCount || 2000,
-        "timeRequired": `PT${readTime || 8}M`
-      },
-      {
-        "@type": "BreadcrumbList",
-        "itemListElement": [
-          { "@type": "ListItem", "position": 1, "name": "首頁", "item": "https://mosstack.studio/" },
-          { "@type": "ListItem", "position": 2, "name": "Blog", "item": "https://mosstack.studio/blog" },
-          { "@type": "ListItem", "position": 3, "name": title, "item": `https://mosstack.studio/blog/${slug}` }
-        ]
-      }
-    ]
-  });
-
-  return `<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="zh-TW" data-theme="light">
 <head>
   <meta charset="UTF-8" />
   <script>document.documentElement.setAttribute("data-theme",localStorage.getItem("theme")||(matchMedia("(prefers-color-scheme:dark)").matches?"dark":"light"));</script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="${description}" />
+  <meta name="description" content="網站做好之後一年還要花多少錢？2026 年台灣網站維護費用行情一次整理：網域、主機、SSL 固定成本，維護方案月費與年費區間，以及怎麼判斷你的維護費是不是付太多。" />
   <meta name="robots" content="index, follow" />
-  <link rel="canonical" href="https://mosstack.studio/blog/${slug}" />
-  <script type="application/ld+json">${schema}</script>
-  <title>${title} — MosStack Studio</title>
+  <link rel="canonical" href="https://mosstack.studio/blog/website-maintenance-cost-taiwan" />
+  <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"BlogPosting","@id":"https://mosstack.studio/blog/website-maintenance-cost-taiwan#post","mainEntityOfPage":{"@type":"WebPage","@id":"https://mosstack.studio/blog/website-maintenance-cost-taiwan"},"headline":"網站一年要花多少維護費？2026 台灣網站維護費用行情","description":"網站做好之後一年還要花多少錢？2026 年台灣網站維護費用行情一次整理：網域、主機、SSL 固定成本，維護方案月費與年費區間，以及怎麼判斷你的維護費是不是付太多。","datePublished":"2026-10-01T08:00:00+08:00","dateModified":"2026-10-01T08:00:00+08:00","author":{"@type":"Organization","@id":"https://mosstack.studio/#business","name":"MosStack Studio"},"publisher":{"@type":"Organization","@id":"https://mosstack.studio/#business","name":"MosStack Studio","logo":{"@type":"ImageObject","url":"https://mosstack.studio/assets/favicon-32.png","width":32,"height":32}},"url":"https://mosstack.studio/blog/website-maintenance-cost-taiwan","inLanguage":"zh-TW","articleSection":"費用指南","wordCount":1549,"timeRequired":"PT7M"},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"首頁","item":"https://mosstack.studio/"},{"@type":"ListItem","position":2,"name":"Blog","item":"https://mosstack.studio/blog"},{"@type":"ListItem","position":3,"name":"網站一年要花多少維護費？2026 台灣網站維護費用行情","item":"https://mosstack.studio/blog/website-maintenance-cost-taiwan"}]}]}</script>
+  <title>網站一年要花多少維護費？2026 台灣網站維護費用行情 — MosStack Studio</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -180,19 +19,19 @@ function generateArticleHTML({ title, slug, date, category, description, readTim
   <link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16.png" />
   <link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png" />
   <meta name="theme-color" content="#080c14" />
-  <meta property="og:title" content="${title}" />
-  <meta property="og:description" content="${description}" />
+  <meta property="og:title" content="網站一年要花多少維護費？2026 台灣網站維護費用行情" />
+  <meta property="og:description" content="網站做好之後一年還要花多少錢？2026 年台灣網站維護費用行情一次整理：網域、主機、SSL 固定成本，維護方案月費與年費區間，以及怎麼判斷你的維護費是不是付太多。" />
   <meta property="og:type" content="article" />
-  <meta property="og:url" content="https://mosstack.studio/blog/${slug}" />
+  <meta property="og:url" content="https://mosstack.studio/blog/website-maintenance-cost-taiwan" />
   <meta property="og:image" content="https://mosstack.studio/assets/og-image.jpg" />
   <meta property="og:locale" content="zh_TW" />
   <meta property="og:site_name" content="MosStack Studio" />
-  <meta property="article:published_time" content="${dateFormatted}T08:00:00+08:00" />
+  <meta property="article:published_time" content="2026-10-01T08:00:00+08:00" />
   <meta property="article:author" content="https://mosstack.studio/" />
-  <meta property="article:section" content="${category || 'Web Development'}" />
+  <meta property="article:section" content="費用指南" />
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="${title}" />
-  <meta name="twitter:description" content="${description}" />
+  <meta name="twitter:title" content="網站一年要花多少維護費？2026 台灣網站維護費用行情" />
+  <meta name="twitter:description" content="網站做好之後一年還要花多少錢？2026 年台灣網站維護費用行情一次整理：網域、主機、SSL 固定成本，維護方案月費與年費區間，以及怎麼判斷你的維護費是不是付太多。" />
   <meta name="twitter:image" content="https://mosstack.studio/assets/og-image.jpg" />
   <link rel="stylesheet" href="/style.css" />
   <style>
@@ -489,27 +328,102 @@ function generateArticleHTML({ title, slug, date, category, description, readTim
         <span class="blog-breadcrumb__sep">›</span>
         <a href="/blog">Blog</a>
         <span class="blog-breadcrumb__sep">›</span>
-        <span>${title}</span>
+        <span>網站一年要花多少維護費？2026 台灣網站維護費用行情</span>
       </nav>
     </div>
 
     <article class="blog-article">
       <div class="container">
         <header class="blog-article__header">
-          <span class="blog-article__tag">${category || 'Blog'}</span>
-          <h1 class="blog-article__title">${title}</h1>
+          <span class="blog-article__tag">費用指南</span>
+          <h1 class="blog-article__title">網站一年要花多少維護費？2026 台灣網站維護費用行情</h1>
           <div class="blog-article__meta">
             <span>MosStack Studio</span>
             <span class="blog-article__meta-dot"></span>
-            <span>${dateFormatted}</span>
+            <span>2026-10-01</span>
             <span class="blog-article__meta-dot"></span>
-            <span>${readTime || 8} min read</span>
+            <span>7 min read</span>
           </div>
         </header>
 
         <div class="blog-article__layout">
           <div class="blog-body">
-            ${bodyHtml}
+            
+<h2 id="網站一年要花多少維護費-2026-台灣網站維護費用行情">網站一年要花多少維護費？2026 台灣網站維護費用行情</h2>
+
+<p>上個月有位台中的老闆拿著續約通知來問我：「網站三年前做的，現在每個月還在付五千塊維護費，可是這三年我只請他們改過兩次電話號碼。這正常嗎？」</p>
+
+<p>一年六萬、三年十八萬，比當初的建置費還貴。這種情況我很常遇到。網站維護費不是不該付，而是<strong>很多人根本不知道自己在付什麼</strong>。這篇把一年的真實成本拆開來，讓你自己判斷。</p>
+
+<hr>
+
+<h2 id="先拆開-網站一年的固定成本有哪些">先拆開：網站一年的固定成本有哪些？</h2>
+
+<p>不管找誰維護，以下三筆是網站活著就一定要付的，跟「維護服務」是兩回事：</p>
+
+<div class="blog-table-wrap"><table class="blog-table"><thead><tr><th>項目</th><th>一年行情</th></tr></thead><tbody><tr><td>網域（.com）</td><td>約 NT$500～800</td></tr><tr><td>網域（.com.tw）</td><td>約 NT$800～1,200</td></tr><tr><td>共享主機</td><td>約 NT$2,400～9,600</td></tr><tr><td>VPS／雲端主機</td><td>約 NT$12,000～60,000</td></tr><tr><td>SSL 憑證</td><td>免費（Let's Encrypt）～NT$5,000</td></tr></tbody></table></div>
+<p>以上數字參考<a href="https://www.newscan.com.tw/blog/website-hidden-costs.htm" target="_blank" rel="noopener noreferrer">Newscan 網站隱藏成本整理</a>。一個中小企業形象官網，光是這三筆一年大約 NT$3,000～15,000。</p>
+
+<p>這裡就有第一個檢查點：<strong>你的維護費裡，有沒有把這些成本另外加價轉賣給你？</strong> 網域一年幾百塊，被包裝成「網域管理費」收兩千的情況並不少見。</p>
+
+<hr>
+
+<h2 id="維護服務本身-市場行情多少">維護服務本身，市場行情多少？</h2>
+
+<p>真正的「維護費」是人力成本：更新程式、備份、資安監控、修 Bug、幫你改內容。台灣市場大致分三級：</p>
+
+<div class="blog-table-wrap"><table class="blog-table"><thead><tr><th>等級</th><th>年費行情</th><th>通常包含</th></tr></thead><tbody><tr><td>基礎代管</td><td>約 1～3 萬</td><td>主機、網域、SSL、基本備份與更新</td></tr><tr><td>標準維護</td><td>約 3～6 萬</td><td>加上資安掃描、監控、每月少量修改</td></tr><tr><td>高階維運</td><td>約 6～12 萬以上</td><td>加上 SLA 回應時限、優先支援</td></tr></tbody></table></div>
+<p>分級參考<a href="https://www.whitepaper.com.tw/blog/website-maintenance-cost.php" target="_blank" rel="noopener noreferrer">白紙創意設計的年費行情整理</a>與<a href="https://seo-koumei.com/website-maintenance-cost/" target="_blank" rel="noopener noreferrer">SEO 口碑的公開報價彙整</a>；<a href="https://www.pro360.com.tw/price/website_maintenance" target="_blank" rel="noopener noreferrer">PRO360 達人網</a>的統計也落在月費 NT$3,000～5,000、年費 NT$2～4 萬之間。不綁約、需要時再找人的話，時薪大約 NT$1,200～2,500（<a href="https://www.design-hu.com/web-news/website-maintenance.html" target="_blank" rel="noopener noreferrer">鵠崙設計</a>）。</p>
+
+<h3 id="為什麼-wordpress-網站的維護費特別高">為什麼 WordPress 網站的維護費特別高？</h3>
+
+<p>因為它真的需要。WordPress 靠大量外掛組成，核心、主題、外掛每個月都有更新，更新後還可能互相衝突把網站弄壞。不更新的代價更高：被植入惡意程式後的清除費用，常見落在 NT$15,000～50,000（<a href="https://hostswp.com/wordpress-security-maintenance-guide/" target="_blank" rel="noopener noreferrer">HostsWP 整理</a>）。</p>
+
+<p>所以 WordPress 每月付維護費是合理的，那是在替外掛架構的風險買保險。這也是我們當初選擇不用 WordPress 的主要原因之一，細節可以看<a href="/blog/nextjs-vs-wordpress-website-development" target="_blank" rel="noopener noreferrer">為什麼你的網站該用 Next.js 而不是 WordPress</a>。</p>
+
+<hr>
+
+<h2 id="怎麼判斷你的維護費付太多">怎麼判斷你的維護費付太多？</h2>
+
+<p>拿出你的維護合約，問自己這四個問題：</p>
+
+<ol>
+<li><strong>過去一年，他們實際幫你做了什麼？</strong> 有沒有更新紀錄、備份紀錄、月報？如果什麼都拿不出來，你付的是「萬一出事有人接電話」的費用，那就該用這個價格去評估值不值得。</li>
+<li><strong>網域和主機登記在誰名下？</strong> 如果帳號在廠商手上，你不續約就搬不走，這筆維護費其實是贖金。這是我最常勸客戶第一個處理的事。</li>
+<li><strong>你的網站多久改一次？</strong> 一年只改兩三次內容的形象站，用月費制通常不划算，改成單次計費或基礎代管就好。</li>
+<li><strong>維護費佔建置費幾成？</strong> 業界常見落在建置費的 10%～20%（<a href="https://www.dmo.com.tw/article_detail_28.htm" target="_blank" rel="noopener noreferrer">DMO 網頁設計行情</a>）。如果每年維護費已經超過當初建置費的三成，就值得好好問清楚。</li>
+</ol>
+
+<hr>
+
+<h2 id="我們的做法-讓維護費本來就低">我們的做法：讓維護費本來就低</h2>
+
+<p>我們做的網站用現代化的靜態架構，部署在 Cloudflare、Vercel 這類全球雲端平台。這帶來三個直接的省錢效果：</p>
+
+<ul>
+<li><strong>主機費大幅降低</strong>：多數形象官網的流量，用雲端平台的免費或入門方案就夠用。</li>
+<li><strong>SSL 自動續期</strong>：不用另外買，也不會因為忘記續約而跳出「不安全」警告。</li>
+<li><strong>沒有外掛要更新</strong>：不會發生「某天外掛更新後網站整個掛掉」的狀況。</li>
+</ul>
+
+<p>所有網域與平台帳號都登記在客戶自己名下，原始碼交機時一併交付。上線第一年免費保固；之後如果需要持續維護，年度維護約大約是建置費的 10%，以 NT$35,000 起的<a href="/blog/brand-website-cost-taiwan-2026" target="_blank" rel="noopener noreferrer">形象官網</a>來說，一年約三千多元，不想綁約也可以單次計費。</p>
+
+<p>日常的文字、照片、作品更新，我們會做成後台讓你自己改，不用每次都付錢請人。像我們幫<a href="/heygo-case.html" target="_blank" rel="noopener noreferrer">黑犬設計 HEYGO Design</a> 做的作品集官網，後續新增作品與設計誌文章，都是客戶自己在後台完成。</p>
+
+<hr>
+
+<h2 id="結論">結論</h2>
+
+<p>網站一年的合理花費，取決於三件事：<strong>架構本身要不要常常顧、帳號在不在你手上、你多常改內容</strong>。一個架構乾淨的形象官網，一年總成本壓在一萬元以內並不難；反過來，架構老舊又綁在廠商手上的網站，每年付五六萬也只是剛好維持不壞。</p>
+
+<p>如果你也拿著一張看不懂的維護續約單，或想知道現在的網站搬家要花多少，歡迎直接傳給我們看，免費幫你拆解每一筆費用。更多方案細節可以參考<a href="/services.html" target="_blank" rel="noopener noreferrer">服務項目</a>。</p>
+
+<p>台中在地工作室，官網建置、系統開發與網站搬家，目前接受新專案洽詢。</p>
+
+<hr>
+
+<p><em>© MosStack Studio — 台中全端網頁開發工作室 | <a href="https://mosstack.studio" target="_blank" rel="noopener noreferrer">mosstack.studio</a></em></p>
+
 
             <!-- CTA -->
             <div class="blog-cta">
@@ -523,7 +437,13 @@ function generateArticleHTML({ title, slug, date, category, description, readTim
           </div>
 
           <aside>
-            ${toc}
+            <nav class="blog-toc" aria-label="文章目錄"><p class="blog-toc__title">目錄</p><ul class="toc__list"><li class="toc__item toc__item--h2"><a class="toc__link" href="#網站一年要花多少維護費-2026-台灣網站維護費用行情">網站一年要花多少維護費？2026 台灣網站維護費用行情</a></li>
+<li class="toc__item toc__item--h2"><a class="toc__link" href="#先拆開-網站一年的固定成本有哪些">先拆開：網站一年的固定成本有哪些？</a></li>
+<li class="toc__item toc__item--h2"><a class="toc__link" href="#維護服務本身-市場行情多少">維護服務本身，市場行情多少？</a></li>
+<li class="toc__item toc__item--h3"><a class="toc__link" href="#為什麼-wordpress-網站的維護費特別高">為什麼 WordPress 網站的維護費特別高？</a></li>
+<li class="toc__item toc__item--h2"><a class="toc__link" href="#怎麼判斷你的維護費付太多">怎麼判斷你的維護費付太多？</a></li>
+<li class="toc__item toc__item--h2"><a class="toc__link" href="#我們的做法-讓維護費本來就低">我們的做法：讓維護費本來就低</a></li>
+<li class="toc__item toc__item--h2"><a class="toc__link" href="#結論">結論</a></li></ul></nav>
           </aside>
         </div>
       </div>
@@ -623,157 +543,4 @@ function generateArticleHTML({ title, slug, date, category, description, readTim
     })();
   </script>
 </body>
-</html>`;
-}
-
-// ── 文章定義（從 docs/ 草稿轉換）──
-const ARTICLES = [
-  {
-    title: '預約系統開發要多少錢？2026 台灣行情完整解析',
-    slug: 'appointment-system-cost-taiwan-2026',
-    date: '2026-06-29',
-    category: '費用指南',
-    description: '預約系統開發要多少錢？2026 年台灣行情從 SaaS 月租到客製開發一次整理。附實際報價範圍、功能比較與選購建議，幫服務業老闆找到最划算的方案。',
-    readTime: 8,
-    mdFile: null, // null = use inline content below
-    inlineContent: null // will be set from parsed articles
-  },
-  {
-    title: '網頁設計費用怎麼算？台中網頁設計報價懶人包（2026）',
-    slug: 'web-design-cost-taichung-2026',
-    date: '2026-06-29',
-    category: '費用指南',
-    description: '台中網頁設計費用一次看懂！2026 年一頁式、形象站、電商、客製系統完整報價範圍，加上選廠商避坑指南，讓你不再被模糊報價搞混。',
-    readTime: 7,
-  },
-  {
-    title: '自架電商 vs 蝦皮開店：品牌電商該怎麼選？',
-    slug: 'self-hosted-ecommerce-vs-shopee-taiwan',
-    date: '2026-06-29',
-    category: '電商',
-    description: '蝦皮開店抽成吃掉你的利潤？2026 年自架電商 vs 蝦皮完整比較，從費用、品牌控制、顧客資料到長期經營，幫品牌電商老闆做出最划算的選擇。',
-    readTime: 8,
-  },
-  {
-    title: '為什麼你的網站該用 Next.js 而不是 WordPress？',
-    slug: 'nextjs-vs-wordpress-website-development',
-    date: '2026-06-29',
-    category: '技術',
-    description: 'WordPress 慢、外掛地雷、維護成本高？2026 年用 Next.js 開發網站的 6 大優勢完整解析，附實際效能數據與適用場景比較。',
-    readTime: 9,
-  },
-  {
-    title: 'LINE Bot 串接與客服自動化：中小企業導入指南（2026）',
-    slug: 'line-bot-automation-sme-guide-2026',
-    date: '2026-06-29',
-    category: 'LINE',
-    description: 'LINE 訊息接不完？2026 年中小企業 LINE Bot 導入完整指南，涵蓋費用、功能規劃、常見使用情境與選廠商建議，讓你的 LINE 客服從人工變自動。',
-    readTime: 10,
-  },
-  {
-    title: '形象官網要花多少錢？2026 台中品牌官網製作費用行情',
-    slug: 'brand-website-cost-taiwan-2026',
-    date: '2026-07-15',
-    category: '費用指南',
-    description: '形象官網要花多少錢？2026 年台中品牌官網行情一次整理：套版、半客製、全客製報價區間、台中與台北價差、報價單避坑重點，讓你在詢價前心裡先有底。',
-    readTime: 7,
-  },
-  {
-    title: '民宿官網＋訂房系統：自建 vs OTA，抽成到底怎麼算？（2026）',
-    slug: 'bnb-hotel-booking-website-vs-ota',
-    date: '2026-08-01',
-    category: '預約系統',
-    description: 'OTA 抽成到底吃掉多少利潤？2026 年 Booking、Agoda、Airbnb 最新費率一次整理，加上自建訂房官網的費用與回本試算，幫民宿與旅宿老闆算清楚這筆帳。',
-    readTime: 8,
-  },
-  {
-    title: '網站改版指南：什麼時候該改、怎麼改才不掉排名？（2026）',
-    slug: 'website-redesign-seo-guide',
-    date: '2026-08-15',
-    category: '技術',
-    description: '網站改版最怕排名歸零。這篇整理改版的五大時機訊號、最常掉流量的五個原因，以及上線前中後的 SEO 遷移 SOP，讓你改得安心不掉排名。',
-    readTime: 8,
-  },
-  {
-    title: '金流串接怎麼選：綠界 vs 藍新 vs LINE Pay（含串接費用）',
-    slug: 'payment-gateway-comparison-taiwan',
-    date: '2026-09-01',
-    category: '電商',
-    description: '綠界、藍新、LINE Pay 到底該選哪個？這篇整理 2026 年最新費率、撥款天數與串接開發費用，附實際比較表，幫電商老闆一次選對金流，不再多花冤枉手續費。',
-    readTime: 8,
-  },
-  {
-    title: 'AI 搜尋時代的網站優化（GEO）：讓 ChatGPT 推薦你的店',
-    slug: 'geo-ai-search-optimization-guide',
-    date: '2026-09-15',
-    category: '技術',
-    description: 'GEO 到底要不要做？這篇用實際數據講清楚 AI 導流現在佔多少、AI 是怎麼挑出要推薦哪家店，以及哪些 GEO 做法有效、哪些連 Google 官方都說沒用。',
-    readTime: 8,
-  },
-  {
-    title: '網站一年要花多少維護費？2026 台灣網站維護費用行情',
-    slug: 'website-maintenance-cost-taiwan',
-    date: '2026-10-01',
-    category: '費用指南',
-    description: '網站做好之後一年還要花多少錢？2026 年台灣網站維護費用行情一次整理：網域、主機、SSL 固定成本，維護方案月費與年費區間，以及怎麼判斷你的維護費是不是付太多。',
-    readTime: 7,
-  }
-];
-
-// ── 主程式：從草稿 MD 生成文章 HTML ──
-function buildFromSourceMd(sourceMdPath, outputDir) {
-  const raw = fs.readFileSync(sourceMdPath, 'utf8');
-
-  // 分割每篇文章（以 # 文章 開頭）
-  const articleChunks = raw.split(/\n---\n\n---\n\n# /).map((chunk, i) => i === 0 ? chunk : '# ' + chunk);
-
-  if (!fs.existsSync(outputDir)) fs.mkdirSync(outputDir, { recursive: true });
-
-  ARTICLES.forEach((meta, idx) => {
-    // 找到對應的 chunk（chunk 0 是文件前言，文章從 chunk 1 開始）
-    let chunk = articleChunks[idx + 1] || '';
-
-    // 移除 front matter 部分（目標關鍵字、建議 Meta 等說明）
-    // 保留從第一個 ## 開始的正文
-    const bodyStart = chunk.indexOf('\n## ');
-    const bodyMd = bodyStart >= 0 ? chunk.slice(bodyStart) : chunk;
-
-    // 移除 CTA 連結行（會用統一的 HTML CTA 取代）
-    const cleanMd = bodyMd
-      .replace(/\*\*\[立即填表.+?\]\(.+?\)\*\*/g, '')
-      .replace(/\*\*\[想脫離.+?\]\(.+?\)\*\*/g, '')
-      .replace(/\*\*\[立即預約.+?\]\(.+?\)\*\*/g, '')
-      .replace(/\*\*\[如果你正在.+?\]\(.+?\)\*\*/g, '');
-
-    const { html } = parseMarkdown(cleanMd);
-    const toc = generateTOC(html);
-    const plain = cleanMd.replace(/<[^>]+>/g, '');
-    const cjkCount = (plain.match(/[\u4e00-\u9fff]/g) || []).length;
-    const latinCount = (plain.match(/[A-Za-z0-9]+/g) || []).length;
-    const wordCount = cjkCount + latinCount;
-
-    const articleHtml = generateArticleHTML({
-      ...meta,
-      bodyHtml: html,
-      toc,
-      wordCount
-    });
-
-    const outPath = path.join(outputDir, `${meta.slug}.html`);
-    fs.writeFileSync(outPath, articleHtml, 'utf8');
-    console.log(`✅ Generated: ${outPath}`);
-  });
-
-  console.log(`\n🎉 Built ${ARTICLES.length} articles to ${outputDir}/`);
-}
-
-// ── Entry point ──
-const sourceMd = path.resolve(__dirname, 'docs/mosstack_seo_articles.md');
-const outputDir = path.resolve(__dirname, 'blog');
-
-if (!fs.existsSync(sourceMd)) {
-  console.error('❌ Source file not found:', sourceMd);
-  process.exit(1);
-}
-
-buildFromSourceMd(sourceMd, outputDir);
+</html>
