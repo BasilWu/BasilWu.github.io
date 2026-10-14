@@ -41,6 +41,7 @@
       gtag('js', new Date());
       gtag('config', 'G-GYTGRMGCSH');
     </script>
+  <script src="/track.js" defer></script>
 </head>
 <body>
   <nav class="nav">
@@ -342,6 +343,7 @@
               el.style.pointerEvents = 'none';
             });
             success.classList.add('is-visible');
+            if (window.mosTrack) window.mosTrack('generate_lead', { method: 'form', cta_location: 'contact_form' });
           } else {
             btn.disabled = false;
             btn.textContent = origText;

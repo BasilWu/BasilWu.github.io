@@ -446,6 +446,7 @@ function generateArticleHTML({ title, slug, date, category, description, readTim
       gtag('js', new Date());
       gtag('config', 'G-GYTGRMGCSH');
     </script>
+  <script src="/track.js" defer></script>
 </head>
 <body>
 <div class="article-progress" aria-hidden="true"></div>

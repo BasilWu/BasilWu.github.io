@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="zh-TW" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <script>document.documentElement.setAttribute("data-theme",localStorage.getItem("theme")||(matchMedia("(prefers-color-scheme:dark)").matches?"dark":"light"));</script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="民宿、包棟、旅宿的品牌官網與線上訂房系統：房型房況管理、線上付款、LINE 通知與後台訂單管理。NT$60,000 起固定報價，原始碼交付，客人名單在自己手上。" />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://mosstack.studio/bnb-website" />
+  <script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "Service", "name": "民宿官網與訂房系統", "description": "民宿、包棟、旅宿的品牌官網與線上訂房系統：房型房況管理、線上付款、LINE 通知與後台訂單管理。NT$60,000 起固定報價，原始碼交付，客人名單在自己手上。", "url": "https://mosstack.studio/bnb-website", "provider": {"@id": "https://mosstack.studio/#business"}, "areaServed": {"@type": "Country", "name": "Taiwan"}, "offers": {"@type": "Offer", "priceCurrency": "TWD", "price": "60000", "description": "輕量預約／訂房系統，NT$60,000 起，固定報價"}}, {"@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "自己做官網加訂房系統，跟只放在 OTA 差在哪？", "acceptedAnswer": {"@type": "Answer", "text": "OTA 會抽成，客人名單也在平台手上。自己的官網訂房，客人直接向你訂、直接付款，回頭客與熟客名單留在自己手上。OTA 仍可作為曝光管道，官網負責把熟客與直接詢問的客人留在自己這邊。抽成怎麼算，可以看我們的《民宿官網＋訂房系統：自建 vs OTA》文章。"}}, {"@type": "Question", "name": "系統包含哪些功能？", "acceptedAnswer": {"@type": "Answer", "text": "公開的民宿品牌頁面、房型與房況管理、線上訂房與綠界付款、新訂單與付款成功的 LINE／Email 通知，以及員工後台的訂單與客戶管理。實際功能範圍依你的民宿規模調整。"}}, {"@type": "Question", "name": "多間房、多個館別可以嗎？", "acceptedAnswer": {"@type": "Answer", "text": "可以。多房型、多館別與權限分層屬於客製範圍，會在報價前先確認你的房型與管理方式。"}}, {"@type": "Question", "name": "可以串接現有的 LINE 官方帳號嗎？", "acceptedAnswer": {"@type": "Answer", "text": "可以。新訂單、付款成功等通知可串接你現有的 LINE 官方帳號，文案與時機可調整。"}}, {"@type": "Question", "name": "費用怎麼算？", "acceptedAnswer": {"@type": "Answer", "text": "輕量預約／訂房系統從 NT$60,000 起，依功能範圍固定報價，簽約前講清楚、沒有隱藏費用。上線後一年免費保固；之後如需持續維護，年度維護約為建置費的 10%，也可以單次計費、不強迫綁約。"}}, {"@type": "Question", "name": "系統與資料是誰的？", "acceptedAnswer": {"@type": "Answer", "text": "原始碼交付給你，網域與雲端平台帳號登記在你名下。不會被綁在我們的平台，也不需要每月付平台月費。"}}]}]}</script>
+  <title>民宿官網＋訂房系統｜自有品牌直接訂房，不被 OTA 抽成綁住 — MosStack Studio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@600;700;900&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/x-icon" href="/assets/favicon.ico" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png" />
+  <meta name="theme-color" content="#080c14" />
+  <meta property="og:title" content="民宿官網＋訂房系統｜自有品牌直接訂房，不被 OTA 抽成綁住 — MosStack Studio" />
+  <meta property="og:description" content="民宿、包棟、旅宿的品牌官網與線上訂房系統：房型房況管理、線上付款、LINE 通知與後台訂單管理。NT$60,000 起固定報價，原始碼交付，客人名單在自己手上。" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://mosstack.studio/bnb-website" />
+  <meta property="og:image" content="https://mosstack.studio/assets/og-image.jpg" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="800" />
+  <meta property="og:locale" content="zh_TW" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="民宿官網＋訂房系統｜自有品牌直接訂房，不被 OTA 抽成綁住 — MosStack Studio" />
+  <meta name="twitter:description" content="民宿、包棟、旅宿的品牌官網與線上訂房系統：房型房況管理、線上付款、LINE 通知與後台訂單管理。NT$60,000 起固定報價，原始碼交付，客人名單在自己手上。" />
+  <meta name="twitter:image" content="https://mosstack.studio/assets/og-image.jpg" />
+  <link rel="stylesheet" href="style.css" />
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-GYTGRMGCSH"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-GYTGRMGCSH');
+    </script>
+  <script src="/track.js" defer></script>
+</head>
+<body>
+
+  <nav class="nav">
+    <div class="nav__inner">
+      <a href="/" class="nav__logo" data-i18n="nav.logo">MosStack</a>
+      <ul class="nav__links">
+        <li><a href="/portfolio" class="nav__link--active" data-i18n="nav.work">精選案例</a></li>
+        <li><a href="/services" data-i18n="nav.services">服務項目</a></li>
+        <li><a href="/trust" data-i18n="nav.trust">技術與資安</a></li>
+        <li><a href="/blog">Blog</a></li>
+        <li><a href="/#studio" data-i18n="nav.studio">關於工作室</a></li>
+        <li><a href="/contact" data-i18n="nav.contact">聯絡我們</a></li>
+      </ul>
+            <div class="nav__right">
+        <div class="lang-switch" aria-label="Language switcher">
+          <button class="lang-switch__btn" type="button" data-lang-switch="en">EN</button>
+          <button class="lang-switch__btn is-active" type="button" data-lang-switch="zh">中</button>
+        </div>
+        <div class="nav__social">
+          <a href="https://github.com/BasilWu" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .5C5.65.5.5 5.65.5 12c0 5.1 3.29 9.42 7.86 10.95.57.1.78-.25.78-.55v-2.1c-3.2.7-3.87-1.54-3.87-1.54-.52-1.33-1.27-1.69-1.27-1.69-1.04-.71.08-.7.08-.7 1.15.08 1.75 1.18 1.75 1.18 1.02 1.75 2.68 1.24 3.33.95.1-.74.4-1.24.72-1.53-2.55-.29-5.23-1.28-5.23-5.68 0-1.25.45-2.28 1.18-3.08-.12-.3-.51-1.46.11-3.04 0 0 .96-.31 3.15 1.18a10.94 10.94 0 0 1 5.74 0C17.04 5.8 18 6.11 18 6.11c.62 1.58.23 2.74.11 3.04.73.8 1.18 1.83 1.18 3.08 0 4.41-2.69 5.38-5.25 5.67.41.36.78 1.07.78 2.15v3.18c0 .31.2.66.79.55A11.51 11.51 0 0 0 23.5 12C23.5 5.65 18.35.5 12 .5z"/></svg>
+          </a>
+        </div>
+        <button class="theme-toggle" type="button" data-theme-toggle aria-label="切換深色模式">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        </button>
+        <a href="/contact" class="btn btn--primary nav__cta" data-i18n="nav.cta">免費諮詢</a>
+        <button class="hamburger" id="hamburger" type="button" aria-label="開啟選單" aria-expanded="false">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <div class="mobile-nav" id="mobileNav" aria-hidden="true">
+    <ul>
+      <li><a href="/portfolio" data-i18n="nav.work">精選案例</a></li>
+      <li><a href="/services" data-i18n="nav.services">服務項目</a></li>
+      <li><a href="/trust" data-i18n="nav.trust">技術與資安</a></li>
+      <li><a href="/blog">Blog</a></li>
+      <li><a href="/#studio" data-i18n="nav.studio">關於工作室</a></li>
+      <li><a href="/contact" data-i18n="nav.contact">聯絡我們</a></li>
+      <li><a href="/contact" class="btn btn--primary" style="display:inline-flex;margin-top:var(--space-2)" data-i18n="nav.cta">免費諮詢</a></li>
+    </ul>
+  </div>
+
+  <section class="hero">
+    <div class="container">
+      <p class="hero__eyebrow">民宿官網＋訂房系統</p>
+      <h1 class="hero__title"><span style="display:inline-block">民宿官網＋</span><span style="display:inline-block">訂房系統</span><br><span><span style="display:inline-block">讓熟客</span><span style="display:inline-block">直接向你訂房。</span></span></h1>
+      <p class="hero__subtitle">房型、房況、線上付款、訂單通知與後台管理一次到位。OTA 繼續帶來新客人，官網把回頭客與直接詢問的客人留在自己手上。</p>
+      <div class="hero__cta">
+        <a href="https://lin.ee/5LmZxWcP" target="_blank" rel="noopener noreferrer" class="btn btn--primary">用 LINE 免費諮詢 30 分鐘</a>
+        <a href="/blog/bnb-hotel-booking-website-vs-ota" target="_blank" rel="noopener noreferrer" class="btn btn--ghost">看 OTA 抽成怎麼算 →</a>
+      </div>
+    </div>
+  </section>
+  <main>
+    <section class="service-section" id="problem">
+      <div class="container">
+        <div class="service-section__inner">
+          <div class="service-section__header">
+            <span class="service-section__num">01</span>
+            <h2 class="service-section__title">民宿經營者的常見困擾</h2>
+            <p class="service-section__desc">訂房都在 OTA 上，旺季滿房很好，但抽成與客人名單，其實都不在你手上。</p>
+          </div>
+          <div class="service-section__body">
+            <div class="service-detail-block">
+              <p class="service-detail-block__label">原本的痛點</p>
+              <ul class="service-checklist service-checklist--pain">
+                <li>每筆訂單都要被 OTA 抽成，毛利被吃掉一塊。</li>
+                <li>熟客想直接訂，只能私訊或打電話，來回確認房況。</li>
+                <li>客人資料在平台上，想做回訪或優惠很難。</li>
+                <li>不同平台的房況要手動對，怕超賣。</li>
+                <li>官網只是一頁介紹，看完還是得去別處訂。</li>
+              </ul>
+            </div>
+            <div class="service-detail-block">
+              <p class="service-detail-block__label">自己的官網訂房怎麼解</p>
+              <ul class="service-checklist">
+                <li>熟客與直接詢問的客人，在官網上看房型、選日期、直接下訂。</li>
+                <li>線上付款，確認訂單的流程不用再靠訊息來回。</li>
+                <li>新訂單與付款成功自動通知你與客人。</li>
+                <li>後台集中管理房型、訂單與客戶資料。</li>
+                <li>品牌頁面完全是你的風格，不是平台的版型。</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section class="service-section service-section--alt" id="features">
+      <div class="container">
+        <div class="service-section__inner">
+          <div class="service-section__header">
+            <span class="service-section__num">02</span>
+            <h2 class="service-section__title">系統包含什麼</h2>
+            <p class="service-section__desc">以下是訂房系統的主要模組，實際依你的民宿規模調整。</p>
+          </div>
+          <div class="service-section__body">
+            <div class="service-detail-block">
+              <p class="service-detail-block__label">客人端</p>
+              <ul class="service-checklist">
+                <li>品牌化的民宿介紹與房型頁面。</li>
+                <li>選日期、人數，查看可訂房況。</li>
+                <li>線上訂房與綠界付款（信用卡等）。</li>
+                <li>手機操作優化，不用安裝 App。</li>
+              </ul>
+            </div>
+            <div class="service-detail-block">
+              <p class="service-detail-block__label">業者端（後台）</p>
+              <ul class="service-checklist">
+                <li>房型與房況管理。</li>
+                <li>訂單管理與付款狀態。</li>
+                <li>客戶資料管理。</li>
+                <li>新訂單、付款成功的 LINE／Email 通知。</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section class="service-section" id="fit">
+      <div class="container">
+        <div class="service-section__inner">
+          <div class="service-section__header">
+            <span class="service-section__num">03</span>
+            <h2 class="service-section__title">適合哪些住宿</h2>
+            <p class="service-section__desc">自己的官網訂房，特別適合有一定回頭客、想降低 OTA 依賴的住宿。</p>
+          </div>
+          <div class="service-section__body">
+            <div class="service-detail-block">
+              <p class="service-detail-block__label">特別適合</p>
+              <div class="service-section__cases">
+                <span class="service-case-tag">→ 民宿</span>
+                <span class="service-case-tag">→ 包棟、整棟出租</span>
+                <span class="service-case-tag">→ 小型旅宿、青旅</span>
+              </div>
+            </div>
+            <div class="service-detail-block">
+              <p class="service-detail-block__label">什麼時候值得做</p>
+              <ul class="service-checklist">
+                <li>OTA 抽成已經明顯影響你的毛利。</li>
+                <li>有不少熟客或口碑客，想讓他們直接訂。</li>
+                <li>想建立自己的品牌，而不是只在平台上被比價。</li>
+                <li>想自己掌握客人名單做後續經營。</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section class="service-section service-section--alt" id="faq">
+      <div class="container">
+        <div class="service-section__inner">
+          <div class="service-section__header">
+            <span class="service-section__num">04</span>
+            <h2 class="service-section__title">常見問題</h2>
+            <p class="service-section__desc"></p>
+          </div>
+          <div class="service-section__body">
+            <div class="service-detail-block">
+              <p class="service-detail-block__label">自己做官網加訂房系統，跟只放在 OTA 差在哪？</p>
+              <p style="margin:0;color:var(--color-text-muted);line-height:1.8">OTA 會抽成，客人名單也在平台手上。自己的官網訂房，客人直接向你訂、直接付款，回頭客與熟客名單留在自己手上。OTA 仍可作為曝光管道，官網負責把熟客與直接詢問的客人留在自己這邊。抽成怎麼算，可以看我們的《民宿官網＋訂房系統：自建 vs OTA》文章。</p>
+            </div>
+            <div class="service-detail-block">
+              <p class="service-detail-block__label">系統包含哪些功能？</p>
+              <p style="margin:0;color:var(--color-text-muted);line-height:1.8">公開的民宿品牌頁面、房型與房況管理、線上訂房與綠界付款、新訂單與付款成功的 LINE／Email 通知，以及員工後台的訂單與客戶管理。實際功能範圍依你的民宿規模調整。</p>
+            </div>
+            <div class="service-detail-block">
+              <p class="service-detail-block__label">多間房、多個館別可以嗎？</p>
+              <p style="margin:0;color:var(--color-text-muted);line-height:1.8">可以。多房型、多館別與權限分層屬於客製範圍，會在報價前先確認你的房型與管理方式。</p>
+            </div>
+            <div class="service-detail-block">
+              <p class="service-detail-block__label">可以串接現有的 LINE 官方帳號嗎？</p>
+              <p style="margin:0;color:var(--color-text-muted);line-height:1.8">可以。新訂單、付款成功等通知可串接你現有的 LINE 官方帳號，文案與時機可調整。</p>
+            </div>
+            <div class="service-detail-block">
+              <p class="service-detail-block__label">費用怎麼算？</p>
+              <p style="margin:0;color:var(--color-text-muted);line-height:1.8">輕量預約／訂房系統從 NT$60,000 起，依功能範圍固定報價，簽約前講清楚、沒有隱藏費用。上線後一年免費保固；之後如需持續維護，年度維護約為建置費的 10%，也可以單次計費、不強迫綁約。</p>
+            </div>
+            <div class="service-detail-block">
+              <p class="service-detail-block__label">系統與資料是誰的？</p>
+              <p style="margin:0;color:var(--color-text-muted);line-height:1.8">原始碼交付給你，網域與雲端平台帳號登記在你名下。不會被綁在我們的平台，也不需要每月付平台月費。</p>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+  <section class="contact">
+    <div class="container">
+      <div class="contact__inner">
+        <p class="section-label">聯絡我們</p>
+        <h2 class="contact__heading">先聊聊你的民宿怎麼經營。</h2>
+        <p class="contact__sub">告訴我們你的房型數量與目前的訂房方式，我們會依需求規劃並提供固定報價。不用先準備好規格，有方向就可以先聊。</p>
+        <div class="contact__links">
+          <a href="https://lin.ee/5LmZxWcP" target="_blank" rel="noopener noreferrer" class="btn btn--primary">用 LINE 免費諮詢 30 分鐘</a>
+          <a href="/contact" class="btn btn--ghost">填表留下需求</a>
+        </div>
+        <p style="margin:var(--space-3) 0 0;font-size:var(--text-sm);color:var(--color-text-muted)">有方向就能先聊，不一定要馬上下決定 · 24hr 內回覆 · 固定報價、無隱藏費用</p>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="footer__inner">
+      <div class="footer__brand">
+        <p class="footer__brand-name">MosStack Studio</p>
+        <p class="footer__tagline" data-i18n="footer.tagline">位於台中的全端接案工作室，專注於電商、品牌官網、預約系統與 B2B 後台開發。</p>
+        <div class="footer__social">
+          <a href="https://github.com/BasilWu" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .5C5.65.5.5 5.65.5 12c0 5.1 3.29 9.42 7.86 10.95.57.1.78-.25.78-.55v-2.1c-3.2.7-3.87-1.54-3.87-1.54-.52-1.33-1.27-1.69-1.27-1.69-1.04-.71.08-.7.08-.7 1.15.08 1.75 1.18 1.75 1.18 1.02 1.75 2.68 1.24 3.33.95.1-.74.4-1.24.72-1.53-2.55-.29-5.23-1.28-5.23-5.68 0-1.25.45-2.28 1.18-3.08-.12-.3-.51-1.46.11-3.04 0 0 .96-.31 3.15 1.18a10.94 10.94 0 0 1 5.74 0C17.04 5.8 18 6.11 18 6.11c.62 1.58.23 2.74.11 3.04.73.8 1.18 1.83 1.18 3.08 0 4.41-2.69 5.38-5.25 5.67.41.36.78 1.07.78 2.15v3.18c0 .31.2.66.79.55A11.51 11.51 0 0 0 23.5 12C23.5 5.65 18.35.5 12 .5z"/></svg>
+          </a>
+          <a href="https://lin.ee/5LmZxWcP" target="_blank" rel="noopener noreferrer" aria-label="LINE">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M19.365 9.863c.349 0 .63.285.63.631 0 .345-.281.63-.63.63H17.61v1.125h1.755c.349 0 .63.283.63.63 0 .344-.281.629-.63.629h-2.386c-.345 0-.627-.285-.627-.629V8.108c0-.345.282-.63.63-.63h2.386c.349 0 .63.285.63.63 0 .349-.281.63-.63.63H17.61v1.125h1.755zm-3.855 3.016c0 .27-.174.51-.432.596-.064.021-.133.031-.199.031-.211 0-.391-.09-.51-.25l-2.443-3.317v2.94c0 .344-.279.629-.631.629-.346 0-.626-.285-.626-.629V8.108c0-.27.173-.51.43-.595.06-.023.136-.033.194-.033.195 0 .375.104.495.254l2.462 3.33V8.108c0-.345.282-.63.63-.63.345 0 .63.285.63.63v4.771zm-5.741 0c0 .344-.282.629-.631.629-.345 0-.627-.285-.627-.629V8.108c0-.345.282-.63.627-.63.349 0 .631.285.631.63v4.771zm-2.466.629H4.917c-.345 0-.63-.285-.63-.629V8.108c0-.345.285-.63.63-.63.348 0 .63.285.63.63v4.141h1.756c.348 0 .629.283.629.63 0 .344-.281.629-.629.629M24 10.314C24 4.943 18.615.572 12 .572S0 4.943 0 10.314c0 4.811 4.27 8.842 10.035 9.608.391.082.923.258 1.058.59.12.301.079.766.038 1.08l-.164 1.02c-.045.301-.24 1.186 1.049.645 1.291-.539 6.916-4.078 9.436-6.975C23.176 14.393 24 12.458 24 10.314"/></svg>
+          </a>
+          <a href="https://wa.me/886980054850" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+          </a>
+        </div>
+      </div>
+      <div class="footer__col">
+        <p class="footer__col-title" data-i18n="footer.col.explore">瀏覽</p>
+        <nav class="footer__list">
+          <a href="/portfolio" data-i18n="nav.work">精選案例</a>
+          <a href="/services" data-i18n="nav.services">服務項目</a>
+          <a href="/trust" data-i18n="nav.trust">技術與資安</a>
+          <a href="/index#studio" data-i18n="nav.studio">關於工作室</a>
+          <a href="/contact" data-i18n="nav.contact">聯絡我們</a>
+        </nav>
+      </div>
+      <div class="footer__col">
+        <p class="footer__col-title" data-i18n="footer.col.contact">聯絡</p>
+        <nav class="footer__list">
+          <a href="mailto:mosstackstudio@gmail.com">mosstackstudio@gmail.com</a>
+          <a href="tel:+886980054850">0980-054-850</a>
+          <a href="https://lin.ee/5LmZxWcP" target="_blank" rel="noopener noreferrer">LINE</a>
+          <a href="https://wa.me/886980054850" target="_blank" rel="noopener noreferrer">WhatsApp</a>
+          <a href="https://github.com/BasilWu" target="_blank" rel="noopener noreferrer">GitHub</a>
+        </nav>
+      </div>
+    </div>
+    <div class="footer__bottom">
+      <div class="footer__bottom-inner">
+        <p data-i18n="footer.copy">© 2026 MosStack Studio. 版權所有。</p>
+        <div class="footer__legal">
+          <span data-i18n="footer.location">位於台中，服務來自各地的客戶。</span>
+          <span class="footer__taxid" data-i18n="footer.taxid">摩斯棧工作室（MosStack Studio）｜統一編號 60983424</span>
+          <a href="/privacy" data-i18n="footer.privacy">隱私權政策</a>
+          <a href="/terms" data-i18n="footer.terms">服務條款</a>
+          <a href="/refund" data-i18n="footer.refund">退款政策</a>
+          <span class="footer__support" data-i18n="footer.support">客服信箱 mosstackstudio@gmail.com｜客服電話 0980-054-850（週一至週五 10:00–18:00）</span>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <div class="float-contact" aria-label="快速聯絡">
+    <a href="https://lin.ee/5LmZxWcP" target="_blank" rel="noopener noreferrer" class="float-btn float-btn--line" aria-label="LINE">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M19.365 9.863c.349 0 .63.285.63.631 0 .345-.281.63-.63.63H17.61v1.125h1.755c.349 0 .63.283.63.63 0 .344-.281.629-.63.629h-2.386c-.345 0-.627-.285-.627-.629V8.108c0-.345.282-.63.63-.63h2.386c.349 0 .63.285.63.63 0 .349-.281.63-.63.63H17.61v1.125h1.755zm-3.855 3.016c0 .27-.174.51-.432.596-.064.021-.133.031-.199.031-.211 0-.391-.09-.51-.25l-2.443-3.317v2.94c0 .344-.279.629-.631.629-.346 0-.626-.285-.626-.629V8.108c0-.27.173-.51.43-.595.06-.023.136-.033.194-.033.195 0 .375.104.495.254l2.462 3.33V8.108c0-.345.282-.63.63-.63.345 0 .63.285.63.63v4.771zm-5.741 0c0 .344-.282.629-.631.629-.345 0-.627-.285-.627-.629V8.108c0-.345.282-.63.627-.63.349 0 .631.285.631.63v4.771zm-2.466.629H4.917c-.345 0-.63-.285-.63-.629V8.108c0-.345.285-.63.63-.63.348 0 .63.285.63.63v4.141h1.756c.348 0 .629.283.629.63 0 .344-.281.629-.629.629M24 10.314C24 4.943 18.615.572 12 .572S0 4.943 0 10.314c0 4.811 4.27 8.842 10.035 9.608.391.082.923.258 1.058.59.12.301.079.766.038 1.08l-.164 1.02c-.045.301-.24 1.186 1.049.645 1.291-.539 6.916-4.078 9.436-6.975C23.176 14.393 24 12.458 24 10.314"/></svg>
+    </a>
+    <a href="https://wa.me/886980054850?text=%E4%BD%A0%E5%A5%BD%EF%BC%8C%E6%88%91%E6%83%B3%E8%AB%AE%E8%A9%A2%E7%B6%B2%E7%AB%99%E9%96%8B%E7%99%BC%E5%B0%88%E6%A1%88" target="_blank" rel="noopener noreferrer" class="float-btn float-btn--whatsapp" aria-label="WhatsApp">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+    </a>
+  </div>
+
+  <script src="i18n.js"></script>
+</body>
+</html>
