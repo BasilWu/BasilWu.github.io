@@ -710,7 +710,7 @@ const I18N = {
     "refund.s9.body2": "摩斯棧工作室（MosStack Studio）｜統一編號 60983424<br>客服信箱：<a href=\"mailto:mosstackstudio@gmail.com\">mosstackstudio@gmail.com</a><br>客服電話：<a href=\"tel:+886980054850\">0980-054-850</a>（週一至週五 10:00–18:00）<br>亦可透過<a href=\"/contact\">聯絡頁面</a>、LINE 或 WhatsApp 與我們聯繫。",
 
 
-    "index.hero.title": "台中預約系統與品牌電商開發<br><span>交付後，程式碼歸你。</span>",
+    "index.hero.title": "台中預約系統與品牌電商開發<br><span><span class=\"nb\">交付後，</span><span class=\"nb\">程式碼歸你。</span></span>",
     "index.hero.sub": "從線上預約、金流、會員到後台報表，一個人負責到底。固定報價、無隱藏費用，每個案例都能直接點開操作。",
     "index.hero.primary": "用 LINE 免費諮詢 30 分鐘",
     "index.hero.secondary": "查看精選案例",
