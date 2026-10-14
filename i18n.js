@@ -210,8 +210,8 @@ const I18N = {
     "refund.s9.body2": "MosStack Studio (摩斯棧工作室) · Tax ID 60983424<br>Email: <a href=\"mailto:mosstackstudio@gmail.com\">mosstackstudio@gmail.com</a><br>Phone: <a href=\"tel:+886980054850\">+886 980-054-850</a> (Mon–Fri 10:00–18:00)<br>You may also reach us via our <a href=\"/contact\">contact page</a>, LINE or WhatsApp.",
 
 
-    "index.hero.title": "Booking systems and brand commerce<br><span>built in Taichung, owned by you.</span>",
-    "index.hero.sub": "Online booking, payments, memberships and back-office reporting \u2014 built end to end by one engineer. Fixed price, no hidden fees, and every case is live to try.",
+    "index.hero.title": "Customers book and order on their own.<br><span>You run the business.</span>",
+    "index.hero.sub": "Booking systems, brand websites and online stores for businesses in Taichung. One engineer from first conversation to launch, a fixed price, and you own the code.",
     "index.hero.primary": "Free 30-Min Consultation on LINE",
     "index.hero.secondary": "View Selected Work",
     "index.hero.m1.num": "Full-stack",
@@ -710,8 +710,8 @@ const I18N = {
     "refund.s9.body2": "摩斯棧工作室（MosStack Studio）｜統一編號 60983424<br>客服信箱：<a href=\"mailto:mosstackstudio@gmail.com\">mosstackstudio@gmail.com</a><br>客服電話：<a href=\"tel:+886980054850\">0980-054-850</a>（週一至週五 10:00–18:00）<br>亦可透過<a href=\"/contact\">聯絡頁面</a>、LINE 或 WhatsApp 與我們聯繫。",
 
 
-    "index.hero.title": "台中預約系統與品牌電商開發<br><span><span class=\"nb\">交付後，</span><span class=\"nb\">程式碼歸你。</span></span>",
-    "index.hero.sub": "從線上預約、金流、會員到後台報表，一個人負責到底。固定報價、無隱藏費用，每個案例都能直接點開操作。",
+    "index.hero.title": "<span><span class=\"nb\">\u5ba2\u4eba\u81ea\u5df1\u9810\u7d04\u3001</span><span class=\"nb\">\u81ea\u5df1\u4e0b\u55ae\uff0c</span></span><br><span>\u4f60\u5c08\u5fc3\u505a\u751f\u610f\u3002</span>",
+    "index.hero.sub": "\u70ba\u53f0\u4e2d\u7684\u670d\u52d9\u696d\u8207\u54c1\u724c\uff0c\u6253\u9020\u9810\u7d04\u7cfb\u7d71\u3001\u54c1\u724c\u5b98\u7db2\u8207\u96fb\u5546\u3002\u5f9e\u7b2c\u4e00\u6b21\u8a0e\u8ad6\u5230\u4e0a\u7dda\uff0c\u90fd\u7531\u540c\u4e00\u4f4d\u5de5\u7a0b\u5e2b\u8ca0\u8cac\uff1b\u56fa\u5b9a\u5831\u50f9\uff0c\u7a0b\u5f0f\u78bc\u4ea4\u4ed8\u7d66\u4f60\u3002",
     "index.hero.primary": "用 LINE 免費諮詢 30 分鐘",
     "index.hero.secondary": "查看精選案例",
     "index.hero.m1.num": "全端",
