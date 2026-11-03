@@ -17,6 +17,8 @@ Next.js、React、Node.js、TypeScript、PostgreSQL、Prisma、Tailwind CSS、LI
 
 ## 客戶實際案例
 
+- [Rooté 原根美學](https://mosstack.studio/roote-case)：已上線的美業客製案例，整合品牌官網、會員預約、分開處理的服務同意與自願肖像授權、顧客紀錄、五階段服務追蹤設定及推薦月結。通知依設定與渠道啟用；月結與實際出款由店家人工處理。公開畫面均已去識別，正式客戶網站不供測試預約。
+
 - [黑犬設計 HEYGO Design](https://mosstack.studio/heygo-case)：已上線的室內設計品牌官網，包含作品分類、單案介紹、內容管理與諮詢入口。空間作品由黑犬設計提供，網站由 MosStack 建置。
 
 ## 功能展示案例（可線上試用）
