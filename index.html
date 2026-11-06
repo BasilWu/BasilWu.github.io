@@ -66,8 +66,8 @@
           <button class="lang-switch__btn is-active" type="button" data-lang-switch="zh">中</button>
         </div>
         <div class="nav__social">
-          <a href="https://github.com/BasilWu" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .5C5.65.5.5 5.65.5 12c0 5.1 3.29 9.42 7.86 10.95.57.1.78-.25.78-.55v-2.1c-3.2.7-3.87-1.54-3.87-1.54-.52-1.33-1.27-1.69-1.27-1.69-1.04-.71.08-.7.08-.7 1.15.08 1.75 1.18 1.75 1.18 1.02 1.75 2.68 1.24 3.33.95.1-.74.4-1.24.72-1.53-2.55-.29-5.23-1.28-5.23-5.68 0-1.25.45-2.28 1.18-3.08-.12-.3-.51-1.46.11-3.04 0 0 .96-.31 3.15 1.18a10.94 10.94 0 0 1 5.74 0C17.04 5.8 18 6.11 18 6.11c.62 1.58.23 2.74.11 3.04.73.8 1.18 1.83 1.18 3.08 0 4.41-2.69 5.38-5.25 5.67.41.36.78 1.07.78 2.15v3.18c0 .31.2.66.79.55A11.51 11.51 0 0 0 23.5 12C23.5 5.65 18.35.5 12 .5z"/></svg>
+          <a href="https://www.instagram.com/mosstack.studio/" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.3" cy="6.7" r=".7" fill="currentColor" stroke="none"/></svg>
           </a>
         </div>
         <button class="theme-toggle" type="button" data-theme-toggle aria-label="切換深色模式">
@@ -97,31 +97,89 @@
 
   <main>
     <!-- ── HERO ── -->
-    <section class="hero">
-      <div class="container">
-        <p class="hero__eyebrow">MosStack Studio · 台中</p>
-        <h1 class="hero__title" data-i18n="index.hero.title"><span><span class="nb">客人自己預約、</span><span class="nb">自己下單，</span></span><br><span>你專心做生意。</span></h1>
-        <p class="hero__subtitle" data-i18n="index.hero.sub">為台中的服務業與品牌，打造預約系統、品牌官網與電商。從第一次討論到上線，都由同一位工程師負責；固定報價，程式碼交付給你。</p>
-        <div class="hero__cta">
-          <a href="https://lin.ee/5LmZxWcP" target="_blank" rel="noopener noreferrer" class="btn btn--primary" data-i18n="index.hero.primary">用 LINE 免費諮詢 30 分鐘</a>
-          <a href="/portfolio" class="btn btn--ghost" data-i18n="index.hero.secondary">查看精選案例</a>
+    <section class="hero hero--split">
+      <div class="container--wide hero__grid">
+        <div class="hero__copy">
+          <p class="hero__eyebrow">MosStack Studio · 台中</p>
+          <h1 class="hero__title" data-i18n="index.hero.title"><span>把每個細節，</span><br><span>都當成自己的店在做</span></h1>
+          <p class="hero__subtitle" data-i18n="index.hero.sub">預約系統、品牌官網與電商，<span class="nb">每個案例都能線上點開試用。</span><span class="nb">固定報價，程式碼交付給你。</span></p>
+          <div class="hero__cta">
+            <a href="https://lin.ee/5LmZxWcP" target="_blank" rel="noopener noreferrer" class="btn btn--primary" data-i18n="index.hero.primary">用 LINE 免費諮詢 30 分鐘</a>
+            <a href="/portfolio" class="btn btn--ghost" data-i18n="index.hero.secondary">查看精選案例</a>
+          </div>
+          <ul class="hero-trust-list" data-i18n="index.hero.trust"><li>同一位工程師負責</li><li>固定報價</li><li>原始碼交付</li><li>一年免費保固</li></ul>
         </div>
 
-        <!-- 首屏：已上線客戶案例 -->
-        <a href="/heygo-case" class="hero-case" data-case-link="heygo">
-          <div class="hero-case__img"><img src="/assets/work/heygo/cover.webp" width="1600" height="1000" fetchpriority="high" alt="HEYGO Design 黑犬設計品牌官網，桌機與手機網站實際畫面"></div>
-          <div class="hero-case__body">
-            <span class="hero-case__badge" data-i18n="heygo.status">已上線客戶案例</span>
-            <p class="hero-case__name">HEYGO DESIGN</p>
-            <h2 class="hero-case__title" data-i18n="heygo.card.subtitle">讓空間作品，成為品牌的第一印象。</h2>
-            <p class="hero-case__desc" data-i18n="heygo.card.desc">以作品集為核心，整合案例分類、設計內容與諮詢入口，讓訪客看懂品牌，也讓工作室持續更新內容。</p>
-            <span class="hero-case__link" data-i18n="heygo.card.link">查看完整案例 ↗</span>
+        <!-- 首屏：作品輪播 -->
+        <div class="hero-carousel" id="heroCarousel" role="region" aria-roledescription="carousel" aria-label="精選作品">
+          <div class="hero-carousel__viewport">
+            <div class="hero-carousel__track" id="heroTrack">
+            <a class="hero-slide" href="/heygo-case" aria-roledescription="slide" aria-label="1 / 5：HEYGO Design 黑犬設計研究室">
+              <div class="hero-slide__shot"><img src="/assets/work/heygo/cover.webp" width="1600" height="1000" alt="HEYGO Design 黑犬設計品牌官網，桌機與手機網站實際畫面" fetchpriority="high"></div>
+              <div class="hero-slide__meta">
+                <div>
+                  <p class="hero-slide__kicker"><span>01</span><span data-i18n="index.car.t.brand">品牌官網</span><span class="is-status" data-i18n="index.car.s.live">已上線客戶案例</span></p>
+                  <h2 class="hero-slide__name">HEYGO Design 黑犬設計研究室</h2>
+                  <p class="hero-slide__line" data-i18n="heygo.card.subtitle">讓空間作品，成為品牌的第一印象。</p>
+                </div>
+                <span class="hero-slide__go" data-i18n="index.car.go.case">閱讀案例 →</span>
+              </div>
+            </a>
+            <a class="hero-slide" href="/roote-case" aria-roledescription="slide" aria-label="2 / 5：Rooté 原根美學">
+              <div class="hero-slide__shot"><img src="/assets/work/roote/home.webp" width="1425" height="627" alt="Rooté 原根美學品牌官網與客製預約系統實際案例" loading="lazy"></div>
+              <div class="hero-slide__meta">
+                <div>
+                  <p class="hero-slide__kicker"><span>02</span><span data-i18n="index.car.t.booking">預約系統</span><span class="is-status" data-i18n="index.car.s.live">已上線客戶案例</span></p>
+                  <h2 class="hero-slide__name">Rooté 原根美學</h2>
+                  <p class="hero-slide__line" data-i18n="roote.card.subtitle">好的服務，不只在到店那一天。</p>
+                </div>
+                <span class="hero-slide__go" data-i18n="index.car.go.case">閱讀案例 →</span>
+              </div>
+            </a>
+            <a class="hero-slide" href="/reservation-case" aria-roledescription="slide" aria-label="3 / 5：Frame &amp; Light">
+              <div class="hero-slide__shot"><img src="/assets/work/reservation.jpg" width="1200" height="800" alt="Frame &amp; Light Studio 預約系統 Demo 畫面" loading="lazy"></div>
+              <div class="hero-slide__meta">
+                <div>
+                  <p class="hero-slide__kicker"><span>03</span><span data-i18n="index.car.t.booking">預約系統</span><span class="is-status" data-i18n="index.car.s.demo">線上 Demo</span></p>
+                  <h2 class="hero-slide__name">Frame &amp; Light</h2>
+                  <p class="hero-slide__line" data-i18n="index.car.l3">客人自己選好時段，你只管迎接。</p>
+                </div>
+                <span class="hero-slide__go" data-i18n="index.car.go.demo">試用 Demo →</span>
+              </div>
+            </a>
+            <a class="hero-slide" href="/ecommerce-case" aria-roledescription="slide" aria-label="4 / 5：STREET LAB">
+              <div class="hero-slide__shot"><img src="/assets/work/ecommerce.jpg" width="1600" height="1000" alt="STREET LAB 品牌電商 Demo 畫面" loading="lazy"></div>
+              <div class="hero-slide__meta">
+                <div>
+                  <p class="hero-slide__kicker"><span>04</span><span data-i18n="index.car.t.shop">品牌電商</span><span class="is-status" data-i18n="index.car.s.demo">線上 Demo</span></p>
+                  <h2 class="hero-slide__name">STREET LAB</h2>
+                  <p class="hero-slide__line" data-i18n="index.car.l4">訂單、庫存、出貨，收在同一個後台。</p>
+                </div>
+                <span class="hero-slide__go" data-i18n="index.car.go.demo">試用 Demo →</span>
+              </div>
+            </a>
+            <a class="hero-slide" href="/brand-case" aria-roledescription="slide" aria-label="5 / 5：木境設計 WOODSCAPE">
+              <div class="hero-slide__shot"><img src="/assets/work/brand/01-home.jpg" width="1600" height="1000" alt="木境設計 WOODSCAPE 品牌官網 Demo 畫面" loading="lazy"></div>
+              <div class="hero-slide__meta">
+                <div>
+                  <p class="hero-slide__kicker"><span>05</span><span data-i18n="index.car.t.brand">品牌官網</span><span class="is-status" data-i18n="index.car.s.demo">線上 Demo</span></p>
+                  <h2 class="hero-slide__name">木境設計 WOODSCAPE</h2>
+                  <p class="hero-slide__line" data-i18n="index.car.l5">作品與文章，由你慢慢累積。</p>
+                </div>
+                <span class="hero-slide__go" data-i18n="index.car.go.demo">試用 Demo →</span>
+              </div>
+            </a>
+            </div>
           </div>
-        </a>
-        <p class="hero-case__more">想自己操作看看？Demo 範例：
-          <a href="/reservation-case">預約系統</a><a href="/ecommerce-case">品牌電商</a><a href="/brand-case">品牌官網</a>
-        </p>
-        <p class="hero-trust">固定報價　·　原始碼交付　·　一年免費保固</p>
+          <div class="hero-carousel__ctrl">
+            <div class="hero-carousel__dots" id="heroDots" role="group" aria-label="選擇作品"></div>
+            <div class="hero-carousel__arrows">
+              <span class="hero-carousel__count" id="heroCount" aria-hidden="true">01 / 05</span>
+              <button class="hero-carousel__btn" id="heroPrev" type="button" aria-label="上一個作品"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M10 3L5 8l5 5"/></svg></button>
+              <button class="hero-carousel__btn" id="heroNext" type="button" aria-label="下一個作品"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M6 3l5 5-5 5"/></svg></button>
+            </div>
+          </div>
+        </div>
       </div>
     </section>
 
@@ -391,8 +449,8 @@
         <p class="footer__brand-name">MosStack Studio</p>
         <p class="footer__tagline" data-i18n="footer.tagline">位於台中的全端接案工作室，專注於電商、品牌官網、預約系統與 B2B 後台開發。</p>
         <div class="footer__social">
-          <a href="https://github.com/BasilWu" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .5C5.65.5.5 5.65.5 12c0 5.1 3.29 9.42 7.86 10.95.57.1.78-.25.78-.55v-2.1c-3.2.7-3.87-1.54-3.87-1.54-.52-1.33-1.27-1.69-1.27-1.69-1.04-.71.08-.7.08-.7 1.15.08 1.75 1.18 1.75 1.18 1.02 1.75 2.68 1.24 3.33.95.1-.74.4-1.24.72-1.53-2.55-.29-5.23-1.28-5.23-5.68 0-1.25.45-2.28 1.18-3.08-.12-.3-.51-1.46.11-3.04 0 0 .96-.31 3.15 1.18a10.94 10.94 0 0 1 5.74 0C17.04 5.8 18 6.11 18 6.11c.62 1.58.23 2.74.11 3.04.73.8 1.18 1.83 1.18 3.08 0 4.41-2.69 5.38-5.25 5.67.41.36.78 1.07.78 2.15v3.18c0 .31.2.66.79.55A11.51 11.51 0 0 0 23.5 12C23.5 5.65 18.35.5 12 .5z"/></svg>
+          <a href="https://www.instagram.com/mosstack.studio/" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.3" cy="6.7" r=".7" fill="currentColor" stroke="none"/></svg>
           </a>
           <a href="https://lin.ee/5LmZxWcP" target="_blank" rel="noopener noreferrer" aria-label="LINE">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M19.365 9.863c.349 0 .63.285.63.631 0 .345-.281.63-.63.63H17.61v1.125h1.755c.349 0 .63.283.63.63 0 .344-.281.629-.63.629h-2.386c-.345 0-.627-.285-.627-.629V8.108c0-.345.282-.63.63-.63h2.386c.349 0 .63.285.63.63 0 .349-.281.63-.63.63H17.61v1.125h1.755zm-3.855 3.016c0 .27-.174.51-.432.596-.064.021-.133.031-.199.031-.211 0-.391-.09-.51-.25l-2.443-3.317v2.94c0 .344-.279.629-.631.629-.346 0-.626-.285-.626-.629V8.108c0-.27.173-.51.43-.595.06-.023.136-.033.194-.033.195 0 .375.104.495.254l2.462 3.33V8.108c0-.345.282-.63.63-.63.345 0 .63.285.63.63v4.771zm-5.741 0c0 .344-.282.629-.631.629-.345 0-.627-.285-.627-.629V8.108c0-.345.282-.63.627-.63.349 0 .631.285.631.63v4.771zm-2.466.629H4.917c-.345 0-.63-.285-.63-.629V8.108c0-.345.285-.63.63-.63.348 0 .63.285.63.63v4.141h1.756c.348 0 .629.283.629.63 0 .344-.281.629-.629.629M24 10.314C24 4.943 18.615.572 12 .572S0 4.943 0 10.314c0 4.811 4.27 8.842 10.035 9.608.391.082.923.258 1.058.59.12.301.079.766.038 1.08l-.164 1.02c-.045.301-.24 1.186 1.049.645 1.291-.539 6.916-4.078 9.436-6.975C23.176 14.393 24 12.458 24 10.314"/></svg>
@@ -419,7 +477,7 @@
           <a href="tel:+886980054850">0980-054-850</a>
           <a href="https://lin.ee/5LmZxWcP" target="_blank" rel="noopener noreferrer">LINE</a>
           <a href="https://wa.me/886980054850" target="_blank" rel="noopener noreferrer">WhatsApp</a>
-          <a href="https://github.com/BasilWu" target="_blank" rel="noopener noreferrer">GitHub</a>
+          <a href="https://www.instagram.com/mosstack.studio/" target="_blank" rel="noopener noreferrer">Instagram</a>
         </nav>
       </div>
     </div>
@@ -449,7 +507,8 @@
   </div>
 
   <script src="roote-copy.js?v=20261103"></script>
-  <script src="i18n.js?v=roote-20261103"></script>
+  <script src="i18n.js?v=hero-20261106"></script>
+  <script src="hero-carousel.js?v=20261106" defer></script>
   <script>
     // 跨頁錨點滾動
     (function () {
