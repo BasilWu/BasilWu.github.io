@@ -2827,3 +2827,17 @@ body.gallery-lightbox-open { overflow: hidden; }
 .hero--split .hero__subtitle .nb { display: inline-block; }
 html[lang="en"] .hero--split .hero__title { font-size: clamp(1.9rem, 3.4vw, 2.9rem); }
 html[lang="en"] .hero--split .hero__title .line-reveal { white-space: normal; }
+
+/* 手機：作品輪播提前到 CTA 之後，保證證明點排在輪播下方 */
+@media (max-width: 900px) {
+  .hero--split { padding-block: var(--space-8) var(--space-12); }
+  .hero__grid { row-gap: 0; }
+  .hero__copy { display: contents; }
+  .hero--split .hero__eyebrow { margin-bottom: var(--space-3); }
+  .hero--split .hero__title { margin-bottom: var(--space-3); }
+  .hero--split .hero__subtitle { font-size: var(--text-sm); margin-bottom: var(--space-5); }
+  .hero--split .hero__cta { margin-bottom: var(--space-6); gap: var(--space-2); }
+  .hero--split .hero__cta .btn { padding-block: 12px; }
+  .hero-carousel { order: 2; }
+  .hero-trust-list { order: 3; margin-top: var(--space-6); }
+}
